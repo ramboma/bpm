@@ -1,0 +1,12 @@
+DROP TABLE [dbo].[CarApply];
+DROP TABLE dbo.Equipment;
+DROP TABLE dbo.EquipmentLog;
+DROP TABLE dbo.ProcessLog;
+DROP TABLE dbo.ProcessType;
+DROP TABLE dbo.Product;
+DROP TABLE dbo.ProductLog;
+DROP TABLE dbo.Provider;
+DROP TABLE dbo.Segment;
+DROP TABLE dbo.Task;
+DROP TABLE [dbo].[DocInfo];
+DROP TABLE dbo.doclog;
