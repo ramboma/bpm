@@ -30,7 +30,15 @@
             <td  align="left" class="Tbl_TD_Label">设备名称：</td>
             <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_name" class="easyui-textbox" style="width:275px;"/>
             </td>
+            <td  align="left" class="Tbl_TD_Label">出厂时间：</td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_producttime" class="easyui-datebox" style="width:275px;" />
+            </td>
+        </tr>
+        <tr>
             <td  align="left" class="Tbl_TD_Label">生产厂家：</td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_saler" class="easyui-textbox" style="width:275px;"/>
+            </td>
+            <td  align="left" class="Tbl_TD_Label">供应商：</td>
             <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_factory" class="easyui-textbox" style="width:275px;"/>
             </td>
         </tr>
@@ -45,7 +53,7 @@
             <td  align="left" class="Tbl_TD_Txt"><input class="easyui-combobox" id="sl_devmng_source" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/>
             </td>
             <td  align="left" class="Tbl_TD_Label">价格：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_price" class="easyui-textbox" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_price" class="easyui-numberbox" precision="2" data-options="min:0,max:1000000,required:true" style="width:275px;"/></td>
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">保管单位：</td>
@@ -54,17 +62,11 @@
             <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_owner" class="easyui-textbox" style="width:275px;"/></td>
         </tr>
         <tr>
-            <td  align="left" class="Tbl_TD_Label">出厂时间：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_producttime" class="easyui-datebox" style="width:275px;" />
-            </td>
-            <td  align="left" class="Tbl_TD_Label">设备状态：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input class="easyui-combobox" id="tb_devmng_status" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/>
-            </td>
-        </tr>
-        <tr>
             <td  align="left" class="Tbl_TD_Label">技术文档：</td>
             <td  align="left" colspan="3" class="Tbl_TD_Txt">
-                <input id="file_upload" type="file" style="width:400px;"/>
+                <form id="f1" action="/Route/libraryhandler.ashx" enctype="multipart/form-data"  method="post">
+                 <input id="file_upload" type="file" style="width:400px;"/> 
+                </form>
             </td>
         </tr>
         <tr>

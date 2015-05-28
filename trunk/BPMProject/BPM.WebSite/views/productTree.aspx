@@ -11,8 +11,6 @@
 	<link rel="stylesheet" type="text/css" href="../scripts/widget/easyui/themes/icon.css"/>
     <script type="text/javascript" src="../scripts/widget/easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="../scripts/widget/easyui/jquery.easyui.min.js"></script>    
-    <script type="text/javascript" src="../scripts/widget/qrcode/jquery.qrcode.js"></script>
-    <script type="text/javascript" src="../scripts/widget/qrcode/qrcode.js"></script>
     <script type="text/javascript" src="../scripts/producttree.js"></script>
 </head>
 <body>
