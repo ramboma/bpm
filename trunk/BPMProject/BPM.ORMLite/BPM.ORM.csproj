@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{392C627C-303D-4A84-87B1-63DC895FC8B1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BPM.ORMLite</RootNamespace>
+    <AssemblyName>BPM.ORMLite</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ServiceStack">
+      <HintPath>..\DLL\ServiceStack\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Client">
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ormlite\AliasNamingStrategy.cs" />
+    <Compile Include="Ormlite\Dapper\SqlMapper.cs" />
+    <Compile Include="Ormlite\DbTypes.cs" />
+    <Compile Include="Ormlite\Dialect\SqlServer\SqlServerDialect.cs" />
+    <Compile Include="Ormlite\Dialect\SqlServer\SqlServerExpression.cs" />
+    <Compile Include="Ormlite\Dialect\SqlServer\SqlServerOrmLiteDialectProvider.cs" />
+    <Compile Include="Ormlite\Expressions\ParameterRebinder.cs" />
+    <Compile Include="Ormlite\Expressions\PredicateBuilder.cs" />
+    <Compile Include="Ormlite\Expressions\ReadConnectionExtensions.cs" />
+    <Compile Include="Ormlite\Expressions\ReadExtensions.cs" />
+    <Compile Include="Ormlite\Expressions\Sql.cs" />
+    <Compile Include="Ormlite\Expressions\SqlExpression.cs" />
+    <Compile Include="Ormlite\Expressions\SqlExpression.Join.cs" />
+    <Compile Include="Ormlite\Expressions\SqlExpressionVisitor.cs" />
+    <Compile Include="Ormlite\Expressions\WriteConnectionExtensions.cs" />
+    <Compile Include="Ormlite\Expressions\WriteExtensions.cs" />
+    <Compile Include="Ormlite\FieldDefinition.cs" />
+    <Compile Include="Ormlite\INamingStrategy.cs" />
+    <Compile Include="Ormlite\IOrmLiteDialectProvider.cs" />
+    <Compile Include="Ormlite\IPropertyInvoker.cs" />
+    <Compile Include="Ormlite\IUntypedApi.cs" />
+    <Compile Include="Ormlite\JoinSqlBuilder.cs" />
+    <Compile Include="Ormlite\ModelDefinition.cs" />
+    <Compile Include="Ormlite\OrmLiteConfig.cs" />
+    <Compile Include="Ormlite\OrmLiteConfigExtensions.cs" />
+    <Compile Include="Ormlite\OrmLiteConnection.cs" />
+    <Compile Include="Ormlite\OrmLiteConnectionFactory.cs" />
+    <Compile Include="Ormlite\OrmLiteConnectionWrapper.cs" />
+    <Compile Include="Ormlite\OrmLiteDDLExtensions.cs" />
+    <Compile Include="Ormlite\OrmLiteDialectProviderBase.cs" />
+    <Compile Include="Ormlite\OrmLiteDialectProviderExtensions.cs" />
+    <Compile Include="Ormlite\OrmLiteExecFilter.cs" />
+    <Compile Include="Ormlite\OrmLiteNamingStrategyBase.cs" />
+    <Compile Include="Ormlite\OrmLitePersistenceProvider.cs" />
+    <Compile Include="Ormlite\OrmLiteReadConnectionExtensions.cs" />
+    <Compile Include="Ormlite\OrmLiteReadExtensions.cs" />
+    <Compile Include="Ormlite\OrmLiteResultsFilter.cs" />
+    <Compile Include="Ormlite\OrmLiteResultsFilterExtensions.cs" />
+    <Compile Include="Ormlite\OrmLiteSPStatement.cs" />
+    <Compile Include="Ormlite\OrmLiteTransaction.cs" />
+    <Compile Include="Ormlite\OrmLiteUtilExtensions.cs" />
+    <Compile Include="Ormlite\OrmLiteWriteConnectionExtensions.cs" />
+    <Compile Include="Ormlite\OrmLiteWriteExtensions.cs" />
+    <Compile Include="Ormlite\PropertyInvoker.cs" />
+    <Compile Include="Ormlite\ReflectionPropertyInvoker.cs" />
+    <Compile Include="Ormlite\SqlBuilder.cs" />
+    <Compile Include="Ormlite\SqlInValues.cs" />
+    <Compile Include="Ormlite\UntypedApi.cs" />
+    <Compile Include="Ormlite\UpperCaseNamingStrategy.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Ormlite\OrmLiteApi.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

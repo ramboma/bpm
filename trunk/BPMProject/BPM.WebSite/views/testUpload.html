@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="../scripts/widget/easyui/jquery.min.js"></script>
+    <script src="../scripts/jquery/jquery.form.js"></script>
+    <script src="../scripts/public.js"></script>
+    <title></title>
+    <script type="text/javascript">
+        $(document).ready(
+            function() {
+                $("#btn_all_submit").click(
+function() {
+    //提交form,上传文件
+    $("#f1").ajaxSubmit(
+    {
+        success:function(data) {
+            console.log(data);
+            //上传成功后，再提交其它的数据
+            var dd=getResult(data);
+            if (dd.code == 1) {
+                
+            var path = dd.Result;
+            console.log(path);
+            } else {
+                alert(dd.message);
+            }
+        }
+    }
+    );
+}
+                    );
+            }
+        );
+    </script>
+</head>
+<body>
+    <table>
+        
+        <thead>
+           <tr><td>aaa</td><td>bbb</td></tr> 
+        </thead>
+        <tbody>
+           <tr><td>aaa</td><td>bbb</td></tr> 
+           <tr><td>ccc</td><td>ddd</td></tr> 
+            <tr><td>
+                    
+    <form id="f1" action="/Route/libraryhandler.ashx" enctype="multipart/form-data"  method="POST">
+        <input type="file" name="fileupload"/> 
+    </form>
+                </td><td>
+                         <input type="button" id="btn_all_submit"/>
+                     </td></tr> 
+        </tbody>
+    </table>
+
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+﻿/* 网站链接总的CSS定义:可定义内容为链接字体颜色、样式等 */
+a{text-decoration:underline;} /* 链接无下划线,有为underline */ 
+a:link {color: #0000FF;} /* 未访问的链接 */
+a:visited {color: #333333;} /* 已访问的链接 */
+a:hover{COLOR: #AE0927;} /* 鼠标在链接上 */ 
+a:active {color: #0000ff;} /* 点击激活链接 */
+/* Body的CSS定义:对应CSS中“BODY”，可定义内容为网页字体颜色、背景、浏览器边框等 */
+body
+{
+	font-size:12px;
+	background-position:center;
+	text-decoration: none;
+	margin-top:0px; 
+	margin-left:0px;
+	background-color:#eeffca;
+}
+.Tbl_logo
+{
+	border:0;
+	width:1024px;
+	height:120px;
+	background-image:url(../images/logo.png);
+}
+.Tbl_bottom
+{
+	width:1024px; 
+	height:48px; 
+	font-size:18px;
+	background-color:#00CCFF;
+}
+.Tbl_Content
+{
+	width:1024px; 
+	height:600px;
+    border:0px;
+}
+.Td_menu
+{
+	width:160px; 
+	height:600px; 
+	background-color:#000000;
+}
+.Td_Frame
+{
+	width:864px;
+	height:600px; 
+	background-color:#328EBC;
+}
+.Div_Frame
+{
+	 width:864px;
+	 height:600px; 
+	 border:0px; 
+	 background-color:ThreeDDarkShadow; 
+	 display:block;	 
+}
+.Div_Button
+{
+	padding-top:12px;
+	width:109px;
+	height:38px; 
+	color:black;
+	cursor:hand;
+	background-image:url(../images/button.png);
+}
+.Div_Descript
+{
+	width:864px;
+	color:black;
+	cursor:hand;
+    background-color:#CCCCCC;
+    display:none;
+}
+.Div_Step
+{
+	width:850px;
+	color:black;
+    background-color:#CCCCCC;
+    display:none;
+}
+/*菜单区域风格*/
+.Div_Menu_Container
+{
+	width:160px;
+	height:600px;
+	overflow-y:scroll;
+	
+}
+.Div_Tree_Container
+{
+	width:830px;
+	height:300px;
+	overflow-y:scroll;
+}
+.Div_Menu_Item_Main
+{
+	width:142px;
+	height:32px;
+	background-image:url(../images/main.png);
+	background-repeat:no-repeat;
+	cursor:hand;
+}
+.Div_Menu_Item_ObjMng
+{
+	width:142px;
+	height:32px;
+	background-image:url(../images/obj_mng_close.png);
+	background-repeat:no-repeat;
+	cursor:hand;
+}
+.Div_Menu_Sub_Container
+{
+    width:142px;
+    vertical-align:middle;
+}
+.Btn_Menu_Item
+{
+	width:142px;
+	height:28px;
+	font-size:18px;
+	cursor:hand;
+}
+.Div_Menu_Item_processrun
+{
+	width:142px;
+	height:32px;
+	background-image:url(../images/process_run_close.png);
+	background-repeat:no-repeat;
+	cursor:hand;
+}
+.Div_Menu_Item_analysis
+{
+	width:142px;
+	height:32px;
+	background-image:url(../images/data_analysis_close.png);
+	background-repeat:no-repeat;
+	cursor:hand;
+}
+.Div_Menu_Item_Config
+{
+	width:142px;
+	height:32px;
+	background-image:url(../images/config_close.png);
+	background-repeat:no-repeat;
+	cursor:hand;
+}
+.Div_Menu_Item_Qrystc
+{
+	width:142px;
+	height:32px;
+	background-image:url(../images/query_statics_close.png);
+	background-repeat:no-repeat;
+	cursor:hand;
+}
+.Div_Menu_Item_DocMng
+{
+	width:142px;
+	height:32px;
+	background-image:url(../images/doc_mng_close.png);
+	background-repeat:no-repeat;
+	cursor:hand;
+}
+.Tbl_Title
+{
+	width:830px;
+    border:0px;
+}
+.Tbl_TD_Title
+{
+	width:830px;
+	height:48px;
+	font-size:18px;
+	font-weight:bold;
+	text-decoration:underline;
+}
+.Tbl_TD_Title_Label
+{
+	width:100px;
+	height:36px;
+	font-size:16px;
+}
+.Tbl_TD_Title_Txt
+{
+	width:730px;
+	height:36px;
+	font-size:16px;
+}
+.Tbl_Info
+{
+	width:830px;
+    border-style:solid; 
+	border-color:#000000; 
+	border-collapse:collapse;
+	border-width:3px;
+}
+.Tbl_Title_Txt
+{
+	width:315px;
+	height:36px;
+	font-size:16px;
+}
+.Tbl_TD_Label
+{
+	width:100px;
+	height:36px;
+	font-size:16px;
+	border-style:solid; 
+	border-width:1px; 
+	border-color:#111111;
+}
+.Tbl_TD_Txt
+{
+	width:315px;
+	height:36px;
+	font-size:16px;
+	border-style:solid; 
+	border-width:1px; 
+	border-color:#111111;
+}
+.Tbl_TD_Clause
+{
+	width:135px;
+	height:28px; 
+	border-style:solid; 
+	border-width:1px; 
+	border-color:#111111;
+}
+.Tbl_TD_Value
+{
+	width:280px;
+	height:28px; 
+	border-style:solid; 
+	border-width:1px; 
+	border-color:#111111;
+}
+.Tbl_TD_TextBox
+{
+	width:275px;
+    font-size:16px;
+	border-style:None; 
+}
+.Tbl_TD_TextBox_long
+{
+	width:550px;
+    font-size:12px;
+	border-style:None;
+}
+.Div_ctlg_container
+{
+	display: none;
+	width: 300px;
+	height:200px;
+	overflow: scroll;
+	background-color: #00CCFF;
+}
+.Div_ctlg
+{
+	background-color: #00CC55;
+}
+.Div_ctlg_detail_container
+{
+	display: none;
+	width: 300px;
+	height:200px;
+	overflow: scroll;
+	background-color: #00CCFF;
+}
+.Div_qrcode
+{
+	width: 200px;
+	height:200px;
+	background-color: #111111;
+}
+.Ta_introduce
+{
+	height: 72px;
+	width: 550px;
+}

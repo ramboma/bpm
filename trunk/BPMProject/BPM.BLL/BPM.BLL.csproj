@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{74EF82FA-5891-4632-B5D7-83401F8264CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BPM.BLL</RootNamespace>
+    <AssemblyName>BPM.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ServiceStack">
+      <HintPath>..\DLL\ServiceStack\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Client">
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=4.0.38.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.0.38.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\ServiceStack\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BookMng.cs" />
+    <Compile Include="ProviderMng.cs" />
+    <Compile Include="ObjMng.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EquipmentMng.cs" />
+    <Compile Include="PageMng.cs" />
+    <Compile Include="DocMng.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BPM.Entity\BPM.Entity.csproj">
+      <Project>{be4e7614-edf8-4c2f-91a6-c33a52400fc4}</Project>
+      <Name>BPM.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.ORMLite\BPM.ORM.csproj">
+      <Project>{392c627c-303d-4a84-87b1-63dc895fc8b1}</Project>
+      <Name>BPM.ORM</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

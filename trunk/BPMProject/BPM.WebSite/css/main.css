@@ -1,0 +1,18 @@
+﻿.Tbl_Frame_main
+{
+	width:840px;
+	height:600px;
+	border: 0px;
+}
+td
+{
+	FONT-FAMILY:宋体;
+	FONT-SIZE: 12pt;
+	line-height: 150%;
+	background-color:#99FFCC;
+}
+th
+{
+	color: white;
+	background-color: #336666;
+}

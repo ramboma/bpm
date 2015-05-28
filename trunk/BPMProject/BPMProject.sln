@@ -1,0 +1,99 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPM.Entity", "BPM.Entity\BPM.Entity.csproj", "{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPM.Common", "BPM.Common\BPM.Common.csproj", "{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPM.ORM", "BPM.ORMLite\BPM.ORM.csproj", "{392C627C-303D-4A84-87B1-63DC895FC8B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPM.BLL", "BPM.BLL\BPM.BLL.csproj", "{74EF82FA-5891-4632-B5D7-83401F8264CE}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BPM.WebSite(1)", "http://localhost:3665", "{BBBE8D80-0560-43C8-954C-1D38AA018A5D}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		ProjectReferences = "{74ef82fa-5891-4632-b5d7-83401f8264ce}|BPM.BLL.dll;{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}|BPM.Entity.dll;{392C627C-303D-4A84-87B1-63DC895FC8B1}|BPM.ORMLite.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_3665"
+		Debug.AspNetCompiler.PhysicalPath = "BPM.WebSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_3665\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_3665"
+		Release.AspNetCompiler.PhysicalPath = "BPM.WebSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_3665\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "BPM.WebSite\"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		MonoTouch|Any CPU = MonoTouch|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Signed|Any CPU = Signed|Any CPU
+		STATIC_ONLY NO_EXPRESSIONS|Any CPU = STATIC_ONLY NO_EXPRESSIONS|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.MonoTouch|Any CPU.ActiveCfg = Release|Any CPU
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.MonoTouch|Any CPU.Build.0 = Release|Any CPU
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.Signed|Any CPU.ActiveCfg = Release|Any CPU
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.Signed|Any CPU.Build.0 = Release|Any CPU
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.ActiveCfg = Release|Any CPU
+		{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.Build.0 = Release|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.MonoTouch|Any CPU.ActiveCfg = Release|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.MonoTouch|Any CPU.Build.0 = Release|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.Signed|Any CPU.ActiveCfg = Release|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.Signed|Any CPU.Build.0 = Release|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.ActiveCfg = Release|Any CPU
+		{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.Build.0 = Release|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.MonoTouch|Any CPU.ActiveCfg = Release|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.MonoTouch|Any CPU.Build.0 = Release|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.Signed|Any CPU.ActiveCfg = Release|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.Signed|Any CPU.Build.0 = Release|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.ActiveCfg = Release|Any CPU
+		{392C627C-303D-4A84-87B1-63DC895FC8B1}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.Build.0 = Release|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.MonoTouch|Any CPU.ActiveCfg = Release|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.MonoTouch|Any CPU.Build.0 = Release|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.Signed|Any CPU.ActiveCfg = Release|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.Signed|Any CPU.Build.0 = Release|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.ActiveCfg = Release|Any CPU
+		{74EF82FA-5891-4632-B5D7-83401F8264CE}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.Build.0 = Release|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.MonoTouch|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.MonoTouch|Any CPU.Build.0 = Debug|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.Signed|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.Signed|Any CPU.Build.0 = Debug|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBBE8D80-0560-43C8-954C-1D38AA018A5D}.STATIC_ONLY NO_EXPRESSIONS|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
