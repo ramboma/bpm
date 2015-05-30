@@ -17,13 +17,13 @@ namespace BPM.BLL
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static List<Provider> GetCatalogInfo(int key)
+        public static List<Provider> GetCatalogInfo(string key)
         {
             SqlExpression<Provider> sqlexpress=Utity.Connection.From<Provider>();
-            sqlexpress.Where(s=>s.catalogId==key);
+            sqlexpress.Where(s=>s.catalogKey.ToLower()==key.ToLower());
             return Utity.Connection.Select<Provider>(sqlexpress);
         }
-        public static List<TreeDto> GetCatalogInfoTree(int key)
+        public static List<TreeDto> GetCatalogInfoTree(string key)
         {
             var treeList=new List<TreeDto>();
             List<Provider> list = GetCatalogInfo(key);
@@ -38,6 +38,12 @@ namespace BPM.BLL
                 treeList.Add(current);
             }
             return treeList;
+        }
+        public static List<Provider> GetCatalogInfoById(int key)
+        {
+            SqlExpression<Provider> sqlexpress=Utity.Connection.From<Provider>();
+            sqlexpress.Where(s=>s.catalogId==key);
+            return Utity.Connection.Select<Provider>(sqlexpress);
         }
     }
 }

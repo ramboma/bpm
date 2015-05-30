@@ -77,7 +77,7 @@ public class LibraryHandler : IHttpHandler
                         {
                             try
                             {
-                                var lstProviderList = ProviderMng.GetCatalogInfo(int.Parse(strParams));
+                                var lstProviderList = ProviderMng.GetCatalogInfo(strParams);
                                 return GetSuccessReturn(lstProviderList);
                             }
                             catch (Exception eall)
@@ -90,7 +90,7 @@ public class LibraryHandler : IHttpHandler
                         {
                             try
                             {
-                                var lstProviderList = ProviderMng.GetCatalogInfoTree(int.Parse(strParams));
+                                var lstProviderList = ProviderMng.GetCatalogInfoTree(strParams);
                                 return GetSuccessReturn(lstProviderList);
                             }
                             catch (Exception eall)
@@ -98,6 +98,18 @@ public class LibraryHandler : IHttpHandler
                                 return GetErrorReturn(ResponseCode.FAIL, eall.Message);
                             }
                         }
+                     case "getproviderbyid":
+                        {
+                            try
+                            {
+                                var lstProviderList = ProviderMng.GetCatalogInfoById(int.Parse(strParams));
+                                return GetSuccessReturn(lstProviderList);
+                            }
+                            catch (Exception eall)
+                            {
+                                return GetErrorReturn(ResponseCode.FAIL, eall.Message);
+                            }
+                           }
 	#endregion
 #region 资产
 
