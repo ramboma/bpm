@@ -232,3 +232,4 @@ $RECYCLE.BIN/
 
 trunk/BPMProject/BPM.WebSite/scripts/query_obj.js
 trunk/BPMProject/BPM.WebSite/Web.config
+*.config

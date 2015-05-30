@@ -1,12 +1,9 @@
 ﻿$.extend(
     {
-        rowformater:function(value,row,index)
-        {
-
-            return '<input type="button" onclick="$.Open(\''+row.itemid+'\')"/>';
+        rowformater: function (value, row, index) {
+            return '<a href="javascript:void(0)" onclick="$.Open(\'' + row.itemid + '\')">详情</a> ';
         },
-        Open:function(id)
-        {
+        Open: function (id) {
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
@@ -20,7 +17,7 @@
                     }
                 });
             $('#dlg').dialog('open');
-            
+
         },
         Deal_Data: function (data) {
             var Ret = eval('(' + data + ')');
@@ -42,8 +39,7 @@
                     type: 'POST',
                     data: { c: 'assetlibrary', m: 'providermng', p: 'cj' },
                     success: function (data) {
-
-                        $("#dgt_product_detail").datagrid('loadData', data);
+                        $("#tb_qryobj_factory").combobox('loadData', $.Deal_Data(data));
                     },
                     error: function (data) {
                         //alert(data);
@@ -120,8 +116,7 @@ $(document).ready(function () {
         { "productid": "AV-CB-01", "productname": "Amazon Parrot", "unitcost": 92.00, "status": "P", "listprice": 63.50, "attr1": "Adult Male", "itemid": "EST-18" }
         ]
     };
-
     $("#dgt_result_query").datagrid('loadData', dd);
-    $("#dgt_product_detail").datagrid('loadData', dd);
+    //$("#dlg_product_detail").datagrid('loadData', dd);
     $.Init_Page();
 });
