@@ -7,9 +7,30 @@
 图书和文档的方法都一样，看文档如果没有借阅就算了
 接着做上传功能和设备查询，资料查询，消耗查询,用户及权限设计
 维修流程
-*2015年5月
-28/三
-#2 代码迁移到github，位置在github.com/ramboma/bpm
-ddd
-lsf
-rambo
+===============================================================================
+保存设备信息的接口
+#2 增加品名目录的子项方法
+删除品名时要删除选中品名及其子项
+更新品名时传入参数
+保管人，来源，long
+productinput 加保质期
+===============================================================================
+提交的格式:
+{ApplyId:4,ApproveId:3,RelativeTask:2,ManagerId:1,data:[{ProductId:11,SaleCount:22}]}
+返回：
+{
+    result:
+    [
+    {
+        ProductInputId:,
+        Shelf:'1',
+        StorageNum:'2',
+        Quantity:11
+    },
+    {
+        ProductInputId:,
+        Shelf:'2',
+        StorageNum:'2',
+        Quantity:21
+    }
+}

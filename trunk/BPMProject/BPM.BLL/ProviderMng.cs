@@ -39,6 +39,11 @@ namespace BPM.BLL
             }
             return treeList;
         }
+        /// <summary>
+        /// 通过id获取类型信息
+        /// </summary>
+        /// <param name="key">类型id</param>
+        /// <returns></returns>
         public static Provider GetCatalogInfoById(int key)
         {
             SqlExpression<Provider> sqlexpress=Utity.Connection.From<Provider>();

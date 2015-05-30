@@ -68,6 +68,8 @@
     <Compile Include="DTO\ProductStatiscDto.cs" />
     <Compile Include="DTO\EquipmentDto.cs" />
     <Compile Include="DTO\BookBorrowDto.cs" />
+    <Compile Include="DTO\FetchDetailDto.cs" />
+    <Compile Include="DTO\OutPutDetailDto.cs" />
     <Compile Include="Enum\CommonEnum.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="EquipmentLog.cs" />

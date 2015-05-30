@@ -87,6 +87,22 @@ GROUP BY p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.Deal
             long lResult = Utity.Connection.Insert<ProductLog>(productLog, selectIdentity: true);
             return lResult;
         }
+        /// <summary>
+        /// 批量保存出库信息
+        /// </summary>
+        /// <remarks>
+        /// 2015-5-30 rambo
+        ///     ApplyId:'',ApproveId:'',RelativeTask:'',ManagerId:'',
+        ///     data[{ProductId:11,SaleCount:22}]
+        /// </remarks>
+        public static OutPutDetailListDto SaveFetchDetail(FetchDetailDto dto)
+        {
+            OutPutDetailListDto listDto=new OutPutDetailListDto();
+            listDto.Lists=new List<OutPutDetailDto>();
+            listDto.Lists.Add(new OutPutDetailDto(){ProductInputId=1,Shelf="1号",StorageNum="2架",Quantity=100});
+            listDto.Lists.Add(new OutPutDetailDto(){ProductInputId=2,Shelf="1号",StorageNum="3架",Quantity=200});
+            return listDto;
+        }
         #endregion
         #region 入库
 

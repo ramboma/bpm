@@ -9,10 +9,28 @@ namespace BPM.BLL
     public class EquipmentMng
     {
         /// <summary>
-        /// 获取可以报废的装备树
+        /// 获取所有装备树
         /// </summary>
         /// <returns></returns>
         public static List<TreeDto> GetEquipmentTree()
+        {
+            var express = ORMLite.Utity.Connection.From<Equipment>();
+            express.Where(s => s.hasDelete == 0);
+            express.Join<EquipmentLog>((equ, log) => equ.id == log.equipmentId && log.recordType != "报废");
+            var list = Utity.Connection.Select<Equipment>(express);
+            var treeDtoList = new List<TreeDto>();
+            //取第一层
+            foreach (var product in list)
+            {
+                treeDtoList.Add(new TreeDto() { id = product.id.ToString(), text = product.equipmentName, children = new List<TreeDto>(), Node = product });
+            }
+            return treeDtoList;
+        }
+        /// <summary>
+        /// 获取可以报废的装备树
+        /// </summary>
+        /// <returns></returns>
+        public static List<TreeDto> GetBfEquipmentTree()
         {
             var express = ORMLite.Utity.Connection.From<Equipment>();
             express.Where(s => s.hasDelete == 0);
