@@ -65,7 +65,9 @@
     </thead>
     </table>
     <div id="dlg_product_detail" class="easyui-dialog" title="资产详细信息" data-options="" style="width:760px;height:300px;padding:10px">
-		    <table id="dgt_product_detail" class="easyui-datagrid" data-options="singleSelect:true,collapsible:true" style="width:710px;height:280px;font-size:16px">
+
+		    <table id="dgt_product_detail" class="easyui-datagrid" data-options="singleSelect:true,collapsible:true" style="width:710px;height:300px;font-size:16px">
+
         <thead>
         <tr>
             <th data-options="field:'itemid',width:100">编号</th>
@@ -78,6 +80,7 @@
     </thead>
     </table>
 	</div>
+
 </form>
 </body>
 </html>
