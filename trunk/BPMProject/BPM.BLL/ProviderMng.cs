@@ -17,13 +17,13 @@ namespace BPM.BLL
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static List<Provider> GetCatalogInfo(string key)
+        public static List<Provider> GetCatalogInfo(int key)
         {
             SqlExpression<Provider> sqlexpress=Utity.Connection.From<Provider>();
-            sqlexpress.Where(s=>s.catalogKey.ToLower()==key.ToLower());
+            sqlexpress.Where(s=>s.catalogId==key);
             return Utity.Connection.Select<Provider>(sqlexpress);
         }
-        public static List<TreeDto> GetCatalogInfoTree(string key)
+        public static List<TreeDto> GetCatalogInfoTree(int key)
         {
             var treeList=new List<TreeDto>();
             List<Provider> list = GetCatalogInfo(key);
