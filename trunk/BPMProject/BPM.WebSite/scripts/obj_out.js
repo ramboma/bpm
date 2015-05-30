@@ -2,12 +2,41 @@ $.extend(
     {
         Get_Product_Detail:function(node)
         {
-            $("#tb_objmng_factory").text(node.Node.factoryId);
             $("#tb_objmng_model").text(node.Node.model);
             $("#tb_objmng_saler").text(node.Node.dealerId);
             $("#tb_objmng_unit").text(node.Node.quantityUnit);
             $("#tb_objmng_spec").text(node.Node.standard);
             $("#tb_objmng_price").text(node.Node.price);
+            $.ajax(
+               {
+                   url: '/Route/LibraryHandler.ashx',
+                   type: 'POST',
+                   data: { c: 'assetlibrary', m: 'getproviderbyid', p: node.Node.factoryId },
+                   success: function (data) {
+                       var Ret = eval('(' + data + ')');
+                       var ctlg_json = Ret.Result;
+                       $("#tb_objmng_factory").text(ctlg_json.catalogName);
+                       return;
+                   },
+                   error: function (data) {
+                       alert(data);
+                   }
+               });
+            $.ajax(
+                {
+                    url: '/Route/LibraryHandler.ashx',
+                    type: 'POST',
+                    data: { c: 'assetlibrary', m: 'getproviderbyid', p: node.Node.dealerId },
+                    success: function (data) {
+                        var Ret = eval('(' + data + ')');
+                        var ctlg_json = Ret.Result;
+                        $("#tb_objmng_saler").text(ctlg_json.catalogName);
+                        return;
+                    },
+                    error: function (data) {
+                        alert(data);
+                    }
+                });
             return;
         },
         Count_Total_Price:function()

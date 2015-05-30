@@ -27,55 +27,29 @@
     </table>
     <table cellpadding="0" cellspacing="0" class="Tbl_Info">
         <tr>
-            <td  align="left" class="Tbl_TD_Label">二维码：</td>
-            <td  align="left" colspan="3" class="Tbl_TD_Txt">
-                <input id="btn_objmng_scan" type="button" style=" width:70px;" value="扫描" />
-            </td>
-        </tr>
-        <tr>
-            <td  align="left" colspan="4" class="Tbl_TD_Txt"><div id="div_objmng_qrcode" class="Div_qrcode"></div></td>
-        </tr>
-        <tr>
-            <td  align="left" class="Tbl_TD_Label">资产名称：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_objmng_name" class="easyui-combotree" data-options="url:'tree_data1.json',method:'get',required:true" style="width:275px;"/></td>
-            <td  align="left" class="Tbl_TD_Label">生产厂家：</td>
-            <td  align="left" class="Tbl_TD_Txt"><span id="tb_objmng_factory" class="Tbl_TD_TextBox"></span>
-            </td>
-        </tr>
-        <tr>
-            <td  align="left" class="Tbl_TD_Label">供应商：</td>
-            <td  align="left" class="Tbl_TD_Txt"><span id="tb_objmng_saler" class="Tbl_TD_TextBox"></span></td>
-            <td  align="left" class="Tbl_TD_Label">包装单位：</td>
-            <td  align="left" class="Tbl_TD_Txt"><span id="tb_objmng_unit" class="Tbl_TD_TextBox"></span></td>
-        </tr>
-        <tr>
-            <td  align="left" class="Tbl_TD_Label">型号：</td>
-            <td  align="left" class="Tbl_TD_Txt"><span id="tb_objmng_model" class="Tbl_TD_TextBox"></span>
-            </td>
-            <td  align="left" class="Tbl_TD_Label">规格：</td>
-            <td  align="left" class="Tbl_TD_Txt"><span id="tb_objmng_spec" class="Tbl_TD_TextBox"></span>
-            </td>
-        </tr>
-        <tr>
-            <td  align="left" class="Tbl_TD_Label">来源：</td>
-            <td  align="left" class="Tbl_TD_Txt"><span id="tb_objmng_source" class="Tbl_TD_TextBox"></span>
-            </td>
-            <td  align="left" class="Tbl_TD_Label">单价：</td>
-            <td  align="left" class="Tbl_TD_Txt"><span id="tb_objmng_price" class="Tbl_TD_TextBox"></span>
-            </td>
-        </tr>
-        <tr>
-            <td  align="left" class="Tbl_TD_Label">数量：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_objmng_amount" class="easyui-numberbox" data-options="min:0,max:1000000,required:true" style="width:275px;"/></td>
-            <td  align="left" class="Tbl_TD_Label">总价：</td>
-            <td  align="left" class="Tbl_TD_Txt"><span id="tb_objmng_total" class="Tbl_TD_TextBox"></span>
-            </td>
-        </tr>
-        <tr>
-            <td  align="left" class="Tbl_TD_Label">申请人：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input class="easyui-combobox" id="tb_objmng_apply" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
-            <td  align="left" class="Tbl_TD_Label">批准人：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input class="easyui-combobox" id="tb_objmng_approval" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
+        <td  align="left">
+            	<table id="dg" title="Custom DataGrid Pager" style="width:700px;height:250px"
+			data-options="toolbar:'#toolbar',rownumbers:true,singleSelect:true,url:'datagrid_data1.json',method:'get'">
+		<thead>
+			<tr>
+				<th data-options="field:'itemid',width:80">Item ID</th>
+				<th data-options="field:'productid',width:100">Product</th>
+				<th data-options="field:'listprice',width:80,align:'right'">List Price</th>
+				<th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
+				<th data-options="field:'attr1',width:240">Attribute</th>
+				<th data-options="field:'status',width:60,align:'center'">Status</th>
+			</tr>
+		</thead>
+	</>
+	
+                    <div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="newuser()"
+            plain="true">添加</a> <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit"
+                onclick="edituser()" plain="true">修改</a> <a href="javascript:void(0)" class="easyui-linkbutton"
+                    iconcls="icon-remove" plain="true">删除</a>
+    </div>
+
+        </td>
         </tr>
     </table>
     <table cellpadding="0" cellspacing="0" style="width:830px" border="0">

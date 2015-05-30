@@ -15,12 +15,40 @@ $.extend(
         },
         Get_Product_Detail:function(node)
         {
-            $("#tb_objmng_factory").text(node.Node.factoryId);
-            $("#tb_objmng_saler").text(node.Node.dealerId);
             $("#tb_objmng_unit").text(node.Node.quantityUnit);
             $("#tb_objmng_model").text(node.Node.model);
             $("#tb_objmng_spec").text(node.Node.standard);
             $("#tb_objmng_price").text(node.Node.price);
+            $.ajax(
+                {
+                    url: '/Route/LibraryHandler.ashx',
+                    type: 'POST',
+                    data: { c: 'assetlibrary', m: 'getproviderbyid', p: node.Node.factoryId },
+                    success: function (data) {
+                        var Ret = eval('(' + data + ')');
+                        var ctlg_json = Ret.Result;
+                        $("#tb_objmng_factory").text(ctlg_json.catalogName);
+                        return;
+                    },
+                    error: function (data) {
+                        alert(data);
+                    }
+                });
+            $.ajax(
+                {
+                    url: '/Route/LibraryHandler.ashx',
+                    type: 'POST',
+                    data: { c: 'assetlibrary', m: 'getproviderbyid', p: node.Node.dealerId },
+                    success: function (data) {
+                    var Ret = eval('(' + data + ')');
+                    var ctlg_json = Ret.Result;
+                    $("#tb_objmng_saler").text(ctlg_json.catalogName);
+                    return;
+                    },
+                    error: function (data) {
+                    alert(data);
+                    }
+                });
             return;
         },
         Init_Page:function()
@@ -86,13 +114,14 @@ $.extend(
             return;
         },
         Btn_Submit_Click: function (ev) {
-            var Objmng_In_Json = { Time: '', ProductId: '', Quantity: '', Source: '', StorageNum: '', Shelf: '' };
+            var Objmng_In_Json = { Time: '', ProductId: '', Quantity: '', Source: '', ShelfLife:'',StorageNum: '', Shelf: '' };
             Objmng_In_Json.Time = new Date();
             Objmng_In_Json.ProductId = $('#tb_objmng_name').combotree('getValue');
             Objmng_In_Json.Quantity = $("#tb_objmng_amount").val();
             Objmng_In_Json.StorageNum = $("#tb_objmng_warehouse").combobox('getValue');
             Objmng_In_Json.Shelf = $("#tb_objmng_shelf").combobox('getValue');
             Objmng_In_Json.Source = $("#sl_objmng_source").combobox('getValue')
+            Objmng_In_Json.ShelfLife = $("#tb_objmng_exp").val();
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
@@ -107,7 +136,7 @@ $.extend(
                             render: "table",
                             width: 200,
                             height: 200,
-                            text: Ret_id
+                            text: $.toUtf8(Ret_id.toString())
                         });
                         alert("保存成功,请打印二维码!");
                     }

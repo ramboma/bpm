@@ -121,7 +121,7 @@ $(document).ready(function () {
         ]
     };
 
-    $("#dgt_sample").datagrid('loadData', dd);
-    $("#dgt_sample1").datagrid('loadData', dd);
+    $("#dgt_result_query").datagrid('loadData', dd);
+    $("#dgt_product_detail").datagrid('loadData', dd);
     $.Init_Page();
 });
