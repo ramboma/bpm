@@ -229,4 +229,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+trunk/BPMProject/BPM.WebSite/scripts/query_obj.js
 trunk/BPMProject/BPM.WebSite/Web.config

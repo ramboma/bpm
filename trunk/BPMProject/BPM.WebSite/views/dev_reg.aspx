@@ -14,7 +14,6 @@
     <script type="text/javascript" src="../scripts/dev_reg.js"></script>
 </head>
 <body>
-<form id="form1" runat="server">
     <table cellpadding="0" cellspacing="0" class="Tbl_Title">
         <tr>
             <td  align="center" colspan ="2" class="Tbl_TD_Title">设备入账流程</td>
@@ -89,7 +88,6 @@
             </td>
         </tr>
     </table>
-</form>
 </body>
 </html>
 

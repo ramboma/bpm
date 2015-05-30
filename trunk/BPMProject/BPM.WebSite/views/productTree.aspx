@@ -41,7 +41,7 @@
         <tr>
             <td  align="left" class="Tbl_TD_Label">供应商：</td>
             <td  align="left" class="Tbl_TD_Txt">
-                <input class="easyui-combobox" id="tb_objmng_saler" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
+                <input id="tb_objmng_saler" class="easyui-combobox"  name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
             <td  align="left" class="Tbl_TD_Label">生产厂家：</td>
             <td  align="left" class="Tbl_TD_Txt">
                 <input id="tb_objmng_factory" class="easyui-combobox"  name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>

@@ -181,6 +181,7 @@ RecordsCounts:1000,currentRows:10,data:
                 exp.AddUpdateField(s => s.hasDelete);
                 Utity.Connection.Update(<Product>(new Product() { hasDelete = 2 },);
             }
+            
         }
         /// <summary>
         /// 更新品名表
