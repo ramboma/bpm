@@ -177,6 +177,7 @@ public class LibraryHandler : IHttpHandler
                         {
                             return GetErrorReturn(ResponseCode.FAIL, e1.Message);
                         }
+                        //保存出库详情,返回具体的出库数和库房号，架号
                     case "savefetchdetail":
                         try
                         {

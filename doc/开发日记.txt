@@ -34,3 +34,18 @@ productinput 加保质期
         Quantity:21
     }
 }
+复合查询：
+{productName:'机',factoryId:11,model:'',standard:'',source:33,storageNum :33,starttime:'',endtime:''}
+返回值：
+[
+    {
+        Id:333,
+        Inout:1,
+        Time:'2015/5/30',
+        Quantity:30,
+        AprrovalId:88,
+        ApprovalName:'rambo',
+        SourceId:888,
+        SourceName:'军区'
+    }
+]

@@ -99,6 +99,8 @@ GROUP BY p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.Deal
         {
             OutPutDetailListDto listDto=new OutPutDetailListDto();
             listDto.Lists=new List<OutPutDetailDto>();
+
+            //
             listDto.Lists.Add(new OutPutDetailDto(){ProductInputId=1,Shelf="1号",StorageNum="2架",Quantity=100});
             listDto.Lists.Add(new OutPutDetailDto(){ProductInputId=2,Shelf="1号",StorageNum="3架",Quantity=200});
             return listDto;
@@ -154,6 +156,7 @@ GROUP BY p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.Deal
             return Utity.Connection.Select<ProductStatiscDto>(strSqlFormat);
 
         }
+
         /// <summary>
         /// 资产统计
         /// </summary>

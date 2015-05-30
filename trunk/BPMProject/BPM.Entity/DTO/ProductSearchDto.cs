@@ -28,5 +28,6 @@ namespace BPM.Entity.DTO
         /// 规格
         /// </summary>
         public string standard{get;set;}
+        public int Source { get; set; }
     }
 }
