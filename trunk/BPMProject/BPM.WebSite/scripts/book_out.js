@@ -13,33 +13,19 @@
             return Json_data;
         },
         Init_Page: function () {
-            //获取图书来源信息
+            //获取图书信息
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
-                    data: { c: 'assetlibrary', m: 'providermng', p: 'ly' },
+                    data: { c: 'assetlibrary', m: 'getallbook', p: 'ly' },
                     success: function (data) {
-                        $('#sl_bookmng_source').combobox('loadData', $.Deal_Data(data));
+                        //$('#sl_bookmng_source').combobox('loadData', $.Deal_Data(data));
                     },
                     error: function (data) {
                         //alert(data);
                     }
                 });
-            //获取图书借阅权限信息
-            $.ajax(
-                {
-                    url: '/Route/LibraryHandler.ashx',
-                    type: 'POST',
-                    data: { c: 'assetlibrary', m: 'providermng', p: 'qx' },
-                    success: function (data) {
-                        $('#sl_bookmng_readlevel').combobox('loadData', $.Deal_Data(data));
-                    },
-                    error: function (data) {
-                        //alert(data);
-                    }
-                }
-        );
             return;
         },
         Btn_Submit_Click: function (ev) {
@@ -73,7 +59,7 @@
             location.reload();
             return;
         },
-        Btn_bookmng_print_click: function (ev) {
+        Btn_bookmng_scan_click: function (ev) {
             alert("请准备打印机");
             return;
         }
@@ -83,6 +69,6 @@ $(document).ready(function () {
     $("#tb_bookmng_time").text(MyDate.toLocaleString());
     $("#btn_bookmng_submit").click($.Btn_Submit_Click);
     $("#btn_bookmng_cancel").click($.Btn_Cancel_Click);
-    $("#btn_bookmng_print").click($.Btn_bookmng_print_click);
+    $("#btn_bookmng_scan").click($.Btn_bookmng_scan_click);
     $.Init_Page();
 });

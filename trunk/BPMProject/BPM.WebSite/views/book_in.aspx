@@ -40,28 +40,27 @@
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">来源：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="sl_bookmng_source" class="easyui-textbox" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="sl_bookmng_source" class="easyui-combobox" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
             <td  align="left" class="Tbl_TD_Label">借阅范围：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="sl_bookmng_readlevel" class="easyui-textbox" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="sl_bookmng_readlevel" class="easyui-combobox" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">单价：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_bookmng_price" class="easyui-textbox" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_bookmng_price" class="easyui-numberbox" precision="2" data-options="min:0,max:1000000,required:true" style="width:275px;"/></td>
             <td  align="left" class="Tbl_TD_Label">存放位置：</td>
             <td  align="left" class="Tbl_TD_Txt"><input id="tb_bookmng_store" class="easyui-textbox" style="width:275px;"/></td>
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">关键字：</td>
-            <td  align="left" colspan="3" class="Tbl_TD_Txt"><input id="tb_bookmng_keyword" class="easyui-textbox" style="width:275px;"/></td>
+            <td  align="left" colspan="3" class="Tbl_TD_Txt"><input id="tb_bookmng_keyword" class="easyui-textbox" style="width:690px;"/></td>
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">内容简介：</td>
-            <td  align="left" colspan="3" class="Tbl_TD_Txt"><input id="ta_docmng_introduce" class="easyui-textbox" data-options="multiline:true" value="" style="width:550px;height:72px"/></td>
+            <td  align="left" colspan="3" class="Tbl_TD_Txt"><input id="ta_bookmng_introduce" class="easyui-textbox" data-options="multiline:true" value="" style="width:690px;height:72px"/></td>
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">二维码：</td>
             <td  align="left" colspan="3" class="Tbl_TD_Txt">
-                <input id="btn_bookmng_build" type="button" style=" width:70px;" value="生成" />
                 <input id="btn_bookmng_print" type="button" style=" width:70px;" value="打印" /></td>
         </tr>
         <tr>

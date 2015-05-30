@@ -168,16 +168,16 @@ RecordsCounts:1000,currentRows:10,data:
         public static int DeleteProduct(Product product)
         {
             int pLength = product.productId.ToString().Length;
-            if (pLength== 12)
+            //if (pLength== 12)
             {
             product.hasDelete = 2;
             return UpdateProduct(product);
             }
-            else
-            {
-                Utity.Connection.Update<Product>(new Product(){hasDelete = 2},p=>p.productId.)
-            }
-            else if()
+            //else
+            //{
+               //Utity.Connection.Update<Product>(new Product(){hasDelete = 2},p=>p.productId.)
+            //}
+            //else if()
         }
         /// <summary>
         /// 更新品名表

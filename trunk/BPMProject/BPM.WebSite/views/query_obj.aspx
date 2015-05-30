@@ -15,7 +15,7 @@
 <form id="form1" runat="server">
      <table cellpadding="0" cellspacing="0" class="Tbl_Title">
         <tr>
-            <td  align="center" colspan ="2" class="Tbl_TD_Title">复合查询条件</td>
+            <td  align="center" colspan ="2" class="Tbl_TD_Title">复合条件查询</td>
         </tr>
     </table>
     <table cellpadding="0" cellspacing="0" class="Tbl_Info">
@@ -52,18 +52,32 @@
             <td  align="left" colspan ="4" class="Tbl_TD_Value"><input id="btn_qryobj_query" type="button" style=" width:70px;" value="查询" /></td>
         </tr>
     </table>
-    <table id="dgt_sample" class="easyui-datagrid" data-options="rownumbers:true,singleSelect:true,collapsible:true,pagination:true" style="width:830px;height:174px;font-size:16px">
+    <table id="dgt_result_query" class="easyui-datagrid" data-options="singleSelect:true,collapsible:true" style="width:830px;height:240px;font-size:16px">
         <thead>
         <tr>
-				<th data-options="field:'itemid',width:80">Item ID</th>
-				<th data-options="field:'productid',width:100">Product</th>
-				<th data-options="field:'listprice',width:80,align:'right'">List Price</th>
-				<th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
-				<th data-options="field:'attr1',width:250">Attribute</th>
-				<th data-options="field:'status',width:60,align:'center'">Status</th>
+            <th data-options="field:'itemid',width:100">编号</th>
+            <th data-options="field:'productid',width:250">资产名称</th>
+            <th data-options="field:'listprice',width:170,align:'right'">生产厂家</th>
+            <th data-options="field:'unitcost',width:120,align:'right'">型号</th>
+            <th data-options="field:'attr1',width:120">规格</th>
+            <th data-options="field:'status',width:50,align:'center',formatter:$.rowformater"></th>
         </tr>
     </thead>
     </table>
+    <div id="dlg_product_detail" class="easyui-dialog" title="资产详细信息" data-options="" style="width:760px;height:300px;padding:10px">
+		    <table id="dgt_product_detail" class="easyui-datagrid" data-options="singleSelect:true,collapsible:true" style="width:710px;height:280px;font-size:16px">
+        <thead>
+        <tr>
+            <th data-options="field:'itemid',width:100">编号</th>
+            <th data-options="field:'productid',width:100">出入状态</th>
+            <th data-options="field:'listprice',width:200,align:'right'">时间</th>
+            <th data-options="field:'unitcost',width:200,align:'right'">数量</th>
+            <th data-options="field:'attr1',width:50">经办人</th>
+            <th data-options="field:'status',width:50,align:'center'">来源</th>
+        </tr>
+    </thead>
+    </table>
+	</div>
 </form>
 </body>
 </html>
