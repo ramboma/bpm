@@ -384,7 +384,7 @@ public class LibraryHandler : IHttpHandler
                         try
                         {
                             var product = JsonConvert.DeserializeObject<Product>(strParams);
-                            var vProjectList = ObjMng.AddProduct(product);
+                            var vProjectList = ObjMng.DeleteProduct(product);
                             return GetSuccessReturn(vProjectList);
                         }
                         catch (Exception e1)

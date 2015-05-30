@@ -67,13 +67,13 @@ namespace BPM.BLL
         /// <returns>资产数量实体</returns>
         public static ProductStatiscDto GetProductStatisc(string productCode)
         {
-            string strsql=@"SELECT a.ProductId,a.ProductNum,a.ProductName,a.ProductFlag,a.FactoryId,a.DealerId,a.Model,a.Standard,a.Price,a.QuantityUnit,a.HasDelete,a.incount-a.outcount AS stacks from
+            string strsql = @"SELECT a.ProductId,a.ProductNum,a.ProductName,a.ProductFlag,a.FactoryId,a.DealerId,a.Model,a.Standard,a.Price,a.QuantityUnit,a.HasDelete,a.incount-a.outcount AS stacks from
 (SELECT p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.DealerId,p.Model,p.Standard,p.Price,p.QuantityUnit,p.HasDelete,SUM(input.Quantity) incount,SUM(outp.Quantity) AS outcount FROM dbo.Product p JOIN dbo.ProductInput input ON p.ProductId=input.ProductId
 JOIN dbo.ProductLog  outp ON input.Id=outp.ProductInputId
 WHERE p.productid={0}
 GROUP BY p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.DealerId,p.Model,p.Standard,p.Price,p.QuantityUnit,p.HasDelete) a";
             string strFinalSql = string.Format(strsql, productCode);
-            var dto=Utity.Connection.Single<ProductStatiscDto>(strFinalSql);
+            var dto = Utity.Connection.Single<ProductStatiscDto>(strFinalSql);
             return dto;
         }
         /// <summary>
@@ -98,7 +98,7 @@ GROUP BY p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.Deal
         public static long SubmitLibrary(ProductInput newProductInput)
         {
             int iResult = 0;
-            long lResult = Utity.Connection.Insert<ProductInput>(newProductInput,selectIdentity:true);
+            long lResult = Utity.Connection.Insert<ProductInput>(newProductInput, selectIdentity: true);
             iResult = (int)lResult;
             return iResult;
         }
@@ -168,16 +168,19 @@ RecordsCounts:1000,currentRows:10,data:
         public static int DeleteProduct(Product product)
         {
             int pLength = product.productId.ToString().Length;
+            product.hasDelete = 2;
             if (pLength== 12)
             {
-            product.hasDelete = 2;
             return UpdateProduct(product);
             }
             else
             {
-                Utity.Connection.Update<Product>(new Product(){hasDelete = 2},p=>p.productId.)
+                //否则就删除该目录下所有节点
+                var exp = Utity.Connection.From<Product>();
+                exp.Where("productid like '{0}%'", product.productId);
+                exp.AddUpdateField(s => s.hasDelete);
+                Utity.Connection.Update(<Product>(new Product() { hasDelete = 2 },);
             }
-            else if()
         }
         /// <summary>
         /// 更新品名表
