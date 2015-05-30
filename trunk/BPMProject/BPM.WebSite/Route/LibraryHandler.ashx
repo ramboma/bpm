@@ -203,6 +203,18 @@ public class LibraryHandler : IHttpHandler
                         {
                             return GetErrorReturn(ResponseCode.FAIL, e1.Message);
                         }
+                        //查询出入库详情
+                    case "searchproductdetail":
+                        try
+                        {
+                            var productDetailSearchDto = JsonConvert.DeserializeObject<ProductDetailSearchDto>(strParams);
+                            var vProjectList = ObjMng.SearchProductDetail(productDetailSearchDto);
+                            return GetSuccessReturn(vProjectList);
+                        }
+                        catch (Exception e1)
+                        {
+                            return GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                        }
 #endregion
                     #region 资产统计
                     case "StaticsProduct":

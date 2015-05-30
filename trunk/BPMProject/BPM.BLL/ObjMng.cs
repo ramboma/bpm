@@ -156,7 +156,19 @@ GROUP BY p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.Deal
             return Utity.Connection.Select<ProductStatiscDto>(strSqlFormat);
 
         }
-
+        /// <summary>
+        ///  获取品名详情
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <remarks>
+        ///  {productName:'机',factoryId:11,model:'',standard:'',source:33,storageNum :33,starttime:'2015/5/4 0:2:15',endtime:'2015/5/20 11:30:50'}
+        /// </remarks>
+        public static ProductInOutListDetailDto SearchProductDetail(ProductDetailSearchDto dto)
+        {
+            var list = new ProductInOutListDetailDto();
+            //
+            return list;
+        }
         /// <summary>
         /// 资产统计
         /// </summary>

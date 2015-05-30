@@ -70,6 +70,7 @@
     <Compile Include="DTO\BookBorrowDto.cs" />
     <Compile Include="DTO\FetchDetailDto.cs" />
     <Compile Include="DTO\OutPutDetailDto.cs" />
+    <Compile Include="DTO\ProductDetailSearchDto.cs" />
     <Compile Include="Enum\CommonEnum.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="EquipmentLog.cs" />
