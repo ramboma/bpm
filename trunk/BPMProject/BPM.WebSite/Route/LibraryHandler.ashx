@@ -110,10 +110,9 @@ public class LibraryHandler : IHttpHandler
                                 return GetErrorReturn(ResponseCode.FAIL, eall.Message);
                             }
                            }
-	#endregion
-#region 资产
-
-                        //分页获取品名
+            	    #endregion
+                    #region 资产
+                    //分页获取品名
                     case "getallpingming":
                         {
                             try
@@ -128,7 +127,7 @@ public class LibraryHandler : IHttpHandler
                             }
 
                         }
-                        //获取品名树
+                    //获取品名树
                     case "getallpingmingtree":
                         {
                             try
@@ -178,9 +177,20 @@ public class LibraryHandler : IHttpHandler
                         {
                             return GetErrorReturn(ResponseCode.FAIL, e1.Message);
                         }
+                    case "savefetchdetail":
+                        try
+                        {
+                            var fetchDetail = JsonConvert.DeserializeObject<FetchDetailDto>(strParams);
+                            var vResult = ObjMng.SaveFetchDetail(fetchDetail);
+                            return GetSuccessReturn(vResult);
+                        }
+                        catch (Exception e1)
+                        {
+                            return GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                        }
 
 	#endregion
-#region 资产查询
+                    #region 资产查询
                     case "searchproduct":
                         try
                         {
@@ -193,12 +203,12 @@ public class LibraryHandler : IHttpHandler
                             return GetErrorReturn(ResponseCode.FAIL, e1.Message);
                         }
 #endregion
-#region 资产统计
+                    #region 资产统计
                     case "StaticsProduct":
 
                         break;
 #endregion
-	#endregion
+	                #endregion
                     #region 装备
                     case "getequiementlist":
                         try
