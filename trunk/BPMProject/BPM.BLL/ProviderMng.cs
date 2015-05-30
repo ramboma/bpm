@@ -39,11 +39,14 @@ namespace BPM.BLL
             }
             return treeList;
         }
-        public static List<Provider> GetCatalogInfoById(int key)
+        public static Provider GetCatalogInfoById(int key)
         {
             SqlExpression<Provider> sqlexpress=Utity.Connection.From<Provider>();
             sqlexpress.Where(s=>s.catalogId==key);
-            return Utity.Connection.Select<Provider>(sqlexpress);
+            var list=Utity.Connection.Select<Provider>(sqlexpress);
+            if (list.Count > 0)
+                return list[0];
+            return null;
         }
     }
 }
