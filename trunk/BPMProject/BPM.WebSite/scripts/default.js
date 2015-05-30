@@ -97,7 +97,7 @@ function btn_click(obj) {
             }
         case "btn_qrystc_obj":
             {
-                document.getElementById("Iframe_Display").src = "query_statics/query_obj.aspx";
+                document.getElementById("Iframe_Display").src = "../views/query_obj.aspx";
                 break;
             }
         case "btn_qrystc_dev":

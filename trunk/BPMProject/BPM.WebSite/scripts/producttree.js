@@ -16,8 +16,8 @@ $.extend(
         Get_Product_Detail: function (node) {
             $("#tb_objmng_Num").textbox('setValue',node.Node.productNum);
             $("#tb_objmng_name").textbox('setValue', node.Node.productName);
-            //$("#tb_objmng_factory").text(node.Node.factoryId);
-            $("#tb_objmng_model").textbox('setValue',node.Node.model);
+            $("#tb_objmng_factory").combobox('setValue',node.Node.factoryId);
+            $("#tb_objmng_model").textbox('setValue', node.Node.model);
             $("#tb_objmng_spec").textbox('setValue',node.Node.standard);
             $("#tb_objmng_Unit").textbox('setValue', node.Node.quantityUnit);
             $("#tb_objmng_price").textbox('setValue', node.Node.price);
@@ -72,13 +72,9 @@ $.extend(
             return;
         },
         Btn_Submit_Click: function (ev) {
-            var Objmng_In_Json = { Time: '', ProductId: '', Quantity: '', Source: '', StorageNum: '', Shelf: '' };
-            Objmng_In_Json.Time = new Date();
-            Objmng_In_Json.ProductId = $('#tb_objmng_name').combotree('getValue');
-            Objmng_In_Json.Quantity = $("#tb_objmng_amount").val();
-            Objmng_In_Json.StorageNum = $("#tb_objmng_warehouse").combobox('getValue');
-            Objmng_In_Json.Shelf = $("#tb_objmng_shelf").combobox('getValue');
-            Objmng_In_Json.Source = $("#sl_objmng_source").combobox('getValue')
+            var Product_Json = { ProductId: '', ProductNum: '', ProductName: '', ProductFlag: '', FactoryId: '', DealerId: '', Model: '', Standard: '', Price: '', QuantityUnit: '', HasDelete: '' };
+            Product_Json.ProductId = Cur_selected_Node.Node.ProductId;
+            Product_Json.ProductNum = $('#tb_objmng_name').val();
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
@@ -92,7 +88,8 @@ $.extend(
             return;
         },
         Btn_Cancel_Click: function (ev) {
-            location.reload();
+            alert(Cur_selected_Node.Node.productId);
+            //location.reload();
             return;
         },
         Btn_Delete_Click: function () {
@@ -119,7 +116,14 @@ $.extend(
         },
         Btn_Addsub_Click: function ()
         {
-            alert(Cur_selected_Node.text);
+            $("#tb_objmng_name").textbox('setValue', '');
+            $("#tb_objmng_Num").textbox('setValue', '');
+            $("#tb_objmng_model").textbox('setValue', '');
+            $("#tb_objmng_spec").textbox('setValue', '');
+            $("#tb_objmng_saler").combobox('setValue', '');
+            $("#tb_objmng_factory").combobox('setValue', '');
+            $("#tb_objmng_unit").textbox('setValue', '');
+            $("#tb_objmng_price").textbox('setValue', '');
             return;
         }
     });
