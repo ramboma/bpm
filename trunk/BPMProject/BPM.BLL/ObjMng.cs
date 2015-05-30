@@ -179,7 +179,8 @@ RecordsCounts:1000,currentRows:10,data:
                 var exp = Utity.Connection.From<Product>();
                 exp.Where("productid like '{0}%'", product.productId);
                 exp.AddUpdateField(s => s.hasDelete);
-                Utity.Connection.Update(<Product>(new Product() { hasDelete = 2 },);
+                //Utity.Connection.Update(<Product>(new Product() { hasDelete = 2 });
+                return 0;
             }
             
         }
