@@ -12,12 +12,7 @@ namespace BPM.Entity.DTO
     /// </summary>
     public class ProductDetailSearchDto
     {
-        public string ProductName { get; set; }
-        public int FactoryId { get; set; }
-        public string Model { get; set; }
-        public string Standard { get; set; }
-        public int Source { get; set; }
-        public int StorageNum { get; set; }
+        public string ProductId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
     }
