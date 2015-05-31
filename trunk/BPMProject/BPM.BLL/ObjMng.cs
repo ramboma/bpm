@@ -105,7 +105,7 @@ GROUP BY p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.Deal
             log.approveId = dto.ApproveId;
             log.relativeTask = dto.RelativeTask;
             log.time = System.DateTime.Now;
-            log.userId = dto.ManagerId;
+            log.managerId = dto.ManagerId;
             var trans=Utity.Connection.BeginTransaction();
             try
             {

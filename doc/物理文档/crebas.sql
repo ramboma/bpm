@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2015/5/27 8:46:29                            */
+/* Created on:     2015/5/31 12:30:39                           */
 /*==============================================================*/
 
 
@@ -86,6 +86,13 @@ if exists (select 1
            where  id = object_id('ProductLog')
             and   type = 'U')
    drop table ProductLog
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('ProductOutDetail')
+            and   type = 'U')
+   drop table ProductOutDetail
 go
 
 if exists (select 1
@@ -250,9 +257,9 @@ create table Equipment (
    UpdateTime           datetime             null,
    EquipmentStatus      varchar(50)          null,
    DepartMent           bigint               null,
+   DepartMan            bigint               null,
    DocPath              varchar(1000)        null,
    HasDelete            tinyint              null,
-   Keeper               bigint               null,
    constraint PK_EQUIPMENT primary key (Id)
 )
 go
@@ -363,12 +370,12 @@ create table ProductInput (
    Time                 datetime             null,
    Quantity             int                  null,
    UserId               bigint               null,
-   Source               bigint               null,
+   Source               varchar(50)          null,
    ApproveId            bigint               null,
    RelativeTask         bigint               null,
    StorageNum           varchar(20)          null,
    Shelf                varchar(20)          null,
-   ShelfLife            decimal              null,
+   StoreTime            decimal              null,
    constraint PK_PRODUCTINPUT primary key (Id)
 )
 go
@@ -385,13 +392,11 @@ go
 /*==============================================================*/
 create table ProductLog (
    Id                   bigint               identity,
-   ProductInputId       bigint               null,
    Time                 datetime             null,
-   Quantity             int                  null,
-   UserId               bigint               null,
-   Source               varchar(50)          null,
+   ApplyId              bigint               null,
    ApproveId            bigint               null,
    RelativeTask         bigint               null,
+   ManagerId            bigint               null,
    constraint PK_PRODUCTLOG primary key (Id)
 )
 go
@@ -401,6 +406,24 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '资产出库表',
    'user', @CurrentUser, 'table', 'ProductLog'
+go
+
+/*==============================================================*/
+/* Table: ProductOutDetail                                      */
+/*==============================================================*/
+create table ProductOutDetail (
+   id                   bigint               null,
+   ProductLogId         bigint               null,
+   ProductInputId       bigint               null,
+   Quantity             int                  null
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '出库详情表',
+   'user', @CurrentUser, 'table', 'ProductOutDetail'
 go
 
 /*==============================================================*/

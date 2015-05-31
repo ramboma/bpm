@@ -17,6 +17,25 @@ public class LibraryHandler : IHttpHandler
 
         if (context.Request.RequestType == "POST")
         {
+             HttpPostedFile uploadFile = HttpContext.Current.Request.Files["fileupload"];
+            if (uploadFile!=null)
+            {
+                //获取文件
+                try
+                {
+                    //保存文件
+                    string savePath = context.Server.MapPath("~/upload/" + uploadFile.FileName);
+                    uploadFile.SaveAs(savePath);
+                    string returnPath = @"/upload/" + uploadFile.FileName;
+                    //返回文件路径 
+                    context.Response.Write(GetSuccessReturn(returnPath));
+                }
+                catch (Exception ep)
+                {
+                    context.Response.Write(GetErrorReturn(ResponseCode.FAIL, ep.Message));
+                }
+                return;
+            }
             string classname = context.Request.Form["c"];
             string method = context.Request.Form["m"];
             string strParams = context.Request.Form["p"];

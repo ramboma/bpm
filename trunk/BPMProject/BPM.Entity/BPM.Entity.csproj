@@ -83,6 +83,7 @@
     <Compile Include="Product.cs" />
     <Compile Include="ProductInput.cs" />
     <Compile Include="ProductLog.cs" />
+    <Compile Include="ProductOutDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
     <Compile Include="Segment.cs" />
