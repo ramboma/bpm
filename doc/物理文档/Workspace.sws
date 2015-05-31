@@ -4,8 +4,9 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model Expanded="Yes" ID="{02F42979-BB50-48A8-9EA9-164DC74A23C6}" Loaded="No" Name="BPM.Entity" Selected="Yes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="BPM_Entitynew.oom"/>
-		<Model Expanded="Yes" ID="{C1AAC207-5D59-4797-90C1-D10F0283FC78}" Name="BPM.DB" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="BPM_DBnew.pdm"/>
+		<Model Expanded="Yes" ID="{02F42979-BB50-48A8-9EA9-164DC74A23C6}" Name="BPM.Entity" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="BPM_Entitynew.oom"/>
+		<Model Expanded="Yes" ID="{C1AAC207-5D59-4797-90C1-D10F0283FC78}" Name="BPM.DB" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="file:///F|/projects/firstproject/doc/物理文档/BPM_DBnew.pdm"/>
+		<Model Expanded="Yes" ID="{C1AAC207-5D59-4797-90C1-D10F0283FC78}" Loaded="No" Name="BPM.DB" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="BPM_DBnew.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>
