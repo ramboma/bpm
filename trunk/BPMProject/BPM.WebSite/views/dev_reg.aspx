@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="../scripts/widget/easyui/jquery.easyui.min.js"></script>    
     <script type="text/javascript" src="../scripts/widget/qrcode/jquery.qrcode.js"></script>
     <script type="text/javascript" src="../scripts/widget/qrcode/qrcode.js"></script>
+    <script type="text/javascript" src="../scripts/widget/jquery.form.min.js"></script>
     <script type="text/javascript" src="../scripts/dev_reg.js"></script>
 </head>
 <body>
@@ -35,10 +36,10 @@
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">生产厂家：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_saler" class="easyui-textbox" style="width:275px;"/>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_factory" class="easyui-textbox" style="width:275px;"/>
             </td>
             <td  align="left" class="Tbl_TD_Label">供应商：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_factory" class="easyui-textbox" style="width:275px;"/>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_saler" class="easyui-textbox" style="width:275px;"/>
             </td>
         </tr>
         <tr>
@@ -63,8 +64,8 @@
         <tr>
             <td  align="left" class="Tbl_TD_Label">技术文档：</td>
             <td  align="left" colspan="3" class="Tbl_TD_Txt">
-                <form id="f1" action="/Route/libraryhandler.ashx" enctype="multipart/form-data"  method="post">
-                 <input id="file_upload" type="file" style="width:400px;"/> 
+                <form id="frm_fileupload" action="/Route/libraryhandler.ashx" enctype="multipart/form-data"  method="post">
+                 <input id="file_upload" type="file" name="fileupload" style="width:400px;"/> 
                 </form>
             </td>
         </tr>

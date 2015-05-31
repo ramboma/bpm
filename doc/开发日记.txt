@@ -1,4 +1,4 @@
-在出库时候需要查找资产的数量，例如200，但是这200来自入库表中的多条字段。那么出库时怎么选择
+﻿在出库时候需要查找资产的数量，例如200，但是这200来自入库表中的多条字段。那么出库时怎么选择
 例如入库id为1的有100个；
 入库id为2的有100个，然后选择这个资产，显示有200个，但是需要出库150个，那么出库表中productinputid填2条？
 还是在出库表中去掉productinputid这个字段
@@ -49,3 +49,9 @@ productinput 加保质期
         SourceName:'军区'
     }
 ]
+
+设备入库：
+设备信息库需要加入三个字段：生产厂家：factoryName（字符串），供应商名称：salerName（字符串）,出厂日期：productTime
+
+P:{equipmentName: '', factoryName: '', salerName: '', model: '', standard: '', source: '', price: '',
+                updateTime: '',productTime: '', equipmentStatus: '', departMent: '', docPath: '', hasDelete: '',keeper:'' };
