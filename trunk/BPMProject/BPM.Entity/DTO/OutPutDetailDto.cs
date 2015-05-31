@@ -42,10 +42,6 @@ namespace BPM.Entity.DTO
         /// </summary>
         public double Price { get; set; }
         /// <summary>
-        /// 总价
-        /// </summary>
-        public double Total { get; set; }
-        /// <summary>
         /// 入库批次
         /// </summary>
         public double ProductInputId { get; set; }

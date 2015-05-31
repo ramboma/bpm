@@ -4,13 +4,14 @@
 // Purpose: Definition of Class ProductLog
 
 using System;
-
+using ServiceStack.DataAnnotations;
 /// 资产出入
 public class ProductLog
 {
    ///<summary>
    ///Id
    ///</summary>
+    [AutoIncrement]
     public long id {get;set;}
    ///<summary>
    ///时间

@@ -98,49 +98,119 @@ GROUP BY p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.Deal
         /// </remarks>
         public static OutPutDetailListDto SaveFetchDetail(FetchDetailDto dto)
         {
-            OutPutDetailListDto listDto=new OutPutDetailListDto();
-            listDto.Lists=new List<OutPutDetailDto>();
+            OutPutDetailListDto listDto = new OutPutDetailListDto();
+            listDto.Lists = new List<OutPutDetailDto>();
             //批量详情中的经办人等数据入productlog表
             ProductLog log = new ProductLog();
             log.approveId = dto.ApproveId;
             log.relativeTask = dto.RelativeTask;
             log.time = System.DateTime.Now;
             log.managerId = dto.ManagerId;
-            var trans=Utity.Connection.BeginTransaction();
+            var trans = Utity.Connection.BeginTransaction();
             try
             {
                 //入主表
-                var logId=Utity.Connection.Insert<ProductLog>(log, selectIdentity: true);
+                var logId = Utity.Connection.Insert<ProductLog>(log, selectIdentity: true);
                 //入从表
                 foreach (var d in dto.data)
                 {
                     //ProductOutDetail detail = new ProductOutDetail();
                     //detail.ProductLogId = logId;
                     //通过productid获取符合条件的待出库资产对象OutBoundList,
-                    OutPutDetailListDto list = GetOutputDetailList(d.ProductId,d.SaleCount);
+                    var list = GetOutputDetailList(d.ProductId, d.SaleCount);
+                    //依次取出数据，从所有可用批次中找出要出库的批次
+
+                    //在出库详情表中增加出库记录
+                    foreach(var detail in list)
+                    {
+                        Utity.Connection.Insert<ProductOutDetail>(new ProductOutDetail() { productInputId = (long)detail.ProductInputId, productLogId = logId, quantity = detail.Quantity });
+                    }
+                    //返回出库记录
+                    listDto.Lists.AddRange(list);
                 }
 
                 trans.Commit();
             }
             catch (Exception ep)
             {
-            trans.Rollback();
+                trans.Rollback();
             }
 
-
-
-
-            //
-            listDto.Lists.Add(new OutPutDetailDto(){ProductId=11,ProductName="螺丝",Price=30,Total=30*100,ProductInputId=1,Shelf="1号",StorageName="2架",Quantity=100});
-            listDto.Lists.Add(new OutPutDetailDto(){ProductId=11,ProductName="螺丝",Price=30,Total=30*100,ProductInputId=2,Shelf="1号",StorageName="3架",Quantity=200});
             return listDto;
         }
 
-        private static OutPutDetailListDto GetOutputDetailList(double ProductId, double Count)
+        private static List<OutPutDetailDto> GetOutputDetailList(double ProductId, double salecount)
         {
             //先取出该资产有效的入库批次取出来；
-            //
-            return null;
+            string sql = @"SELECT  *
+FROM    ( SELECT    id as ProductInputId ,
+                    incount ,
+                    CASE WHEN outcount IS NULL THEN 0
+                         ELSE outcount
+                    END AS ncount ,
+                    CASE WHEN outcount IS NULL THEN incount
+                         ELSE incount - outcount
+                    END AS quantity ,
+                    time + shelflife * 30 AS timelife ,
+                    ProductName ,
+                    productid ,
+                    Price ,
+                    shelfname ,
+                    storageName
+          FROM      ( SELECT    pin.Id ,
+                                pin.time ,
+                                pin.shelflife ,
+                                p.ProductName ,
+                                p.productid ,
+                                p.Price ,
+                                pr1.CatalogName AS shelfname ,
+                                pr2.CatalogName AS storageName ,
+                                SUM(pin.Quantity) AS incount ,
+                                SUM(detail.quantity) outcount
+                      FROM      dbo.ProductInput pin
+                                LEFT JOIN dbo.ProductOutDetail detail ON pin.Id = detail.productinputid
+                                JOIN dbo.Product p ON p.productid = pin.ProductId
+                                LEFT JOIN dbo.Provider pr1 ON pin.Shelf = pr1.CatalogId
+                                LEFT JOIN dbo.Provider pr2 ON pin.StorageNum = pr2.CatalogId
+                      WHERE     pin.productid = @id
+                      GROUP BY  pin.id ,
+                                pin.time ,
+                                pin.shelflife ,
+                                p.ProductName ,
+                                p.productid ,
+                                p.Price ,
+                                pr1.CatalogName ,
+                                pr2.CatalogName
+                    ) a
+        ) b
+WHERE   b.quantity > 0
+ORDER BY timelife,quantity";
+            var list = Utity.Connection.Select<OutPutDetailDto>(sql, new Dictionary<string, object> { { "id", ProductId } });
+
+            Dictionary<double, int> outputCount = new Dictionary<double, int>();
+                int temp = (int)salecount;
+            for (int i = 0; i < list.Count; i++)
+            {
+                temp -= list[i].Quantity;
+                if (temp <= 0)
+                {
+                    outputCount[list[i].ProductInputId] = list[i].Quantity+temp;
+                    break;
+                }
+                else
+                {
+                    outputCount[list[i].ProductInputId]= list[i].Quantity;
+                }
+            }
+            var returnList = new List<OutPutDetailDto>();
+            foreach (var key in outputCount.Keys)
+            {
+                var currentDto=list.Find(s => s.ProductInputId == key);
+                currentDto.Quantity = outputCount[key];
+                returnList.Add(currentDto);
+            }
+
+            return returnList;
         }
         #endregion
         #region 入库
@@ -237,9 +307,9 @@ RecordsCounts:1000,currentRows:10,data:
         {
             int pLength = product.productId.ToString().Length;
             product.hasDelete = 2;
-            if (pLength== 12)
+            if (pLength == 12)
             {
-            return UpdateProduct(product);
+                return UpdateProduct(product);
             }
             else
             {
@@ -250,7 +320,7 @@ RecordsCounts:1000,currentRows:10,data:
                 //Utity.Connection.Update(<Product>(new Product() { hasDelete = 2 });
                 return 0;
             }
-            
+
         }
         /// <summary>
         /// 更新品名表
