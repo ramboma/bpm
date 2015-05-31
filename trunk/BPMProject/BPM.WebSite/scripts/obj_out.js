@@ -3,7 +3,7 @@ $.extend(
     {
         Count_Total_Price: function () {
             var Amount = $("#tb_objmng_amount").val();
-            var Total_Price = parseInt(Amount) * parseFloat($("#tb_objmng_price").text());
+            var Total_Price =Math.round(100*parseInt(Amount) * parseFloat($("#tb_objmng_price").text()))/100;
             $("#tb_objmng_total").text(Total_Price.toString());
             return;
         },
@@ -134,12 +134,12 @@ $.extend(
             Param_Json_all.ApproveId=0;
             Param_Json_all.RelativeTask=0;
             Param_Json_all.ManagerId=0;
-            Param_Json_all.data=param_json;
+            Param_Json_all.data = Param_Json;
             $.each(rows, function (i, val)
             {
                 var TempNode = { 'ProductId': '', 'SaleCount': ''};
-                TempNode.productId = val.ProductId;
-                TempNode.quantity = val.Amount;
+                TempNode.ProductId = val.ProductId;
+                TempNode.SaleCount = val.Amount;
                 Param_Json.push(TempNode);
             });
             $.ajax(
@@ -148,9 +148,15 @@ $.extend(
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
                     data: { c: 'assetlibrary', m: 'savefetchdetail', p: JSON.stringify(Param_Json_all) },
-                    success: function (data) {
-                        alert("±£´æ³É¹¦£¡");
-                        location.reload();
+                    success: function (data)
+                    {
+                        var Ret_Data = eval('(' + data + ')');
+                        var Ret_Result_Json = Ret_Data.Result.Lists;
+                        $("#Div_Out_Result").show();
+                        $.each(Ret_Result_Json, function (i, val) {
+                            $("#dgt_obj_OutResult").datagrid("appendRow", val);
+                        });
+                        
                     }
                 });
             return;

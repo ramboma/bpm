@@ -48,7 +48,7 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="$.NewRow()" plain="true">添加</a> 
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" onclick="$.DeleteRow()" plain="true">删除</a>
     </div>
-    <div id="dlg_product_detail" class="easyui-dialog" title="资产详细信息" data-options="" style="width:760px;height:300px;padding:10px">
+    <div id="dlg_product_detail" class="easyui-dialog" title="资产选择" data-options="" style="width:760px;height:300px;padding:10px">
 	<table cellpadding="0" cellspacing="0" class="Dlg_Tbl_Query">
         <tr>
             <td  align="left" class="Dlg_Tbl_TD_Label">资产名称：</td>
@@ -91,6 +91,21 @@
             <input id="btn_objmng_close" type="button" style=" width:70px;" value="关闭" /></td>
         </tr>
     </table>
+    </div>
+    <div id="Div_Out_Result" style="display:none;height:240px">
+                <table id="dgt_obj_OutResult" class="easyui-datagrid" data-options="singleSelect:true,collapsible:true" style="width:830px;height:240px;font-size:16px">
+                <thead>
+                    <tr>
+                    <th data-options="field:'ProductInputId',width:100">批次号</th>
+                    <th data-options="field:'ProductName',width:250">资产名称</th>
+                    <th data-options="field:'Price',width:150">单价</th>
+                    <th data-options="field:'Quantity',width:50">数量</th>
+                    <th data-options="field:'Total',width:50">总价</th>
+                    <th data-options="field:'StorageName',width:100">库房</th>
+                    <th data-options="field:'Shelf',width:100">货架</th>
+                    </tr>
+                </thead>
+            </table>
     </div>
     <table cellpadding="0" cellspacing="0" style="width:830px" border="0">
         <tr>
