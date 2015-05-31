@@ -4,13 +4,14 @@
 // Purpose: Definition of Class ProductOutDetail
 
 using System;
-
+using ServiceStack.DataAnnotations;
 /// 出库详情表
 public class ProductOutDetail
 {
    ///<summary>
    ///id
    ///</summary>
+    [AutoIncrement]
     public long id {get;set;}
    ///<summary>
    ///出库号
