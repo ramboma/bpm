@@ -4,6 +4,7 @@ using ServiceStack.OrmLite;
 using BPM.ORMLite;
 using BPM.Entity.DTO;
 using BPM.Entity.Paged;
+using System;
 namespace BPM.BLL
 {
     public class ObjMng
@@ -99,11 +100,47 @@ GROUP BY p.ProductId,p.ProductNum,p.ProductName,p.ProductFlag,p.FactoryId,p.Deal
         {
             OutPutDetailListDto listDto=new OutPutDetailListDto();
             listDto.Lists=new List<OutPutDetailDto>();
+            //批量详情中的经办人等数据入productlog表
+            ProductLog log = new ProductLog();
+            log.approveId = dto.ApproveId;
+            log.relativeTask = dto.RelativeTask;
+            log.time = System.DateTime.Now;
+            log.userId = dto.ManagerId;
+            var trans=Utity.Connection.BeginTransaction();
+            try
+            {
+                //入主表
+                var logId=Utity.Connection.Insert<ProductLog>(log, selectIdentity: true);
+                //入从表
+                foreach (var d in dto.data)
+                {
+                    //ProductOutDetail detail = new ProductOutDetail();
+                    //detail.ProductLogId = logId;
+                    //通过productid获取符合条件的待出库资产对象OutBoundList,
+                    OutPutDetailListDto list = GetOutputDetailList(d.ProductId,d.SaleCount);
+                }
+
+                trans.Commit();
+            }
+            catch (Exception ep)
+            {
+            trans.Rollback();
+            }
+
+
+
 
             //
-            listDto.Lists.Add(new OutPutDetailDto(){ProductInputId=1,Shelf="1号",StorageNum="2架",Quantity=100});
-            listDto.Lists.Add(new OutPutDetailDto(){ProductInputId=2,Shelf="1号",StorageNum="3架",Quantity=200});
+            listDto.Lists.Add(new OutPutDetailDto(){ProductId=11,ProductName="螺丝",Price=30,Total=30*100,ProductInputId=1,Shelf="1号",StorageName="2架",Quantity=100});
+            listDto.Lists.Add(new OutPutDetailDto(){ProductId=11,ProductName="螺丝",Price=30,Total=30*100,ProductInputId=2,Shelf="1号",StorageName="3架",Quantity=200});
             return listDto;
+        }
+
+        private static OutPutDetailListDto GetOutputDetailList(double ProductId, double Count)
+        {
+            //先取出该资产有效的入库批次取出来；
+            //
+            return null;
         }
         #endregion
         #region 入库
