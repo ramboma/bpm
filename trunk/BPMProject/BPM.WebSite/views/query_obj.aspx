@@ -60,7 +60,7 @@
             <th data-options="field:'listprice',width:170,align:'right'">生产厂家</th>
             <th data-options="field:'unitcost',width:120,align:'right'">型号</th>
             <th data-options="field:'attr1',width:120">规格</th>
-            <th data-options="field:'status',width:50,align:'center',formatter:$.rowformater"></th>
+            <th data-options="field:'status',width:50,align:'center',formatter:$.Format_Detail"></th>
         </tr>
     </thead>
     </table>

@@ -294,3 +294,29 @@ body
 	height: 72px;
 	width: 550px;
 }
+.Dlg_Tbl_Query 
+{
+    width:740px;
+    border-style:solid; 
+	border-color:#000000; 
+	border-collapse:collapse;
+	border-width:1px;
+}
+.Dlg_Tbl_TD_Label
+{
+	width:100px;
+	height:36px;
+	font-size:16px;
+	border-style:solid; 
+	border-width:1px; 
+	border-color:#111111;
+}
+.Dlg_Tbl_TD_Txt
+{
+	width:270px;
+	height:36px;
+	font-size:16px;
+	border-style:solid; 
+	border-width:1px; 
+	border-color:#111111;
+}

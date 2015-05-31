@@ -1,14 +1,17 @@
 ﻿$.extend(
     {
-        rowformater: function (value, row, index) {
+        Format_Detail: function (value, row, index) {
             return '<a href="javascript:void(0)" onclick="$.Open(\'' + row.itemid + '\')">详情</a> ';
         },
         Open: function (id) {
+            var starttime = $('#tb_qryobj_time_start').datetimebox('getValue');
+            var endtime = $('#tb_qryobj_time_end').datetimebox('getValue');
+            /*
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
-                    data: { c: 'assetlibrary', m: 'providermng', p: id },
+                    data: { c: 'assetlibrary', m: 'providermng', p: { id: "", startime: "", endtime: "" } },
                     success: function (data) {
                         $('#tb_qryobj_factory').combobox('loadData', $.Deal_Data(data));
                     },
@@ -16,8 +19,9 @@
                         //alert(data);
                     }
                 });
-            $('#dlg').dialog('open');
-
+                */
+            $('#dlg_product_detail').dialog('open');
+            return;
         },
         Deal_Data: function (data) {
             var Ret = eval('(' + data + ')');
@@ -118,5 +122,6 @@ $(document).ready(function () {
     };
     $("#dgt_result_query").datagrid('loadData', dd);
     //$("#dlg_product_detail").datagrid('loadData', dd);
+    $('#dlg_product_detail').dialog('close');
     $.Init_Page();
 });
