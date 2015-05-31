@@ -155,7 +155,7 @@ FROM    ( SELECT    id as ProductInputId ,
                     ProductName ,
                     productid ,
                     Price ,
-                    shelfname ,
+                    shelfname as shelf ,
                     storageName
           FROM      ( SELECT    pin.Id ,
                                 pin.time ,
