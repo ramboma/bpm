@@ -11,7 +11,7 @@ public class LibraryHandler : IHttpHandler
 
     public void ProcessRequest(HttpContext context)
     {
-        context.Response.ContentType = "text/plain";
+        context.Response.ContentType = "text/html";
         
         //执行查询，返回实体列表
 
