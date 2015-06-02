@@ -284,6 +284,10 @@ create table EquipmentLog (
    Time                 datetime             null,
    RecordType           varchar(10)          null,
    Remarks              varchar(1000)        null,
+   ApplyId              bigint               null,
+   ApproveId            bigint               null,
+   RelativeTask         bigint               null,
+   ManagerId            bigint               null,
    constraint PK_EQUIPMENTLOG primary key (Id)
 )
 go

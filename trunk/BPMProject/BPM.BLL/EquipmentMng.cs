@@ -74,9 +74,11 @@ namespace BPM.BLL
             EquipmentLog newLog = new EquipmentLog();
             newLog.equipmentId = currentEquLog.equipmentId;
             newLog.remarks = currentEquLog.remarks;
-            newLog.userName = currentEquLog.userName;
             newLog.recordType = "报废";
             newLog.time = System.DateTime.Now;
+            newLog.applyId = currentEquLog.applyId;
+            newLog.approveId = currentEquLog.approveId;
+            newLog.managerId = currentEquLog.managerId;
             long lResult = Utity.Connection.Insert<EquipmentLog>(newLog);
             return lResult;
         }
