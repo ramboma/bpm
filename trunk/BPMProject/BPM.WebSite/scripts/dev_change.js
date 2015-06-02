@@ -9,9 +9,9 @@ $.extend(
                     type: 'POST',
                     data: { c: 'assetlibrary', m: 'getequiementlist', p: '' },
                     success: function (data) {
-                        //var Ret = eval('(' + data + ')');
-                        //var ctlg_json = Ret.Result;
-                        //$("#tb_devmng_name").combotree('loadData', ctlg_json);
+                        var Ret = eval('(' + data + ')');
+                        var ctlg_json = Ret.Result;
+                        $("#tb_devmng_name").combotree('loadData', ctlg_json);
                         return;
                     }
             });

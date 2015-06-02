@@ -1,4 +1,5 @@
 var Submit_Flag = 0;
+var Upload_FileName = "";
 $.extend(
     {
         Deal_Data:function(data)
@@ -18,7 +19,7 @@ $.extend(
         {
             var Devmng_In_Json = {
                 equipmentName: '', factoryName: '', salerName: '', model: '', standard: '', source: '', price: '',
-                updateTime: '',productTime: '', equipmentStatus: '', departMent: '', docPath: '', hasDelete: '',keeper:'' };
+                updateTime: '',productTime: '', equipmentStatus: '', departMent: '', docPath: '', hasDelete: '0',keeper:'' };
             Devmng_In_Json.updateTime = new Date();
             Devmng_In_Json.equipmentName = $("#tb_devmng_name").textbox("getValue");
             Devmng_In_Json.factoryName = $("#tb_devmng_factory").textbox("getValue");
@@ -31,21 +32,21 @@ $.extend(
             Devmng_In_Json.departMent = $("#tb_devmng_dept").textbox("getValue");
             Devmng_In_Json.docPath = docFileName;
             Devmng_In_Json.keeper = $("#tb_devmng_owner").textbox("getValue");
-            alert(JSON.stringify(Devmng_In_Json));
             $.ajax(
             {
                 url: '/Route/LibraryHandler.ashx',
                 type: 'POST',
-                data: { c: 'assetlibrary', m: 'saveequiement', p: JSON.stringify(Devmng_In_Json) },
+                data: { c: 'assetlibrary', m: 'saveequipment', p: JSON.stringify(Devmng_In_Json) },
                 success: function (data)
                 {
+                    var Ret_Result = eval('(' + data + ')');
                     Submit_Flag = 1;
                     $("#div_devmng_qrcode").empty();
                     $("#div_devmng_qrcode").qrcode({
                         render: "table",
                         width: 200,
                         height: 200,
-                        text: "hello world"
+                        text: Ret_Result.Result.toString()
                     });
                     alert("保存成功！,请打印二维码！");
                 }
@@ -78,37 +79,24 @@ $.extend(
             {
                 return;
             }
-            $("#frm_fileupload").ajaxSubmit(
-                {
-                    success: function (data)
-                    {
-                        //上传成功后，再提交其它的数据
-                        var Ret_Result = eval('(' + data + ')');
-                        var Ret_FileName;
-                        if (Ret_Result.Code == 1)
-                        {
-                            Ret_FileName = Ret_Result.Result;
-                            $.Save_Dev_Info(Ret_FileName);
-                        }
-                        else
-                        {
-                            alert("请选择技术资料文件！");
-                        }
-                    }
-                });
+            $.Save_Dev_Info(Upload_FileName);
             return;
         },
         Btn_Cancel_Click: function(ev) {
             location.reload();
             return;
         },
-        Btn_devmng_build_click:function(ev){
-            $("#div_devmng_qrcode").empty();
-            $("#div_devmng_qrcode").qrcode({
-                render	: "table",
-                width:200,
-                height:200,
-                text	: "hello world"
+        Btn_Upload_Click: function (ev) {
+            $("#frm_fileupload").ajaxSubmit(
+            {
+                success: function (data) {
+                    //上传成功后，再提交其它的数据
+                    var Ret_Result = eval('(' + data + ')');
+                    if (Ret_Result.Code == 1) {
+                        Upload_FileName = Ret_Result.Result;
+                        alert("文件上传成功！");
+                    }
+                }
             });
             return;
         },
@@ -122,6 +110,7 @@ $(document).ready(function() {
     $("#tb_devmng_reg_time").text(MyDate.toLocaleString());
     $("#btn_devmng_submit").click($.Btn_Submit_Click);
     $("#btn_devmng_cancel").click($.Btn_Cancel_Click);
+    $("#btn_devmng_upload").click($.Btn_Upload_Click);
     $("#btn_devmng_print").click($.Btn_devmng_print_click);
     $.Init_Page();
 });

@@ -67,6 +67,7 @@
                 <form id="frm_fileupload" action="/Route/libraryhandler.ashx" enctype="multipart/form-data"  method="post">
                  <input id="file_upload" type="file" name="fileupload" style="width:400px;"/> 
                 </form>
+                <input id="btn_devmng_upload" type="button" style=" width:70px;" value="上传" />
             </td>
         </tr>
         <tr>
