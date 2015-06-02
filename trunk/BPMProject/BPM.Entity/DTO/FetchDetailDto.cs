@@ -21,7 +21,7 @@ namespace BPM.Entity.DTO
     }
     public class DetailDto
     {
-        public double ProductId { get; set; }
+        public long ProductId { get; set; }
         public double SaleCount { get; set; }
     }
 }

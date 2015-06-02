@@ -28,9 +28,9 @@
     <table cellpadding="0" cellspacing="0" class="Tbl_Info">
         <tr>
             <td  align="left" class="Tbl_TD_Label">图书名称：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_bookmng_name" class="easyui-textbox" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_bookmng_name" class="easyui-textbox" style="width:275px"/></td>
             <td  align="left" class="Tbl_TD_Label">文档类型：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="sl_bookmng_type" class="easyui-textbox" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="sl_bookmng_type" class="easyui-combobox" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">作者：</td>
@@ -73,7 +73,7 @@
         <tr>
             <td  align="right" colspan ="2" style="width:830px;height:48px">
                 <input id="btn_bookmng_submit" type="button" style=" width:70px;" value="提交" />
-                <input id="btn_bookmng_cancel" type="button" style=" width:70px;" value="取消" />
+                <input id="btn_bookmng_cancel" type="button" style=" width:70px;" value="重置" />
             </td>
         </tr>
     </table>

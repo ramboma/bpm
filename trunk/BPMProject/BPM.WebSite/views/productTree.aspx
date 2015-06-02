@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
 
-    <title>资产入库流程</title>
+    <title>资产品名表维护</title>
     <link rel="stylesheet" type="text/css" href="../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../scripts/widget/easyui/themes/default/easyui.css"/>
 	<link rel="stylesheet" type="text/css" href="../scripts/widget/easyui/themes/icon.css"/>

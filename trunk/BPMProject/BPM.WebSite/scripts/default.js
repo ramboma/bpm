@@ -43,6 +43,11 @@ function btn_click(obj) {
                 document.getElementById("Iframe_Display").src = "../views/dev_reg.aspx";
                 break;
             }
+        case "btn_objmng_change":
+            {
+                document.getElementById("Iframe_Display").src = "../views/dev_change.aspx";
+                break;
+            }
         case "btn_objmng_unreg":
             {
                 document.getElementById("Iframe_Display").src = "../views/dev_unreg.aspx";
@@ -155,6 +160,11 @@ function btn_click(obj) {
                 document.getElementById("Iframe_Display").src = "sys_config/config_role.aspx";
                 break;
             }
+        case "btn_config_product":
+            {
+                document.getElementById("Iframe_Display").src = "../views/productTree.aspx";
+                break;
+            }
         case "btn_config_process":
             {
                 document.getElementById("Iframe_Display").src = "sys_config/config_process.aspx";
@@ -187,12 +197,12 @@ function Change_MenuState(i) {
         if (obj.style.display == "none") {
             obj.style.display = "block";
             obj = document.getElementById("div_objmng_menu");
-            obj.style.backgroundImage = "url(./images/obj_mng_close.png)";
+            obj.style.backgroundImage = "url(../images/obj_mng_close.png)";
         }
         else {
             obj.style.display = "none";
             obj = document.getElementById("div_objmng_menu");
-            obj.style.backgroundImage = "url(./images/obj_mng_open.png)";
+            obj.style.backgroundImage = "url(../images/obj_mng_open.png)";
         }
     }
     else if (i == 1) {
@@ -200,12 +210,12 @@ function Change_MenuState(i) {
         if (obj.style.display == "none") {
             obj.style.display = "block";
             obj = document.getElementById("div_processrun_menu");
-            obj.style.backgroundImage = "url(./images/process_run_close.png)";
+            obj.style.backgroundImage = "url(../images/process_run_close.png)";
         }
         else {
             obj.style.display = "none";
             obj = document.getElementById("div_processrun_menu");
-            obj.style.backgroundImage = "url(./images/process_run_open.png)";
+            obj.style.backgroundImage = "url(../images/process_run_open.png)";
         }
     }
     else if (i == 2) {
@@ -213,12 +223,12 @@ function Change_MenuState(i) {
         if (obj.style.display == "none") {
             obj.style.display = "block";
             obj = document.getElementById("div_dataanysis_nemu");
-            obj.style.backgroundImage = "url(./images/data_analysis_close.png)";
+            obj.style.backgroundImage = "url(../images/data_analysis_close.png)";
         }
         else {
             obj.style.display = "none";
             obj = document.getElementById("div_dataanysis_nemu");
-            obj.style.backgroundImage = "url(./images/data_analysis_open.png)";
+            obj.style.backgroundImage = "url(../images/data_analysis_open.png)";
         }
     }
     else if (i == 3) {
@@ -226,12 +236,12 @@ function Change_MenuState(i) {
         if (obj.style.display == "none") {
             obj.style.display = "block";
             obj = document.getElementById("div_config_nemu");
-            obj.style.backgroundImage = "url(./images/config_close.png)";
+            obj.style.backgroundImage = "url(../images/config_close.png)";
         }
         else {
             obj.style.display = "none";
             obj = document.getElementById("div_config_nemu");
-            obj.style.backgroundImage = "url(./images/config_open.png)";
+            obj.style.backgroundImage = "url(../images/config_open.png)";
         }
     }
     else if (i == 4) {
@@ -239,12 +249,12 @@ function Change_MenuState(i) {
         if (obj.style.display == "none") {
             obj.style.display = "block";
             obj = document.getElementById("div_qrystc_menu");
-            obj.style.backgroundImage = "url(./images/query_statics_close.png)";
+            obj.style.backgroundImage = "url(../images/query_statics_close.png)";
         }
         else {
             obj.style.display = "none";
             obj = document.getElementById("div_qrystc_menu");
-            obj.style.backgroundImage = "url(./images/query_statics_open.png)";
+            obj.style.backgroundImage = "url(../images/query_statics_open.png)";
         }
     }
     else if (i == 5) {
@@ -252,12 +262,12 @@ function Change_MenuState(i) {
             if (obj.style.display == "none") {
             obj.style.display = "block";
             obj = document.getElementById("div_docmng_menu");
-            obj.style.backgroundImage = "url(./images/doc_mng_close.png)";
+            obj.style.backgroundImage = "url(../images/doc_mng_close.png)";
         }
         else {
             obj.style.display = "none";
             obj = document.getElementById("div_docmng_menu");
-            obj.style.backgroundImage = "url(./images/doc_mng_open.png)";
+            obj.style.backgroundImage = "url(../images/doc_mng_open.png)";
         }
     }
     else { 

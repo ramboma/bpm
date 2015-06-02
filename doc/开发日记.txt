@@ -55,3 +55,10 @@ productinput 加保质期
 
 P:{equipmentName: '', factoryName: '', salerName: '', model: '', standard: '', source: '', price: '',
                 updateTime: '',productTime: '', equipmentStatus: '', departMent: '', docPath: '', hasDelete: '',keeper:'' };
+图书及电子文档管理：
+图书及电子文档使用一个表，表结构如下：
+id(自增加，主键),docname(文档名称),doctype(文档类型),author(作者),publisher(出版社),source(图书的来源，是自购，上级配发，个人),price(价格),readlevel(阅读级别：),keyword(关键词),content(内容简介),bookflag(标记是否为图书，0为图书，1为电子文档),location（文件路径及名称)，deleteFlag(删除标记，0表示没有删除，1表示删除)
+图书借阅和文档借阅日志表：
+(id自增加，主键),docid(文档的id号),applyid(借阅人id),approveid(批准人id),BorrowDays(借阅天数)，returntime(实际归还时间)。
+
+

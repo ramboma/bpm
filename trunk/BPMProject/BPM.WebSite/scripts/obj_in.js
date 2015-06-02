@@ -1,3 +1,4 @@
+var Submit_Flag = 0;
 $.extend(
     {
         Deal_Data:function(data)
@@ -116,6 +117,10 @@ $.extend(
         Btn_Submit_Click: function (ev) {
             var Objmng_In_Json = { Time: '', ProductId: '', Quantity: '', Source: '', ShelfLife:'',StorageNum: '', Shelf: '' };
             Objmng_In_Json.Time = new Date();
+            if (Submit_Flag == 1)
+            {
+                return;
+            }
             Objmng_In_Json.ProductId = $('#tb_objmng_name').combotree('getValue');
             Objmng_In_Json.Quantity = $("#tb_objmng_amount").val();
             Objmng_In_Json.StorageNum = $("#tb_objmng_warehouse").combobox('getValue');
@@ -138,6 +143,7 @@ $.extend(
                             height: 200,
                             text: $.toUtf8(Ret_id.toString())
                         });
+                        Submit_Flag = 1;
                         alert("保存成功,请打印二维码!");
                     }
                 });

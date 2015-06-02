@@ -102,7 +102,7 @@
                     <th data-options="field:'Quantity',width:50">数量</th>
                     <th data-options="field:'Total',width:50">总价</th>
                     <th data-options="field:'StorageName',width:100">库房</th>
-                    <th data-options="field:'ShelfName',width:100">货架</th>
+                    <th data-options="field:'Shelf',width:100">货架</th>
                     </tr>
                 </thead>
             </table>

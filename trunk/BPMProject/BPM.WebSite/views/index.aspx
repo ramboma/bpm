@@ -24,6 +24,7 @@
                         <input id="btn_objmng_in" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="资产入库" />
                         <input id="btn_objmng_out" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="资产出库" />
                         <input id="btn_objmng_reg" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="设备入账" />
+                        <input id="btn_objmng_change" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="设备变动"/>
                         <input id="btn_objmng_unreg" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="设备报废" />
                     </div>
                     <div id="div_docmng_menu" class="Div_Menu_Item_DocMng" onclick="Change_MenuState(5)"></div>
@@ -63,6 +64,7 @@
                     <div id="div_config_Container" class="Div_Menu_Sub_Container">
                         <input id="btn_config_dept" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="部门管理" />
                         <input id="btn_config_employee" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="人员管理" />
+                        <input id="btn_config_product" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="品名管理" />
                         <input id="btn_config_role" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="角色管理" />
                         <input id="btn_config_process" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="流程管理" />
                         <input id="btn_config_recover" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="备份恢复" />

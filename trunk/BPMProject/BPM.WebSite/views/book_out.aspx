@@ -71,15 +71,10 @@
         <tr>
             <td  align="right" colspan ="2" style="width:830px;height:48px">
                 <input id="btn_bookmng_submit" type="button" style=" width:70px;" value="提交" />
-                <input id="btn_bookmng_cancel" type="button" style=" width:70px;" value="取消" />
+                <input id="btn_bookmng_cancel" type="button" style=" width:70px;" value="重置" />
             </td>
         </tr>
     </table>
-    <div id="bookmng_ctlg_detail_container" class="Div_ctlg_detail_container">
-        <div id="bookmng_ctlg_detail">
-        </div>
-        <input id="btn_detail_select" type="button" style=" width:70px;" value="确定" />
-        <input id="btn_detail_cancel" type="button" style=" width:70px;" value="取消" /></div>
 </form>
 </body>
 </html>

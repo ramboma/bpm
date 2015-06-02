@@ -30,12 +30,7 @@
         },
         Btn_Submit_Click: function (ev) {
             var Bookmng_In_Json = { Time: '', DocName: '', Author: '', Publisher: '', Source: '', Shelf: '' };
-            Bookmng_In_Json.Time = new Date();
-            Bookmng_In_Json.ProductId = $('#tb_objmng_name').combotree('getValue');
-            Bookmng_In_Json.Quantity = $("#tb_objmng_amount").val();
-            Bookmng_In_Json.StorageNum = $("#tb_objmng_warehouse").combobox('getValue');
-            Bookmng_In_Json.Shelf = $("#tb_objmng_shelf").combobox('getValue');
-            Bookmng_In_Json.Source = $("#sl_objmng_source").combobox('getValue');
+
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',

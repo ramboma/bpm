@@ -24,9 +24,11 @@ public class LibraryHandler : IHttpHandler
                 try
                 {
                     //保存文件
-                    string savePath = context.Server.MapPath("~/upload/" + uploadFile.FileName);
+                    int iFileNameIndex = uploadFile.FileName.LastIndexOf("\\");
+                    string FileName = uploadFile.FileName.Substring(iFileNameIndex + 1);
+                    string savePath = context.Server.MapPath("~/upload/"+FileName);
                     uploadFile.SaveAs(savePath);
-                    string returnPath = @"/upload/" + uploadFile.FileName;
+                    string returnPath = @"/upload/"+FileName;
                     //返回文件路径 
                     context.Response.Write(GetSuccessReturn(returnPath));
                 }

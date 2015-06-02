@@ -1,4 +1,5 @@
-﻿$.extend(
+﻿var SubMit_Flag = 0;
+$.extend(
     {
         Deal_Data: function (data) {
             var Ret = eval('(' + data + ')');
@@ -26,6 +27,19 @@
                         //alert(data);
                     }
                 });
+            //获取图书来源信息
+            $.ajax(
+                {
+                    url: '/Route/LibraryHandler.ashx',
+                    type: 'POST',
+                    data: { c: 'assetlibrary', m: 'providermng', p: 'wdlx' },
+                    success: function (data) {
+                        $('#sl_bookmng_type').combobox('loadData', $.Deal_Data(data));
+                    },
+                    error: function (data) {
+                        //alert(data);
+                    }
+                });
             //获取图书借阅权限信息
             $.ajax(
                 {
@@ -43,28 +57,37 @@
             return;
         },
         Btn_Submit_Click: function (ev) {
-            var Bookmng_In_Json = { Time: '', DocName: '', Author: '', Publisher: '', Source: '', Shelf: '' };
-            Bookmng_In_Json.Time = new Date();
-            Bookmng_In_Json.ProductId = $('#tb_objmng_name').combotree('getValue');
-            Bookmng_In_Json.Quantity = $("#tb_objmng_amount").val();
-            Bookmng_In_Json.StorageNum = $("#tb_objmng_warehouse").combobox('getValue');
-            Bookmng_In_Json.Shelf = $("#tb_objmng_shelf").combobox('getValue');
-            Bookmng_In_Json.Source = $("#sl_objmng_source").combobox('getValue');
+            if (SubMit_Flag == 1)
+            {
+                return;
+            }
+            var Bookmng_In_Json = { time: '', bookName: '',doctype:"",author: '', publisher: '', source: '', price: '', readLevel: '', keyWord: '', content: '',bookflag:'0', location: '', deleteFlag: '0' };
+            Bookmng_In_Json.bookName = $("#tb_bookmng_name").val();
+            Bookmng_In_Json.author = $("#tb_bookmng_author").val();
+            Bookmng_In_Json.doctype = $("#sl_bookmng_type").combobox('getValue');
+            Bookmng_In_Json.publisher = $("#tb_bookmng_publisher").val();
+            Bookmng_In_Json.source = $("#sl_bookmng_source").combobox('getValue');
+            Bookmng_In_Json.price = $("#tb_bookmng_price").val();
+            Bookmng_In_Json.readLevel = $("#sl_bookmng_readlevel").combobox('getValue');
+            Bookmng_In_Json.keyWord = $("#tb_bookmng_keyword").val();
+            Bookmng_In_Json.content = $("#ta_bookmng_introduce").val();
+            Bookmng_In_Json.location = $("#tb_bookmng_store").val();
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
-                    data: { c: 'assetlibrary', m: 'submitlibrary', p: JSON.stringify(Objmng_In_Json) },
+                    data: { c: 'assetlibrary', m: 'submitlibrary', p: JSON.stringify(Bookmng_In_Json) },
                     success: function (data) {
                         var Ret = eval('(' + data + ')');
                         var Ret_id = Ret.Result;
-                        $("#div_objmng_qrcode").empty();
-                        $("#div_objmng_qrcode").qrcode({
+                        $("#div_bookmng_qrcode").empty();
+                        $("#div_bookmng_qrcode").qrcode({
                             render: "table",
                             width: 200,
                             height: 200,
-                            text: Ret_id
+                            text: Ret_id.toString()
                         });
+                        SubMit_Flag = 1;
                         alert("保存成功,请打印二维码!");
                     }
                 });

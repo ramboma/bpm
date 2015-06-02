@@ -1,3 +1,4 @@
+var Submit_Flag = 0;
 var Cur_Selected_Node = new Object();
 $.extend(
     {
@@ -135,6 +136,10 @@ $.extend(
             Param_Json_all.RelativeTask=0;
             Param_Json_all.ManagerId=0;
             Param_Json_all.data = Param_Json;
+            if (Submit_Flag == 1)
+            {
+                return;
+            }
             $.each(rows, function (i, val)
             {
                 var TempNode = { 'ProductId': '', 'SaleCount': ''};
@@ -156,7 +161,7 @@ $.extend(
                         $.each(Ret_Result_Json, function (i, val) {
                             $("#dgt_obj_OutResult").datagrid("appendRow", val);
                         });
-                        
+                        Submit_Flag = 1;
                     }
                 });
             return;
@@ -189,6 +194,8 @@ $.extend(
         }
     });
 $(document).ready(function () {
+    var MyDate = new Date();
+    $("#tb_objmng_out_time").text(MyDate.toLocaleString());
     $("#btn_objmng_submit").click($.Btn_Submit_Click);
     $("#btn_objmng_cancel").click($.Btn_Cancel_Click);
     $("#btn_objmng_ok").click($.Btn_Ok_Click);
