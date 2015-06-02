@@ -32,7 +32,7 @@ namespace BPM.Entity.DTO
         /// <summary>
         /// 资产id
         /// </summary>
-        public double ProductId { get; set; }
+        public long ProductId { get; set; }
         /// <summary>
         /// 资产名
         /// </summary>
