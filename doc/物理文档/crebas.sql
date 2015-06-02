@@ -257,12 +257,11 @@ create table Equipment (
    UpdateTime           datetime             null,
    EquipmentStatus      varchar(50)          null,
    DepartMent           bigint               null,
-   DepartMan            bigint               null,
    DocPath              varchar(1000)        null,
    HasDelete            tinyint              null,
-   keeper               tinyint              null,
-   FactoryName          varchar(100)         null,
-   SalerName            varchar(100)         null,
+   keeper               bigint               null,
+   FactoryName          varchar(500)         null,
+   SalerName            varchar(500)         null,
    ProductTime          datetime             null,
    constraint PK_EQUIPMENT primary key (Id)
 )

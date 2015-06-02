@@ -293,8 +293,28 @@ RecordsCounts:1000,currentRows:10,data:
         /// </summary>
         /// <param name="addProductDto"></param>
         /// <returns></returns>
-        public static long AddProduct(Product addProductDto)
+        public static long AddProduct(AddProductDto addProductDto)
         {
+            //如果父id长度是2，那么增加的是目录
+            //如果父id长度是5，那么增加的是资产
+            //如果父id长度是12，那么无法添加
+            //生成子id
+            switch (addProductDto.ParentId.ToString().Length)
+            {
+                case 2:
+                    long lMaxId=Utity.Connection.ScalarFmt<long>(@"SELECT MAX(productid) FROM dbo.Product p
+WHERE p.ProductId LIKE'{0}%' AND Len(p.productid)=5",addProductDto.ParentId);
+                    addProductDto.productId = lMaxId + 1; 
+                    break;
+                case 5:
+                    long lProductId=Utity.Connection.ScalarFmt<long>(@"SELECT MAX(productid) FROM dbo.Product p
+WHERE p.ProductId LIKE'{0}%' AND Len(p.productid)>5",addProductDto.ParentId);
+                    addProductDto.productId = lProductId + 1; 
+                    break;
+                default:
+                    break;
+            }
+
             long lresult = Utity.Connection.Insert<Product>(addProductDto);
             return lresult;
         }

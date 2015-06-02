@@ -427,8 +427,8 @@ public class LibraryHandler : IHttpHandler
                     case "addproduct":
                         try
                         {
-                            var product = JsonConvert.DeserializeObject<Product>(strParams);
-                            var vProjectList = ObjMng.AddProduct(product);
+                            var addProduct = JsonConvert.DeserializeObject<AddProductDto>(strParams);
+                            var vProjectList = ObjMng.AddProduct(addProduct);
                             return GetSuccessReturn(vProjectList);
                         }
                         catch (Exception e1)

@@ -9,7 +9,11 @@ namespace BPM.Entity.DTO
     /// <summary>
     /// 新增资产Dto
     /// </summary>
-    public class AddProductDto
+    public class AddProductDto:Product
     {
+        /// <summary>
+        /// 父Id
+        /// </summary>
+        public long ParentId { get; set; }
     }
 }
