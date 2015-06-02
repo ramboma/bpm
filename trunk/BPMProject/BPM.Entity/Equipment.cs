@@ -4,13 +4,14 @@
 // Purpose: Definition of Class Equipment
 
 using System;
-
+using ServiceStack.DataAnnotations;
 /// 设备信息
 public class Equipment
 {
     ///<summary>
    ///设备编码
    ///</summary>
+   [AutoIncrement] 
    public long id {get;set;}
     ///<summary>
    ///设备名称
@@ -56,5 +57,18 @@ public class Equipment
    ///保管人
    ///</summary>
    public long keeper {get;set;}
+
+    /// <summary>
+    /// 工厂名
+    /// </summary>
+   public string FactoryName { get; set; }
+    /// <summary>
+    /// 供应商名
+    /// </summary>
+   public string SalerName { get; set; }
+    /// <summary>
+    /// 出厂时间
+    /// </summary>
+   public DateTime ProductTime { get; set; }
 
 }

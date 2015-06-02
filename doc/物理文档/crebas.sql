@@ -260,6 +260,10 @@ create table Equipment (
    DepartMan            bigint               null,
    DocPath              varchar(1000)        null,
    HasDelete            tinyint              null,
+   keeper               tinyint              null,
+   FactoryName          varchar(100)         null,
+   SalerName            varchar(100)         null,
+   ProductTime          datetime             null,
    constraint PK_EQUIPMENT primary key (Id)
 )
 go

@@ -256,7 +256,7 @@ public class LibraryHandler : IHttpHandler
                         }
 
                     //保存装备出入库
-                    case "saveequiement":
+                    case "saveequipmentlog":
                          try
                         {
                             var equipmentLog = JsonConvert.DeserializeObject<EquipmentLog>(strParams);
