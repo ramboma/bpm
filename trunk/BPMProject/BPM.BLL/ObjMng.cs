@@ -236,24 +236,62 @@ ORDER BY timelife,quantity";
         public static List<ProductStatiscDto> SearchProduct(ProductSearchDto productSearch)
         {
             if (productSearch == null) return null;
-            string strSql = @"select a.productid,a.productnum,a.productname,a.productflag,a.factoryid,a.dealerid,a.model,a.standard,a.price,a.quantityunit,sum(dd) as stacks
- from (
- select p.*,
- case when l.inout=1 then p.Price*l.Quantity else -1*p.Price*l.Quantity end as dd  
- from Product p join ProductLog l on p.ProductId=l.ProductId
- JOIN Provider pv ON p.FactoryId = pv.CatalogId
-                                        AND pv.CatalogKey = '工厂'{0}
- ) a
- group by a.productid,a.productnum,a.productname,a.productflag,a.factoryid,a.dealerid,a.model,a.standard,a.price,a.quantityunit";
+            string strSql = @"SELECT  pro.productid ,
+        pro.productnum ,
+        pro.productname ,
+        pro.productflag ,
+        pro.factoryid,
+        pro.dealerid,
+        pv.CatalogName AS factoryname ,
+        pv1.CatalogName AS dealername ,
+        pro.model ,
+        pro.standard ,
+        pro.price ,
+        pro.quantityunit ,
+        CASE WHEN e.myintotal - e.myouttotal IS NULL THEN 0
+             ELSE e.myintotal - e.myouttotal
+        END AS Stacks
+FROM    product pro
+        LEFT  JOIN ( SELECT d.productid ,
+                            SUM(total) AS myintotal ,
+                            SUM(pouttotal) AS myouttotal
+                     FROM   ( SELECT    c.id ,
+                                        c.productid ,
+                                        c.total ,
+                                        CASE WHEN c.outtotal IS NULL THEN 0
+                                             ELSE c.outtotal
+                                        END AS pouttotal
+                              FROM      ( SELECT    a.id ,
+                                                    a.productid ,
+                                                    a.total ,
+                                                    SUM(pout.Quantity) AS outtotal
+                                          FROM      ( SELECT  id ,
+                                                              productid ,
+                                                              SUM(quantity) total
+                                                      FROM    dbo.Productinput
+                                                      GROUP BY id ,
+                                                              ProductId
+                                                    ) a
+                                                    LEFT JOIN productoutdetail pout ON a.id = pout.ProductInputId
+                                          GROUP BY  a.id ,
+                                                    a.productid ,
+                                                    a.total
+                                        ) c
+                            ) d
+                     GROUP BY d.productid
+                   ) e ON pro.productid = e.ProductId
+        LEFT JOIN Provider pv ON pro.FactoryId = pv.CatalogId
+        LEFT JOIN Provider pv1 ON pro.DealerId = pv1.CatalogId {0}
+                                        ";
 
             string strFormat = "";
             string strAnd = "";
             string strLikeFormat = " {0} like '{1}%' ";
-            if (productSearch.productId > 0) strAnd += "p.productid=" + productSearch.productId.ToString() + " and ";
-            if (!string.IsNullOrEmpty(productSearch.productName)) strAnd += string.Format(strLikeFormat, "p.productName", productSearch.productName) + " and ";
+            if (productSearch.productId > 0) strAnd += "pro.productid=" + productSearch.productId.ToString() + " and ";
+            if (!string.IsNullOrEmpty(productSearch.productName)) strAnd += string.Format(strLikeFormat, "pro.productName", productSearch.productName) + " and ";
             if (!string.IsNullOrEmpty(productSearch.factoryName)) strAnd += string.Format(strLikeFormat, "pv.CatalogName", productSearch.factoryName) + " and ";
-            if (!string.IsNullOrEmpty(productSearch.model)) strAnd += string.Format(strLikeFormat, "p.model", productSearch.model) + " and ";
-            if (!string.IsNullOrEmpty(productSearch.standard)) strAnd += string.Format(strLikeFormat, "p.standard", productSearch.standard) + " and ";
+            if (!string.IsNullOrEmpty(productSearch.model)) strAnd += string.Format(strLikeFormat, "pro.model", productSearch.model) + " and ";
+            if (!string.IsNullOrEmpty(productSearch.standard)) strAnd += string.Format(strLikeFormat, "pro.standard", productSearch.standard) + " and ";
             strAnd = strAnd.Remove(strAnd.Length - 5, 5);
             if (!string.IsNullOrEmpty(strAnd))
             {

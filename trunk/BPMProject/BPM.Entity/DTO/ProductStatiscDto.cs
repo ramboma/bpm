@@ -11,6 +11,8 @@ namespace BPM.Entity.DTO
     /// </summary>
     public class ProductStatiscDto:Product
     {
+        public string factoryname { get; set; }
+        public string dealername { get; set; }
         public long Stacks { get; set; }
     }
 }
