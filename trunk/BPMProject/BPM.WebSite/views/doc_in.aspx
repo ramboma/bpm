@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="../scripts/widget/easyui/jquery.easyui.min.js"></script>    
     <script type="text/javascript" src="../scripts/widget/qrcode/jquery.qrcode.js"></script>
     <script type="text/javascript" src="../scripts/widget/qrcode/qrcode.js"></script>
+    <script type="text/javascript" src="../scripts/widget/jquery.form.min.js"></script>
     <script type="text/javascript" src="../scripts/doc_in.js"></script>
 </head>
 <body>
@@ -52,7 +53,7 @@
             <td  align="left" colspan="3" class="Tbl_TD_Txt">
             <form id="frm_fileupload" action="/Route/libraryhandler.ashx" enctype="multipart/form-data"  method="post">
             <input id="file_upload" type="file" name="fileupload" style="width:400px; font-size:16px"/> 
-            </form></td>
+            </form><input id="btn_docmng_upload" type="button" style=" width:70px;" value="上传" /></td>
         </tr>
     </table>
     <table cellpadding="0" cellspacing="0" style="width:830px" border="0">

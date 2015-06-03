@@ -62,7 +62,7 @@
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">借阅人：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_bookmng_borrow" class="Tbl_TD_TextBox" type="text" maxlength="48"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_bookmng_borrow" class="easyui-textbox" style="width:275px;"/></td>
             <td  align="left" class="Tbl_TD_Label">归还时间：</td>
             <td  align="left" class="Tbl_TD_Txt"><input id="tb_bookmng_return_time" class="easyui-datetimebox" style="width:275px"/></td>
         </tr>

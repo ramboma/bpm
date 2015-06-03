@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="dev_change.aspx.cs" Inherits="views_dev_change" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="dev_change.aspx.cs" Inherits="views_dev_change" CodePage="936" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
@@ -63,14 +63,8 @@
         <tr>
             <td  align="left" class="Tbl_TD_Label">出厂时间：</td>
             <td  align="left" class="Tbl_TD_Txt"><span id="tb_devmng_producttime" class="Tbl_TD_TextBox"></span></td>
-            <td  align="left" class="Tbl_TD_Label">设备状态：</td>
-            <td  align="left" class="Tbl_TD_Txt"><span id="tb_devmng_status" class="Tbl_TD_TextBox"></span></td>
-        </tr>
-        <tr>
             <td  align="left" class="Tbl_TD_Label">变动类型：</td>
             <td  align="left" class="Tbl_TD_Txt"><input class="easyui-combobox" id="sl_devmng_changetype" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
-            <td  align="left" class="Tbl_TD_Label">经办人：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_operator" class="easyui-textbox" style="width:275px;"/></td>
         </tr>
     </table>
     <table cellpadding="0" cellspacing="0" style="width:830px" border="0">

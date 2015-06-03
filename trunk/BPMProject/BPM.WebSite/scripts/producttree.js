@@ -86,11 +86,11 @@ $.extend(
             return;
         },
         Btn_Submit_Click: function (ev) {
-            var Product_Json = { ProductId: '', ProductNum: '', ProductName: '', ProductFlag: '', FactoryId: '', DealerId: '', Model: '', Standard: '', Price: '', QuantityUnit: '', HasDelete: '' };
+            var Product_Json = { ParentId: '', ProductNum: '', ProductName: '', ProductFlag: '0', FactoryId: '', DealerId: '', Model: '', Standard: '', Price: '', QuantityUnit: '', HasDelete: '0' };
             if (Addsub_Flag == 0) {
                 return;
             }
-            Product_Json.ProductId = Cur_selected_Node.Node.productId;
+            Product_Json.ParentId = Cur_selected_Node.Node.productId;
             Product_Json.ProductName = $('#tb_objmng_name').val();
             Product_Json.ProductNum = $('#tb_objmng_Num').val();;
             Product_Json.FactoryId = $('#tb_objmng_factory').combobox('getValue');
@@ -99,13 +99,11 @@ $.extend(
             Product_Json.Standard = $('#tb_objmng_spec').val();
             Product_Json.Price = $('#tb_objmng_price').val();
             Product_Json.QuantityUnit = $('#tb_objmng_Unit').val();
-            Product_Json.HasDelete = "";
-
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
-                    data: { c: 'assetlibrary', m: 'saveproductinput', p: JSON.stringify(Product_Json) },
+                    data: { c: 'assetlibrary', m: 'addproduct', p: JSON.stringify(Product_Json) },
                     success: function (data) {
                         alert("保存成功！");
                         location.reload();
@@ -128,7 +126,7 @@ $.extend(
                     {
                         url: '/Route/LibraryHandler.ashx',
                         type: 'POST',
-                        data: { c: 'assetlibrary', m: 'deleteproduct', p: JSON.stringify(Cur_selected_Node) },
+                        data: { c: 'assetlibrary', m: 'deleteproduct', p: JSON.stringify(Cur_selected_Node.Node) },
                         success: function (data)
                         {
                             alert(data);

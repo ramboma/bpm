@@ -349,7 +349,7 @@ WHERE p.ProductId LIKE'{0}%' AND Len(p.productid)>5",addProductDto.ParentId);
         /// <returns></returns>
         public static int UpdateProduct(Product product)
         {
-            var lresult = Utity.Connection.Update<Product>();
+            var lresult = Utity.Connection.Update<Product>(product);
             return lresult;
         }
         #endregion

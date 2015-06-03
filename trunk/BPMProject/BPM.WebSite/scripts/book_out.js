@@ -18,9 +18,9 @@
                 {
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
-                    data: { c: 'assetlibrary', m: 'getallbook', p: 'ly' },
+                    data: { c: 'assetlibrary', m: 'getreturnbooks', p: '' },
                     success: function (data) {
-                        //$('#sl_bookmng_source').combobox('loadData', $.Deal_Data(data));
+                        alert(data);
                     },
                     error: function (data) {
                         //alert(data);

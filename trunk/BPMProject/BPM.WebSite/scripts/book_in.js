@@ -52,8 +52,7 @@ $.extend(
                     error: function (data) {
                         //alert(data);
                     }
-                }
-        );
+                });
             return;
         },
         Btn_Submit_Click: function (ev) {
@@ -72,11 +71,12 @@ $.extend(
             Bookmng_In_Json.keyWord = $("#tb_bookmng_keyword").val();
             Bookmng_In_Json.content = $("#ta_bookmng_introduce").val();
             Bookmng_In_Json.location = $("#tb_bookmng_store").val();
+            Bookmng_In_Json.time = new Date();
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
-                    data: { c: 'assetlibrary', m: 'submitlibrary', p: JSON.stringify(Bookmng_In_Json) },
+                    data: { c: 'assetlibrary', m: 'savebook', p: JSON.stringify(Bookmng_In_Json) },
                     success: function (data) {
                         var Ret = eval('(' + data + ')');
                         var Ret_id = Ret.Result;
@@ -98,6 +98,7 @@ $.extend(
         },
         Btn_bookmng_print_click: function (ev) {
             alert("请准备打印机");
+            $("div#div_bookmng_qrcode").printArea();
             return;
         }
     });
