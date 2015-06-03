@@ -16,6 +16,7 @@ namespace BPM.BLL
         public static PagedList<Product> GetAllPingMing(PageDto dto)
         {
             var express = ORMLite.Utity.Connection.From<Product>();
+            express.Where(s => s.hasDelete == 1);
             int skips = (dto.PageIndex - 1) * dto.PageSize;
             express.Limit(skip: skips, rows: dto.PageSize);
             long allCount = Utity.Connection.Count<Product>(express);
@@ -36,7 +37,7 @@ namespace BPM.BLL
             kpValues.Add(new KeyValuePair<int, int>(2, 5));
             kpValues.Add(new KeyValuePair<int, int>(5, 12));
             var sqlexpression = Utity.Connection.From<Product>();
-
+            sqlexpression.Where(s => s.hasDelete == 1);
             //判断code的长度
             //0,那么返回第一级目录
             //2位，那么是第一级目录
@@ -268,7 +269,7 @@ FROM    product pro
                                           FROM      ( SELECT  id ,
                                                               productid ,
                                                               SUM(quantity) total
-                                                      FROM    dbo.Productinput
+                                                      FROM    dbo.Productinput {0} 
                                                       GROUP BY id ,
                                                               ProductId
                                                     ) a
@@ -281,13 +282,26 @@ FROM    product pro
                      GROUP BY d.productid
                    ) e ON pro.productid = e.ProductId
         LEFT JOIN Provider pv ON pro.FactoryId = pv.CatalogId
-        LEFT JOIN Provider pv1 ON pro.DealerId = pv1.CatalogId {0}
-                                        ";
+        LEFT JOIN Provider pv1 ON pro.DealerId = pv1.CatalogId
+        where pro.hasdelete=1 {1}                                        ";
+
 
             string strFormat = "";
+            string strInput = "";
             string strAnd = "";
+            if (productSearch.Source>=0) strInput += "dbo.Productinput.source="+productSearch.Source.ToString() + " and ";
+            if (productSearch.StorageNum>=0) strInput += "dbo.Productinput.storageNum="+productSearch.StorageNum.ToString() + " and ";
+            if (productSearch.StartTime != null && productSearch.EndTime != null)
+            {
+                strInput += "dbo.productinput.Time>='" + productSearch.StartTime.ToString() + "' and " + "dbo.productinput.time<='" + productSearch.EndTime.ToString()+"' and ";
+            }
+            strInput = strInput.Remove(strInput.Length - 5, 5);
+            if (!string.IsNullOrEmpty(strInput))
+            {
+                strInput = " where " + strInput;
+            }
+            strAnd = "";
             string strLikeFormat = " {0} like '{1}%' ";
-            if (productSearch.productId > 0) strAnd += "pro.productid=" + productSearch.productId.ToString() + " and ";
             if (!string.IsNullOrEmpty(productSearch.productName)) strAnd += string.Format(strLikeFormat, "pro.productName", productSearch.productName) + " and ";
             if (!string.IsNullOrEmpty(productSearch.factoryName)) strAnd += string.Format(strLikeFormat, "pv.CatalogName", productSearch.factoryName) + " and ";
             if (!string.IsNullOrEmpty(productSearch.model)) strAnd += string.Format(strLikeFormat, "pro.model", productSearch.model) + " and ";
@@ -295,9 +309,9 @@ FROM    product pro
             strAnd = strAnd.Remove(strAnd.Length - 5, 5);
             if (!string.IsNullOrEmpty(strAnd))
             {
-                strFormat = " where " + strAnd;
+                strFormat = " and " + strAnd;
             }
-            string strSqlFormat = string.Format(strSql, strFormat);
+            string strSqlFormat = string.Format(strSql, strInput,strFormat);
             return Utity.Connection.Select<ProductStatiscDto>(strSqlFormat);
 
         }

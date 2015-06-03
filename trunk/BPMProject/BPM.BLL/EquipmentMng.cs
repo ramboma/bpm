@@ -15,7 +15,7 @@ namespace BPM.BLL
         public static List<TreeDto> GetEquipmentTree()
         {
             var express = ORMLite.Utity.Connection.From<Equipment>();
-            express.Where(s => s.hasDelete == 0);
+            express.Where(s => s.hasDelete == 1);
             express.Join<EquipmentLog>((equ, log) => equ.id == log.equipmentId && log.recordType != "报废");
             var list = Utity.Connection.Select<Equipment>(express);
             var treeDtoList = new List<TreeDto>();
@@ -33,7 +33,7 @@ namespace BPM.BLL
         public static List<TreeDto> GetBfEquipmentTree()
         {
             var express = ORMLite.Utity.Connection.From<Equipment>();
-            express.Where(s => s.hasDelete == 0);
+            express.Where(s => s.hasDelete == 1);
             express.Join<EquipmentLog>((equ, log) => equ.id == log.equipmentId && log.recordType != "报废");
             var list = Utity.Connection.Select<Equipment>(express);
             var treeDtoList = new List<TreeDto>();
