@@ -484,7 +484,44 @@ create table Task (
    CurrentSegment       integer              null
 )
 go
-
+CREATE TABLE [dbo].[Employee](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[DeptID] [bigint] NOT NULL,
+	[Attribute] [bigint] not null,
+	[Age] [bigint] NOT NULL,
+        [AliasName] varchar(50) NOT NULL,
+        [Password]  varchar(24) NOT NULL,
+        [KeyString] varchar(128) NULL,
+	[Sex] [bigint] NOT NULL,
+	[TelNo] [varchar](50) NULL,
+	[Rank] [bigint] NULL,
+	[Remark] [varchar](100) NULL,
+ CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+CREATE TABLE [dbo].[Department](
+	[ID] [bigint] NOT NULL,
+	[Name] [varchar](500) NOT NULL,
+	[Remark] [varchar](100) NULL,
+ CONSTRAINT [PK_Department1] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+CREATE TABLE [dbo].[Role](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](500) NOT NULL,
+	[EmployeeID] [bigint] NOT NULL,
+	[AccessMask] [varchar](128) NULL,
+	[Remark] [varchar](100) NULL,
+ CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
