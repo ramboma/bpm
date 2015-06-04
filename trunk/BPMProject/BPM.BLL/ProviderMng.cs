@@ -39,6 +39,7 @@ namespace BPM.BLL
             }
             return treeList;
         }
+
         /// <summary>
         /// 通过id获取类型信息
         /// </summary>
