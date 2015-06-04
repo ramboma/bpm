@@ -52,7 +52,7 @@
 	<table cellpadding="0" cellspacing="0" class="Dlg_Tbl_Query">
         <tr>
             <td  align="left" class="Dlg_Tbl_TD_Label">资产名称：</td>
-            <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_objmng_name" class="easyui-combotree" data-options="url:'tree_data1.json',method:'get',required:true" style="width:275px;"/></td>
+            <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_objmng_name" class="easyui-combotree" data-options="url:'tree_data1.json',method:'get',required:true" style="width:250px;"/></td>
             <td  align="left" class="Dlg_Tbl_TD_Label">生产厂家：</td>
             <td  align="left" class="Dlg_Tbl_TD_Txt"><span id="tb_objmng_factory" class="Tbl_TD_TextBox"></span>
             </td>
@@ -76,7 +76,7 @@
             <td  align="left" class="Dlg_Tbl_TD_Txt"><span id="tb_objmng_price" class="Tbl_TD_TextBox"></span>
             </td>
             <td  align="left" class="Dlg_Tbl_TD_Label">数量：</td>
-            <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_objmng_amount" class="easyui-numberbox" data-options="min:0,max:1000000,required:true" style="width:275px;"/></td>
+            <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_objmng_amount" class="easyui-numberbox" data-options="min:0,max:1000000,required:true" style="width:250px;"/></td>
         </tr>
         <tr>
             <td  align="left" class="Dlg_Tbl_TD_Label">总价：</td>
@@ -84,9 +84,9 @@
             </td>
         </tr>
     </table>
-    <table cellpadding="0" cellspacing="0" style="width:830px" border="0">
+    <table cellpadding="0" cellspacing="0" class="Dlg_Tbl_Query_NoLine">
         <tr>
-            <td  align="center" style="width:830px;height:48px">
+            <td  align="center">
             <input id="btn_objmng_ok" type="button" style=" width:70px;" value="确定" />
             <input id="btn_objmng_close" type="button" style=" width:70px;" value="关闭" /></td>
         </tr>

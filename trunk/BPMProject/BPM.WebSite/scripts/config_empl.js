@@ -1,27 +1,7 @@
-var Submit_Flag = 0;
+锘縱ar Submit_Flag = 0;
 var Cur_Selected_Node = new Object();
 $.extend(
     {
-        Count_Total_Price: function () {
-            var Amount = $("#tb_objmng_amount").val();
-            var Total_Price =Math.round(100*parseInt(Amount) * parseFloat($("#tb_objmng_price").text()))/100;
-            $("#tb_objmng_total").text(Total_Price.toString());
-            return;
-        },
-        NewRow:function()
-        {
-            $('#dlg_product_detail').dialog('open');
-            return;
-        },
-        DeleteRow:function()
-        {
-            var row = $('#dgt_obj_list').datagrid('getSelected');
-            if (row) {
-                var rowIndex = $('#dgt_obj_list').datagrid('getRowIndex', row);
-                $('#dgt_obj_list').datagrid('deleteRow', rowIndex);
-            }
-            return;
-        },
         Deal_Data: function (data) {
             var Ret = eval('(' + data + ')');
             var ctlg_json = Ret.Result;
@@ -36,8 +16,7 @@ $.extend(
         },
         Get_Product_Detail: function (node) {
             var str_id = node.id.toString();
-            if (str_id.length < 12)
-            {
+            if (str_id.length < 12) {
                 $("#tb_objmng_unit").text("");
                 $("#tb_objmng_model").text("");
                 $("#tb_objmng_spec").text("");
@@ -86,16 +65,44 @@ $.extend(
             return;
         },
         Init_Page: function () {
-            //获取资产品名信息
+            //鑾峰彇浜哄憳淇℃伅
             $.ajax(
                    {
                        url: '/Route/LibraryHandler.ashx',
                        type: 'POST',
-                       data: { c: 'assetlibrary', m: 'getallpingmingtree', p: '' },
+                       data: { c: 'sysconfig', m: 'getallemployee', p: '' },
                        success: function (data) {
                            var Ret = eval('(' + data + ')');
                            var ctlg_json = Ret.Result;
-                           $("#tb_objmng_name").combotree('loadData', ctlg_json);
+                           //$("#tb_objmng_name").combotree('loadData', ctlg_json);
+                       },
+                       error: function (data) {
+                           alert(data);
+                       }
+                   }
+             );
+            //鑾峰彇浜哄憳淇℃伅
+            $.ajax(
+                   {
+                       url: '/Route/LibraryHandler.ashx',
+                       type: 'POST',
+                       data: { c: 'assetlibrary', m: 'providermng', p: 'zw' },
+                       success: function (data) {
+                           $("#tb_empl_rank").combotree('loadData', $.Deal_Data(data));
+                       },
+                       error: function (data) {
+                           alert(data);
+                       }
+                   }
+             );
+            //鑾峰彇鎬у埆淇℃伅
+            $.ajax(
+                   {
+                       url: '/Route/LibraryHandler.ashx',
+                       type: 'POST',
+                       data: { c: 'assetlibrary', m: 'providermng', p: 'xb' },
+                       success: function (data) {
+                           $("#tb_empl_rank").combotree('loadData', $.Deal_Data(data));
                        },
                        error: function (data) {
                            alert(data);
@@ -107,31 +114,28 @@ $.extend(
         Btn_Submit_Click: function (ev) {
             var rows = $('#dgt_obj_list').datagrid("getRows");
             var Param_Json = [];
-            var Param_Json_all={};
-            Param_Json_all.ApplyId=0;
-            Param_Json_all.ApproveId=0;
-            Param_Json_all.RelativeTask=0;
-            Param_Json_all.ManagerId=0;
+            var Param_Json_all = {};
+            Param_Json_all.ApplyId = 0;
+            Param_Json_all.ApproveId = 0;
+            Param_Json_all.RelativeTask = 0;
+            Param_Json_all.ManagerId = 0;
             Param_Json_all.data = Param_Json;
-            if (Submit_Flag == 1)
-            {
+            if (Submit_Flag == 1) {
                 return;
             }
-            $.each(rows, function (i, val)
-            {
-                var TempNode = { 'ProductId': '', 'SaleCount': ''};
+            $.each(rows, function (i, val) {
+                var TempNode = { 'ProductId': '', 'SaleCount': '' };
                 TempNode.ProductId = val.ProductId;
                 TempNode.SaleCount = val.Amount;
                 Param_Json.push(TempNode);
             });
             $.ajax(
                 {
-                    
+
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
                     data: { c: 'assetlibrary', m: 'savefetchdetail', p: JSON.stringify(Param_Json_all) },
-                    success: function (data)
-                    {
+                    success: function (data) {
                         var Ret_Data = eval('(' + data + ')');
                         var Ret_Result_Json = Ret_Data.Result.Lists;
                         $("#Div_Out_Result").show();
@@ -143,25 +147,23 @@ $.extend(
                 });
             return;
         },
-        Btn_Cancel_Click: function ()
-        {
+        Btn_Cancel_Click: function () {
             location.reload(false);
             return;
         },
         Btn_Ok_Click: function () {
             var i_amount = $("#tb_objmng_amount").val();
-            var objmng_Json = { ProductId: '',ProductName:'',FactoryName:'',Model:'',Spec:'',Amount:'', Total:''};
-            if (parseInt(i_amount) > 0)
-            {
+            var objmng_Json = { ProductId: '', ProductName: '', FactoryName: '', Model: '', Spec: '', Amount: '', Total: '' };
+            if (parseInt(i_amount) > 0) {
                 objmng_Json.ProductId = Cur_Selected_Node.id;
                 objmng_Json.ProductName = Cur_Selected_Node.text;
-                objmng_Json.FactoryName=$("#tb_objmng_factory").text();
+                objmng_Json.FactoryName = $("#tb_objmng_factory").text();
                 objmng_Json.Model = $("#tb_objmng_model").text();
                 objmng_Json.Spec = $("#tb_objmng_spec").text();
                 objmng_Json.Amount = $("#tb_objmng_amount").val();
                 objmng_Json.Total = $("#tb_objmng_total").text();
                 $('#dlg_product_detail').dialog('close');
-                $('#dgt_obj_list').datagrid('appendRow',  objmng_Json);
+                $('#dgt_obj_list').datagrid('appendRow', objmng_Json);
             }
             return;
         },
@@ -172,11 +174,11 @@ $.extend(
     });
 $(document).ready(function () {
     $("#btn_empl_submit").click($.Btn_Submit_Click);
-    $("#btn_objmng_cancel").click($.Btn_Cancel_Click);
-    $("#btn_objmng_ok").click($.Btn_Ok_Click);
-    $("#btn_objmng_close").click($.Btn_Close_Click);
-    $("input", $("#tb_objmng_amount").next("span")).blur(function () { $.Count_Total_Price() });
-    $("#tb_objmng_name").combotree({ onSelect: function (node) { $.Get_Product_Detail(node) } });
-    $('#dlg_product_detail').dialog('close');
+    $("#btn_empl_cancel").click($.Btn_Cancel_Click);
+    $("#btn_empl_ok").click($.Btn_Ok_Click);
+    $("#btn_empl_close").click($.Btn_Close_Click);
+    $("#btn_empl_add").click($.Btn_Add_Click);
+    $("#btn_empl_edit").click($.Btn_Edit_Click);
+    $('#dlg_employee_detail').dialog('close');
     $.Init_Page();
 });

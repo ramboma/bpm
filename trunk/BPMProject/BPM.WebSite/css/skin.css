@@ -88,9 +88,13 @@ body
 }
 .Div_Tree_Container
 {
-	width:830px;
+	width:825px;
 	height:300px;
 	overflow-y:scroll;
+}
+.Div_Info_Container
+{
+	width:830px;
 }
 .Div_Menu_Item_Main
 {
@@ -296,11 +300,17 @@ body
 }
 .Dlg_Tbl_Query 
 {
-    width:740px;
+    width:700px;
     border-style:solid; 
 	border-color:#000000; 
 	border-collapse:collapse;
 	border-width:1px;
+}
+.Dlg_Tbl_Query_NoLine 
+{
+    width:700px;
+    border-color:#000000; 
+	border-collapse:collapse;
 }
 .Dlg_Tbl_TD_Label
 {
@@ -313,7 +323,7 @@ body
 }
 .Dlg_Tbl_TD_Txt
 {
-	width:270px;
+	width:250px;
 	height:36px;
 	font-size:16px;
 	border-style:solid; 

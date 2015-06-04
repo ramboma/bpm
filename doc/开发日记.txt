@@ -61,4 +61,63 @@ id(自增加，主键),docname(文档名称),doctype(文档类型),author(作者
 图书借阅和文档借阅日志表：
 (id自增加，主键),docid(文档的id号),applyid(借阅人id),approveid(批准人id),BorrowDays(借阅天数)，returntime(实际归还时间)。
 
+增加人员信息表：
+drop table Employee
+CREATE TABLE [dbo].[Employee](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[DeptID] [bigint] NOT NULL,
+	[LeaderFlag] [bigint] not null,
+	[Age] [bigint] NOT NULL,
+	[Sex] [bigint] NOT NULL,
+	[TelNo] [varchar](50) NULL,
+	[Rank] [bigint] NULL,
+	[Remark] [varchar](100) NULL,
+ CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+增加部门信息表：
+
+CREATE TABLE [dbo].[Department](
+	[ID] [bigint] NOT NULL,
+	[Name] [varchar](500) NOT NULL,
+	[Remark] [varchar](100) NULL,
+ CONSTRAINT [PK_Department1] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+部门ID采用和物资品名表同样的含义，总共分三级：前两位11为根，（3---6）为二级部门，（7---8）为三级部门。
+
+
+增加角色信息表：
+
+CREATE TABLE [dbo].[Role](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](500) NOT NULL,
+	[EmployeeID] [bigint] NOT NULL,
+	[AccessMask] [varchar](128) NULL,
+	[Remark] [varchar](100) NULL,
+ CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+角色信息表说明：
+AccessMask：角色权限掩码，类型为字符串或者bigint（待定），如果为长度为64的字符串，对应系统有64个功能模块，0表示没有权限访问该模块，1表示有权限访问该模块。如果为bigint，含意同字符串。
+
+
+
+
+
+
+
+
+
+
+
+
 
