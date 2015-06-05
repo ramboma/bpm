@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2015/5/31 12:30:39                           */
+/* Created on:     2015/6/5 22:52:26                            */
 /*==============================================================*/
 
 
@@ -27,6 +27,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('Department')
+            and   type = 'U')
+   drop table Department
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('DocInfo')
             and   type = 'U')
    drop table DocInfo
@@ -37,6 +44,13 @@ if exists (select 1
            where  id = object_id('DocLog')
             and   type = 'U')
    drop table DocLog
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Employee')
+            and   type = 'U')
+   drop table Employee
 go
 
 if exists (select 1
@@ -100,6 +114,13 @@ if exists (select 1
            where  id = object_id('Provider')
             and   type = 'U')
    drop table Provider
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Role')
+            and   type = 'U')
+   drop table Role
 go
 
 if exists (select 1
@@ -194,6 +215,16 @@ execute sp_addextendedproperty 'MS_Description',
 go
 
 /*==============================================================*/
+/* Table: Department                                            */
+/*==============================================================*/
+create table Department (
+   Id                   bigint               null,
+   部门名                  varchar(100)         null,
+   备注                   varchar(500)         null
+)
+go
+
+/*==============================================================*/
 /* Table: DocInfo                                               */
 /*==============================================================*/
 create table DocInfo (
@@ -245,6 +276,26 @@ execute sp_addextendedproperty 'MS_Description',
 go
 
 /*==============================================================*/
+/* Table: Employee                                              */
+/*==============================================================*/
+create table Employee (
+   Id                   bigint               null,
+   Name                 varchar(50)          null,
+   DeptID               bigint               null,
+   Attribute            bigint               null,
+   Age                  int                  null,
+   AliasName            varchar(50)          null,
+   Password             varchar(50)          null,
+   KeyString            varchar(255)         null,
+   Sex                  int                  null,
+   TelNo                varchar(10)          null,
+   Rank                 bigint               null,
+   Remark               varchar(500)         null,
+   RoleId               bigint               null
+)
+go
+
+/*==============================================================*/
 /* Table: Equipment                                             */
 /*==============================================================*/
 create table Equipment (
@@ -259,9 +310,9 @@ create table Equipment (
    DepartMent           bigint               null,
    DocPath              varchar(1000)        null,
    HasDelete            tinyint              null,
-   keeper               bigint               null,
-   FactoryName          varchar(500)         null,
-   SalerName            varchar(500)         null,
+   Keeper               bigint               null,
+   FactoryName          varchar(00)          null,
+   SalerName            varchar(100)         null,
    ProductTime          datetime             null,
    constraint PK_EQUIPMENT primary key (Id)
 )
@@ -280,14 +331,13 @@ go
 create table EquipmentLog (
    Id                   bigint               identity,
    EquipmentId          bigint               null,
-   UserName             varchar(100)         null,
    Time                 datetime             null,
    RecordType           varchar(10)          null,
    Remarks              varchar(1000)        null,
-   ApplyId              bigint               null,
-   ApproveId            bigint               null,
-   RelativeTask         bigint               null,
-   ManagerId            bigint               null,
+   applyId              bigint               null,
+   approveId            bigint               null,
+   relativeTask         bigint               null,
+   managerId            bigint               null,
    constraint PK_EQUIPMENTLOG primary key (Id)
 )
 go
@@ -377,12 +427,12 @@ create table ProductInput (
    Time                 datetime             null,
    Quantity             int                  null,
    UserId               bigint               null,
-   Source               varchar(50)          null,
+   Source               bigint               null,
    ApproveId            bigint               null,
    RelativeTask         bigint               null,
    StorageNum           varchar(20)          null,
    Shelf                varchar(20)          null,
-   StoreTime            decimal              null,
+   ShelfLife            decimal              null,
    constraint PK_PRODUCTINPUT primary key (Id)
 )
 go
@@ -454,6 +504,16 @@ execute sp_addextendedproperty 'MS_Description',
 go
 
 /*==============================================================*/
+/* Table: Role                                                  */
+/*==============================================================*/
+create table Role (
+   Id                   bigint               null,
+   Name                 varchar(50)          null,
+   Remark               varchar(500)         null
+)
+go
+
+/*==============================================================*/
 /* Table: Segment                                               */
 /*==============================================================*/
 create table Segment (
@@ -484,44 +544,7 @@ create table Task (
    CurrentSegment       integer              null
 )
 go
-CREATE TABLE [dbo].[Employee](
-	[ID] [bigint] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](50) NOT NULL,
-	[DeptID] [bigint] NOT NULL,
-	[Attribute] [bigint] not null,
-	[Age] [bigint] NOT NULL,
-        [AliasName] varchar(50) NOT NULL,
-        [Password]  varchar(24) NOT NULL,
-        [KeyString] varchar(128) NULL,
-	[Sex] [bigint] NOT NULL,
-	[TelNo] [varchar](50) NULL,
-	[Rank] [bigint] NULL,
-	[Remark] [varchar](100) NULL,
- CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-CREATE TABLE [dbo].[Department](
-	[ID] [bigint] NOT NULL,
-	[Name] [varchar](500) NOT NULL,
-	[Remark] [varchar](100) NULL,
- CONSTRAINT [PK_Department1] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-CREATE TABLE [dbo].[Role](
-	[ID] [bigint] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](500) NOT NULL,
-	[EmployeeID] [bigint] NOT NULL,
-	[AccessMask] [varchar](128) NULL,
-	[Remark] [varchar](100) NULL,
- CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
