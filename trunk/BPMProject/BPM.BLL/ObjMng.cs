@@ -293,7 +293,10 @@ FROM    product pro
             if (productSearch.StorageNum>=0) strInput += "dbo.Productinput.storageNum="+productSearch.StorageNum.ToString() + " and ";
             if (productSearch.StartTime != null && productSearch.EndTime != null)
             {
-                strInput += "dbo.productinput.Time>='" + productSearch.StartTime.ToString() + "' and " + "dbo.productinput.time<='" + productSearch.EndTime.ToString()+"' and ";
+                if (productSearch.StartTime != new DateTime() && productSearch.EndTime != new DateTime())
+                {
+                    strInput += "dbo.productinput.Time>='" + productSearch.StartTime.ToString() + "' and " + "dbo.productinput.time<='" + productSearch.EndTime.ToString() + "' and ";
+                }
             }
             strInput = strInput.Remove(strInput.Length - 5, 5);
             if (!string.IsNullOrEmpty(strInput))
