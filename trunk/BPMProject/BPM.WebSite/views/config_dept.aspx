@@ -24,25 +24,15 @@
         <tr>
             <td  align="left" colspan="4" style="width:308px;">
                 <div class="Div_Tree_Container">
-                <ul id="tv_product_info" class="easyui-tree" data-options="animate:true"></ul></div></td>
+                <ul id="tv_department_info" class="easyui-tree" data-options="animate:true"></ul></div></td>
         </tr>
-    </table>
-    <div id="div_dept_info" class="Div_Info_Container">
-    <table cellpadding="0" cellspacing="0" class="Tbl_Info">
         <tr>
-            <td  align="left" class="Tbl_TD_Label">部门ID：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_dept_id" class="easyui-textbox" data-options="" style="width:275px;"/></td>
             <td  align="left" class="Tbl_TD_Label">部门名称：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_objmng_name" class="easyui-textbox"  data-options="" style="width:275px;"/></td>
-        </tr>
-        <tr>
-            <td  align="left" class="Tbl_TD_Label">负责人：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_objmng_manager" class="easyui-textbox" data-options="" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_dept_name" class="easyui-textbox"  data-options="" style="width:275px;"/></td>
             <td  align="left" class="Tbl_TD_Label">备注：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_objmng_memo" class="easyui-textbox" data-options="" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_dept_memo" class="easyui-textbox" data-options="" style="width:275px;"/></td>
         </tr>
     </table>
-    </div>
    <table cellpadding="0" cellspacing="0" style="width:830px" border="0">
         <tr>
             <td  align="right" colspan ="2" style="width:830px;height:48px"> 

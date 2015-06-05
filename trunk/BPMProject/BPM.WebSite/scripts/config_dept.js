@@ -15,24 +15,8 @@ $.extend(
             return Json_data;
         },
         Get_Product_Detail: function (node) {
-            $("#tb_objmng_Num").textbox('setValue', node.Node.productNum);
-            $("#tb_objmng_name").textbox('setValue', node.Node.productName);
-            if (node.Node.factoryId != 0) {
-                $("#tb_objmng_factory").combobox('setValue', node.Node.factoryId);
-            }
-            else {
-                $("#tb_objmng_factory").combobox('setValue', "");
-            }
-            if (node.Node.dealerId != 0) {
-                $("#tb_objmng_saler").combobox('setValue', node.Node.dealerId);
-            }
-            else {
-                $("#tb_objmng_saler").combobox('setValue', "");
-            }
-            $("#tb_objmng_model").textbox('setValue', node.Node.model);
-            $("#tb_objmng_spec").textbox('setValue', node.Node.standard);
-            $("#tb_objmng_Unit").textbox('setValue', node.Node.quantityUnit);
-            $("#tb_objmng_price").textbox('setValue', node.Node.price);
+            $("#tb_dept_name").textbox('setValue', node.Node.name);
+            $("#tb_dept_memo").textbox('setValue', node.Node.Remark);
             Cur_selected_Node = node;
             return;
         },
@@ -46,7 +30,7 @@ $.extend(
                        success: function (data) {
                            var Ret = eval('(' + data + ')');
                            var ctlg_json = Ret.Result;
-                           $("#tv_product_info").tree('loadData', ctlg_json);
+                           //$("#tv_department_info").tree('loadData', ctlg_json);
                        },
                        error: function (data) {
                            alert(data);
@@ -88,7 +72,7 @@ $.extend(
                     {
                         url: '/Route/LibraryHandler.ashx',
                         type: 'POST',
-                        data: { c: 'assetlibrary', m: 'deleteproduct', p: JSON.stringify(Cur_selected_Node.Node) },
+                        data: { c: 'sysconfig', m: 'deletedept', p: JSON.stringify(Cur_selected_Node.Node) },
                         success: function (data) {
                             alert(data);
 
@@ -104,18 +88,12 @@ $.extend(
         Btn_Addsub_Click: function () {
             if (Cur_selected_Node != null) {
                 if (Cur_selected_Node.id.length < 12) {
-                    $("#tb_objmng_name").textbox('setValue', '');
-                    $("#tb_objmng_Num").textbox('setValue', '');
-                    $("#tb_objmng_model").textbox('setValue', '');
-                    $("#tb_objmng_spec").textbox('setValue', '');
-                    $("#tb_objmng_saler").combobox('setValue', '');
-                    $("#tb_objmng_factory").combobox('setValue', '');
-                    $("#tb_objmng_Unit").textbox('setValue', '');
-                    $("#tb_objmng_price").textbox('setValue', '');
+                    $("#tb_dept_name").textbox('setValue', '');
+                    $("#tb_dept_memo").textbox('setValue', '');
                     Addsub_Flag = 1;
                 }
                 else {
-                    alert("已经是叶子节点，无法增加子项！");
+                    alert("已经是三级部门，无法增加子部门！");
                 }
             }
             else {
@@ -129,6 +107,6 @@ $(document).ready(function () {
     $("#btn_objmng_cancel").click($.Btn_Cancel_Click);
     $("#btn_objmng_delete").click($.Btn_Delete_Click);
     $("#btn_objmng_addsub").click($.Btn_Addsub_Click);
-    $("#tv_product_info").tree({ onSelect: function (node) { $.Get_Dept_Detail(node); } });
+    $("#tv_department_info").tree({ onSelect: function (node) { $.Get_Dept_Detail(node); } });
     $.Init_Page();
 });

@@ -27,19 +27,19 @@
             <td  align="left" class="Tbl_Query_TD_Txt"><input id="tb_qryobj_factory" class="easyui-combobox" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
         </tr>
         <tr>
-            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_spec" type="checkbox" name="CheckBox1" />规格：</td>
+            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_spec" type="checkbox" name="CheckBox2" />规格：</td>
             <td  align="left" class="Tbl_Query_TD_Txt"><input id="tb_qryobj_spec" class="easyui-textbox" data-options="" style="width:275px;"/></td>
-            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_model" type="checkbox" name="CheckBox1" />型号：</td>
+            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_model" type="checkbox" name="CheckBox3" />型号：</td>
             <td  align="left" class="Tbl_Query_TD_Txt"><input id="tb_qryobj_model" class="easyui-textbox" data-options="" style="width:275px;"/></td>
         </tr>
         <tr>
-            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_source" type="checkbox" name="CheckBox1" />来源：</td>
+            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_source" type="checkbox" name="CheckBox4" />来源：</td>
             <td  align="left" class="Tbl_Query_TD_Txt"><input id="tb_qryobj_source" class="easyui-combobox" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
-            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_warehouse" type="checkbox" name="CheckBox1" />库房编号：</td>
+            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_warehouse" type="checkbox" name="CheckBox5" />库房编号：</td>
             <td  align="left" class="Tbl_Query_TD_Txt"><input id="tb_qryobj_warehouse" class="easyui-combobox" name="" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
         </tr>
         <tr>
-            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_time_interval" type="checkbox" name="CheckBox1" />时间区间：</td>
+            <td  align="left" class="Tbl_Query_TD_Label"><input id="cb_qryobj_time_interval" type="checkbox" name="CheckBox6" />时间区间：</td>
             <td  align="left" class="Tbl_Query_TD_Txt">
                 <input id="tb_qryobj_time_start" class="easyui-datetimebox" style="width:275px"/>
             </td>
