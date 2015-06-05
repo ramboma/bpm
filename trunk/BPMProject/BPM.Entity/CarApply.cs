@@ -4,13 +4,14 @@
 // Purpose: Definition of Class CarApply
 
 using System;
-
+using ServiceStack.DataAnnotations;
 /// 车辆申请
 public class CarApply
 {
    ///<summary>
    ///车辆申请Id
    ///</summary>
+    [AutoIncrement]
    public int applyId {get;set;}
    ///<summary>
    ///用车单位
