@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookMng.cs" />
+    <Compile Include="CarMng.cs" />
+    <Compile Include="ProcessMng.cs" />
     <Compile Include="ProviderMng.cs" />
     <Compile Include="ObjMng.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

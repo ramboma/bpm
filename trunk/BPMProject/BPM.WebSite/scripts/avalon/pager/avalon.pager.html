@@ -1,0 +1,41 @@
+<div class="row-fluid">
+    <div ms-if="showTitle" class="span4">
+        <div class="dataTables_info" id="sample_1_info">符合条件的记录有{{totalItems}}条</div>
+    </div>
+    <div class="span8">
+        <div class="dataTables_paginate paging_bootstrap pagination">
+            <ul onselectstart="return false;" unselectable="on" ms-visible="totalPages>1">
+                <li class="prev"
+                    ms-class="disabled:currentPage==1"
+                    ms-if="isShowPrev()"
+                    ms-title="getTitle('prev')">
+                    <a href="#" ms-click="jumpPage($event,'prev')" ms-text="prevText"></a>
+                </li>
+                <li ms-visible="firstPage!==1"
+                    ms-title="getTitle('first', currentPage)"
+                    ms-class-active="currentPage == 1">
+                    <a href="#" ms-click="jumpPage($event,'first')" ms-hover="oni-state-hover">1</a>
+                </li>
+                <li ms-if="showFirstOmit"><a href="#" ms-text="ellipseText"></a></li>
+                <li ms-repeat="pages"
+                    ms-title="getTitle(el, currentPage)"
+                    ms-class-active="el == currentPage"><a href="#" ms-text="el" ms-hover="oni-state-hover" ms-click="jumpPage($event,el)"></a></li>
+                <li ms-if="showLastOmit"><a href="#" ms-text="ellipseText"></a></li>
+                <li ms-visible="lastPage!==totalPages"
+                    ms-title="getTitle('last', currentPage, totalPages)"><a href="#" ms-hover="oni-state-hover"
+                        ms-click="jumpPage($event,'last')"
+                        ms-text="totalPages"></a></li>
+                <li class="next"
+                    ms-if="isShowNext()"
+                    ms-title="getTitle('next')"
+                    ms-class="next disabled:currentPage==totalPages"><a href="#" ms-text="nextText" ms-click="jumpPage($event,'next')"></a></li>
+                <li>
+                    <p class="pull-left">
+                        转到
+                         <input type="text" ms-duplex="_currentPage" data-duplex-event="change" ms-keyup="changeCurrentPage" class="mini" style="width: 20px;">
+                    </p>
+                    <a class="btn" ms-click="changeCurrentPage" style="border: none; background: #ddd;">GO</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

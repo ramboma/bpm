@@ -6,7 +6,6 @@ using System.Web;
 /// <summary>
 /// ReturnBase 的摘要说明
 /// </summary>
-
     public class ReturnBase
     {
         public ReturnBase()

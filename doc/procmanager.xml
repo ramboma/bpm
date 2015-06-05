@@ -1,0 +1,9 @@
+<ProcessList>
+  <Process Id="1" Name="派车流程" ApplyRole="所有人">
+  <Process Id="1" Name="派车流程" ApplyRole="所有人">
+    <Steps Id="11" StepName="申请车辆"  ApproveRole="科长" SubmitAction="assetlibrary.SubmitPaiChe" BackAction="assetlibrary.RejectSubmit" Params="Entity.PaiCheDto"></Steps> 
+    <Steps Id="12" StepName="审批车辆"  ApproveRole="经理" SubmitAction="assetlibrary.ShenPiPaiChe" BackAction="assetlibrary.RejectShenpi" Params="Entity.PaiCheDto"></Steps> 
+    <Steps Id="13" StepName="派出车辆"  ApproveRole="厂长" SubmitAction="assetlibrary.PaiChuPaiChe" BackAction="assetlibrary.RejectPaiChu" Params="Entity.PaiCheDto"></Steps> 
+    <Steps Id="14" StepName="车辆回场"  ApproveRole="门岗" SubmitAction="assetlibrary.HuiCanPaiChe" BackAction="assetlibrary.RejectHuiCan" Params="Entity.PaiCheDto"></Steps> 
+  </Process>
+</ProcessList>

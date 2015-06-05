@@ -1,0 +1,24 @@
+﻿<div>
+    <div class="table-toolbar pull-right">
+        <div class="controls pull-left">
+            <a href="#" class="btn " ms-click="_prev(prevMonth, $event)"><i class="icon-chevron-left"></i>上一月</a>
+            <a href="#" class="btn blue ">{{year}}年{{month + 1}}月</a>
+            <a href="#" class="btn "  ms-click="_next(nextMonth, $event)">下一月 <i class="icon-chevron-right"></i></a>
+        </div>
+    </div>
+    <div ms-repeat-calendar="data">
+        <table cellspacing="0" style="width: 100%" class="schedule margin-bottom-20">
+            <tr>
+                <th ms-repeat-weekname="weekNames">星期{{weekname}}</th>
+            </tr>
+            <tr ms-repeat-days="calendar.rows">
+                <td ms-repeat-item="days"
+                    ms-click="_selectDate($index, $outer.$index, $outer.$outer.$index, $event)"
+                        >
+                    <h4 class="text-right color-black">{{item.day}}</h4>
+                    <p ms-if="item.event" class="label-success">{{item.event}}</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
