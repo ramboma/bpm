@@ -73,8 +73,8 @@
     <table cellpadding="0" cellspacing="0" class="Dlg_Tbl_Query_NoLine">
         <tr>
             <td align="center">
-            <input id="btn_objmng_ok" type="button" style=" width:70px;" value="确定" />
-            <input id="btn_objmng_close" type="button" style=" width:70px;" value="关闭" /></td>
+            <input id="btn_empl_ok" type="button" style=" width:70px;" value="确定" />
+            <input id="btn_empl_close" type="button" style=" width:70px;" value="关闭" /></td>
         </tr>
     </table>
     </div>
