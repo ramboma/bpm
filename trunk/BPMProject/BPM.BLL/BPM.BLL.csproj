@@ -69,6 +69,7 @@
     <Compile Include="EquipmentMng.cs" />
     <Compile Include="PageMng.cs" />
     <Compile Include="DocMng.cs" />
+    <Compile Include="SysMng.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BPM.Entity\BPM.Entity.csproj">

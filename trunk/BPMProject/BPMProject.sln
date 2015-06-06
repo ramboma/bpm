@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPM.Entity", "BPM.Entity\BPM.Entity.csproj", "{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPM.Common", "BPM.Common\BPM.Common.csproj", "{EDADD5CA-C0F2-433B-B3F5-F0496F85EF5F}"
@@ -11,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPM.ORM", "BPM.ORMLite\BPM.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPM.BLL", "BPM.BLL\BPM.BLL.csproj", "{74EF82FA-5891-4632-B5D7-83401F8264CE}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BPM.WebSite(1)", "http://localhost:3665", "{BBBE8D80-0560-43C8-954C-1D38AA018A5D}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BPM.WebSite", "http://localhost:3665", "{BBBE8D80-0560-43C8-954C-1D38AA018A5D}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		ProjectReferences = "{74ef82fa-5891-4632-b5d7-83401f8264ce}|BPM.BLL.dll;{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}|BPM.Entity.dll;{392C627C-303D-4A84-87B1-63DC895FC8B1}|BPM.ORMLite.dll;"
+		ProjectReferences = "{74ef82fa-5891-4632-b5d7-83401f8264ce}|BPM.BLL.dll;{BE4E7614-EDF8-4C2F-91A6-C33A52400FC4}|BPM.Entity.dll;{392C627C-303D-4A84-87B1-63DC895FC8B1}|BPM.ORMLite.dll;{edadd5ca-c0f2-433b-b3f5-f0496f85ef5f}|BPM.Common.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_3665"
 		Debug.AspNetCompiler.PhysicalPath = "BPM.WebSite\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_3665\"
