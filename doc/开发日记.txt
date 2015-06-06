@@ -86,6 +86,7 @@ CREATE TABLE [dbo].[Employee](
 CREATE TABLE [dbo].[Department](
 	[ID] [bigint] NOT NULL,
 	[Name] [varchar](500) NOT NULL,
+	[Parentid] [bigint] NOT NULL,
 	[Remark] [varchar](100) NULL,
  CONSTRAINT [PK_Department1] PRIMARY KEY CLUSTERED 
 (
@@ -118,3 +119,36 @@ AccessMask：角色权限掩码，类型为字符串或者bigint（待定），�
 资料查询
 
 
+2005年6月5日，关于流程数据库设计的一些思路
+
+流程模板表，存放一个流程的基本信息，流程数据放到一个表内，叫流程数据表，流程的信息放到一个表内，叫流程信息表，流程主要靠流程信息表来控制它的运作和流转，还有一个表叫流程环节信息表。
+1、流程模板表：流程名称，流程数据表名称，流程环节集合（字符串型，“环节id1，环节id2，环节id3，环节id4，环节id5”）等等。
+2、流程数据表的字段根据流程内涉及的数据设计表。（这个表结合到具体流程了，一个流程是一个表）
+3、流程信息表主要字段有：流程id，流程名称，流程创建时间，流程创建人，当前流程运行环节的id，流程对应页面名称，等等。
+4、环节信息表主要字段有：环节id，环节处理角色id，环节名称，环节字段映射集合（字符串型，是一个json字符串，“【{标签名：‘字段名’}，{标签名：‘字段名’}。。】，其中字段名对应的是流程数据表中的字段），环节html代码，等等
+
+系统配置的接口定义：
+
+1、获取所有部门信息：c:‘sysconfig’,m:‘getalldepttree’ p:‘’
+   返回：Result：[{id，name，remark}，{..}]
+2、增加一个部门记录：c:‘sysconfig’，m:‘adddeptinfo’，p{parentid：‘11’，name：‘技术科’，ramark：‘’}
+   返回：code：1，Result：null
+3、更新一条部门记录：
+     c:‘sysconfig’，m:‘updatedeptinfo，p{id：‘11’，name：‘技术科’，ramark：‘’}
+      返回：code：1，Result：null
+4、删除一条部门记录：c:’sysconfig‘，m:’deletedeptinfo‘，p{id：‘11’}
+   返回：code：1，Result：null
+5、获取所有人员信息：
+   c:sysconfig，m:getallemplyeeinfo,p:''
+   返回：Result：[{emplyeeDto}]这里deptid关联到deptment表的name
+6：增加一条人员信息：
+   c:sysconfig，m:addemplyeeinfo,p:{employee实体}
+
+   返回：Result：null
+7、更新一条人员记录：c:sysconfig，m：updateemployee，p：{employee实体}
+8、删除一条人员记录：c:sysconfig，m：deleteemployee，p：{id：'11'}
+9、获取所有角色信息：c:sysconfig,m:getallroleinfo,p:''
+   返回Result：[{role实体}]  其中employeeid关联到employeeName
+10、增加一条角色记录：c：sysconfig，m：addroleinfo，p：{role实体}
+11、更新一条role记录：c：sysconfig，m：updateroleinfo，p：{role实体}
+12、删除一条角色记录：c:sysconfig。m：deleteroleinfo，p：{id：’‘}

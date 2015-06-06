@@ -147,17 +147,17 @@ function btn_click(obj) {
             }
         case "btn_config_dept":
             {
-                document.getElementById("Iframe_Display").src = "sys_config/config_dept.aspx";
+                document.getElementById("Iframe_Display").src = "../views/config_dept.aspx";
                 break;
             }
         case "btn_config_employee":
             {
-                document.getElementById("Iframe_Display").src = "sys_config/config_employee.aspx";
+                document.getElementById("Iframe_Display").src = "../views/config_empl.aspx";
                 break;
             }
         case "btn_config_role":
             {
-                document.getElementById("Iframe_Display").src = "sys_config/config_role.aspx";
+                document.getElementById("Iframe_Display").src = "../views/config_role.aspx";
                 break;
             }
         case "btn_config_product":

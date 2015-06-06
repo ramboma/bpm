@@ -16,7 +16,6 @@ namespace BPM.BLL
         {
             var express = ORMLite.Utity.Connection.From<Equipment>();
             express.Where(s => s.hasDelete == 1);
-            express.Join<EquipmentLog>((equ, log) => equ.id == log.equipmentId && log.recordType != "报废");
             var list = Utity.Connection.Select<Equipment>(express);
             var treeDtoList = new List<TreeDto>();
             //取第一层
