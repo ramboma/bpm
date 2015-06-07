@@ -218,9 +218,10 @@ go
 /* Table: Department                                            */
 /*==============================================================*/
 create table Department (
-   Id                   bigint               null,
+   Id                   BIGINT IDENTITY(1,1)               null,
    部门名                  varchar(100)         null,
-   备注                   varchar(500)         null
+   备注                   varchar(500)         NULL,
+   parentid				BIGINT				null
 )
 go
 
@@ -279,7 +280,7 @@ go
 /* Table: Employee                                              */
 /*==============================================================*/
 create table Employee (
-   Id                   bigint               null,
+   Id                   bigint IDENTITY(1,1) NOT NULL,
    Name                 varchar(50)          null,
    DeptID               bigint               null,
    Attribute            bigint               null,
@@ -507,7 +508,7 @@ go
 /* Table: Role                                                  */
 /*==============================================================*/
 create table Role (
-   Id                   bigint               null,
+   Id                   bigint IDENTITY(1,1) NOT NULL,
    Name                 varchar(50)          null,
    Remark               varchar(500)         null
 )

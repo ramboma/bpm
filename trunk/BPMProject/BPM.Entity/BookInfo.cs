@@ -47,7 +47,7 @@ public class BookInfo
     public string keyWord {get;set;}
    ///<summary>
    ///´æ·ÅÎ»ÖÃ
-   ///</summary>
+   ///</summary>var
     public string location {get;set;}
    ///<summary>
    ///ÄÚÈİ¼ò½é

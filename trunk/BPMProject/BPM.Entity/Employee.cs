@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ServiceStack.DataAnnotations;
 namespace BPM.Entity
 {
     public class Employee
     {
+        [AutoIncrement]
         public double ID { get; set; }
         public string Name { get; set; }
         public double DeptID { get; set; }
