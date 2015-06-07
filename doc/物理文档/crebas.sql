@@ -289,7 +289,7 @@ create table Employee (
    Password             varchar(50)          null,
    KeyString            varchar(255)         null,
    Sex                  int                  null,
-   TelNo                varchar(10)          null,
+   TelNo                varchar(100)          null,
    Rank                 bigint               null,
    Remark               varchar(500)         null,
    RoleId               bigint               null

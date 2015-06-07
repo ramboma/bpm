@@ -18,7 +18,7 @@ namespace BPM.BLL
         public static List<EmplyeeDto> GetAllEmployeeInfo()
         {
             SqlExpression<Employee> sqlexpression = Utity.Connection.From<Employee>();
-            sqlexpression.Join<Department>((e, d) => e.DeptID == d.ID);
+            sqlexpression.LeftJoin<Department>((e, d) => e.DeptID == d.ID);
 
             return Utity.Connection.Select<EmplyeeDto>(sqlexpression);
         }
@@ -58,7 +58,7 @@ namespace BPM.BLL
         public static List<RoleDto> GetAllRoleInfo()
         {
             SqlExpression<Role> sqlexpression = Utity.Connection.From<Role>();
-            sqlexpression.Join<Employee>((r, e) => r.EmployeeID == e.ID);
+            sqlexpression.LeftJoin<Employee>((r, e) => r.EmployeeID == e.ID);
             return Utity.Connection.Select<RoleDto>(sqlexpression);
         }
         #endregion
@@ -72,7 +72,9 @@ namespace BPM.BLL
         public static List<TreeDto> GetAllDeptInfo()
         {
             List<TreeDto> list = new List<TreeDto>();
-            var allDept = Utity.Connection.Select<Department>();
+            SqlExpression<Department> sqlexpression = Utity.Connection.From<Department>();
+            string str = sqlexpression.SelectInto<Department>();
+            var allDept = Utity.Connection.Select(sqlexpression);
             //先填充第一层
             //对于第一层依次遍历，查找下一层,查找到一个就添加到子节点中
             List<Department> firstLayer = allDept.Where(s => s.ParentId == 0).ToList();
