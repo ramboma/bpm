@@ -2,20 +2,8 @@
 var Addsub_Flag = 0;
 $.extend(
     {
-        Deal_Data: function (data) {
-            var Ret = eval('(' + data + ')');
-            var ctlg_json = Ret.Result;
-            var Json_data = [];
-            for (var i = 0; i < ctlg_json.length; i++) {
-                var TempNode = { 'id': '', 'text': '' };
-                TempNode.id = ctlg_json[i].catalogId;
-                TempNode.text = ctlg_json[i].catalogName;
-                Json_data.push(TempNode);
-            }
-            return Json_data;
-        },
-        Get_Product_Detail: function (node) {
-            $("#tb_dept_name").textbox('setValue', node.Node.name);
+        Get_Dept_Detail: function (node) {
+            $("#tb_dept_name").textbox('setValue', node.Node.Name);
             $("#tb_dept_memo").textbox('setValue', node.Node.Remark);
             Cur_selected_Node = node;
             return;
@@ -30,7 +18,7 @@ $.extend(
                        success: function (data) {
                            var Ret = eval('(' + data + ')');
                            var ctlg_json = Ret.Result;
-                           //$("#tv_department_info").tree('loadData', ctlg_json);
+                           $("#tv_department_info").tree('loadData', ctlg_json);
                        },
                        error: function (data) {
                            alert(data);
@@ -44,14 +32,14 @@ $.extend(
             if (Addsub_Flag == 0) {
                 return;
             }
-            Product_Json.ParentId = Cur_selected_Node.Node.ID;
-            Product_Json.Name = $('#tb_dept_name').val();
-            Product_Json.Remark = $('#tb_dept_remark').val();
+            Dept_Json.ParentId = Cur_selected_Node.Node.ID;
+            Dept_Json.Name = $('#tb_dept_name').val();
+            Dept_Json.Remark = $('#tb_dept_memo').val();
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
-                    data: { c: 'sysconfig', m: 'addproduct', p: JSON.stringify(Product_Json) },
+                    data: { c: 'sysconfig', m: 'adddeptinfo', p: JSON.stringify(Dept_Json) },
                     success: function (data) {
                         alert("保存成功！");
                         location.reload();
@@ -67,12 +55,16 @@ $.extend(
             if (Cur_selected_Node == null) {
                 return;
             }
+            if (Cur_selected_Node.Node.ID == '1')
+            {
+                alert("无法删除根目录！");
+            }
             if (confirm("是否删除《" + Cur_selected_Node.text + "》项及其所有子项吗？")) {
                 $.ajax(
                     {
                         url: '/Route/LibraryHandler.ashx',
                         type: 'POST',
-                        data: { c: 'sysconfig', m: 'deletedept', p: JSON.stringify(Cur_selected_Node.Node) },
+                        data: { c: 'sysconfig', m: 'deletedeptinfo', p: Cur_selected_Node.Node.ID },
                         success: function (data) {
                             alert(data);
 
@@ -87,14 +79,9 @@ $.extend(
         },
         Btn_Addsub_Click: function () {
             if (Cur_selected_Node != null) {
-                if (Cur_selected_Node.id.length < 12) {
                     $("#tb_dept_name").textbox('setValue', '');
                     $("#tb_dept_memo").textbox('setValue', '');
                     Addsub_Flag = 1;
-                }
-                else {
-                    alert("已经是三级部门，无法增加子部门！");
-                }
             }
             else {
                 alert("请先选择项目！");

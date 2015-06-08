@@ -70,7 +70,7 @@ $.extend(
                    {
                        url: '/Route/LibraryHandler.ashx',
                        type: 'POST',
-                       data: { c: 'sysconfig', m: 'getallemployee', p: '' },
+                       data: { c: 'sysconfig', m: 'getallemplyeeinfo', p: '' },
                        success: function (data) {
                            var Ret = eval('(' + data + ')');
                            var ctlg_json = Ret.Result;
