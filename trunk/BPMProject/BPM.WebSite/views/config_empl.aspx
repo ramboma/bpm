@@ -41,9 +41,7 @@
             <td  align="right" colspan ="2" style="width:830px;height:48px"> 
                 <input id="btn_empl_delete" type="button" style=" width:70px;" value="删除" />
                 <input id="btn_empl_add" type="button" style=" width:70px;" value="添加" />
-                <input id="btn_empl_edit" type="button" style=" width:70px;" value="修改" />
-                <input id="btn_empl_submit" type="button" style=" width:70px;" value="保存" />
-                <input id="btn_empl_cancel" type="button" style=" width:70px;" value="放弃" /></td>
+                <input id="btn_empl_edit" type="button" style=" width:70px;" value="修改" /></td>
         </tr>
     </table>
    <div id="dlg_employee_detail" class="easyui-dialog" title="人员信息" data-options="" style="width:760px;height:300px;padding:10px">
@@ -63,7 +61,7 @@
         <tr>
             <td  align="left" class="Dlg_Tbl_TD_Label">性别：</td>
             <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="sl_empl_sex" class="easyui-combobox" name="" data-options="valueField:'id',textField:'text'" style="width:250px;"/></td>
-            <td  align="left" class="Dlg_Tbl_TD_Label">年龄：</td>
+            <td  align="left" class="Dlg_Tbl_TD_Label">出生日期：</td>
             <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_empl_birthday" class="easyui-datebox" data-options="min:0,max:1000,required:true" style="width:250px;"/></td>
         </tr>
         <tr>
