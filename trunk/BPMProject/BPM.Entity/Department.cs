@@ -10,9 +10,9 @@ namespace BPM.Entity
     public class Department
     {
         [AutoIncrement]
-        public double ID { get; set; }
-        public string Name { get; set; }
-        public string Remark { get; set; }
-        public double ParentId { get; set; }
+        public long DeptID { get; set; }
+        public string DeptName { get; set; }
+        public string DeptRemark { get; set; }
+        public long DeptParentID { get; set; }
     }
 }

@@ -36,10 +36,10 @@
    <table cellpadding="0" cellspacing="0" style="width:830px" border="0">
         <tr>
             <td  align="right" colspan ="2" style="width:830px;height:48px"> 
-                <input id="btn_objmng_delete" type="button" style=" width:70px;" value="删除" />
-                <input id="btn_objmng_addsub" type="button" style=" width:70px;" value="添加子项" />
-                <input id="btn_objmng_submit" type="button" style=" width:70px;" value="提交" />
-                <input id="btn_objmng_cancel" type="button" style=" width:70px;" value="放弃" /></td>
+                <input id="btn_dept_delete" type="button" style=" width:70px;" value="删除" />
+                <input id="btn_dept_addsub" type="button" style=" width:70px;" value="添加子项" />
+                <input id="btn_dept_submit" type="button" style=" width:70px;" value="提交" />
+                <input id="btn_dept_cancel" type="button" style=" width:70px;" value="放弃" /></td>
         </tr>
     </table>
    

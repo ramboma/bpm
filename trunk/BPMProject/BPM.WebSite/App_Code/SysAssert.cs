@@ -19,7 +19,6 @@ public class SysAssert
                 {
                     try
                     {
-                        var productinput = JsonConvert.DeserializeObject<EmplyeeDto>(strParams);
                         var vProjectList = BPM.BLL.SysMng.GetAllEmployeeInfo();
                         return ResponseHelper.GetSuccessReturn(vProjectList);
                     }
@@ -145,6 +144,18 @@ public class SysAssert
                     {
                         return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
                     }
+                }
+            case "getalldeptlist":
+                {
+                    try
+                    {
+                        var vDeptInfoList = BPM.BLL.SysMng.GetAllDeptInfoList();
+                        return ResponseHelper.GetSuccessReturn(vDeptInfoList);
+                    }
+                    catch (Exception e1)
+                    {
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                    } 
                 }
             case "updatedeptinfo":
                 {

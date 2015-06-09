@@ -152,3 +152,52 @@ AccessMask：角色权限掩码，类型为字符串或者bigint（待定），�
 10、增加一条角色记录：c：sysconfig，m：addroleinfo，p：{role实体}
 11、更新一条role记录：c：sysconfig，m：updateroleinfo，p：{role实体}
 12、删除一条角色记录：c:sysconfig。m：deleteroleinfo，p：{id：’‘}
+6.9日：
+部门信息表
+CREATE TABLE [dbo].[Department](
+	[deptID] [bigint] IDENTITY(1,1) NOT NULL,
+	[deptParentID] [bigint] NULL,
+	[deptName] [varchar](500) NOT NULL,
+	[deptRemark] [varchar](100) NULL,
+ CONSTRAINT [PK_Department] PRIMARY KEY CLUSTERED 
+(
+	[deptID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+人员信息表：
+CREATE TABLE [dbo].[Employee](
+	[EmplID] [bigint] IDENTITY(1,1) NOT NULL,
+	[EmplName] [varchar](50) NOT NULL,
+	[DeptID] [bigint] NULL,
+	[AliasName] [varchar](50) NOT NULL,
+	[KeyString] [varchar](500) NULL,
+	[Password] [varchar](50) NOT NULL,
+	[Sex] [bigint] NULL,
+	[Birthday] [datetime] NULL,
+	[Attribute] [bigint] NULL,
+	[Rank] [bigint] NULL,
+	[TelNo] [varchar](50) NULL,
+	[AccessMask] [bigint] NULL,
+	[Remark] [varchar](100) NULL,
+ CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
+(
+	[EmplID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+角色信息表：
+
+CREATE TABLE [dbo].[Role](
+	[RoleID] [bigint] NOT NULL,
+	[RoleName] [varchar](100) NOT NULL,
+	[EmplID] [bigint] IDENTITY(1,1) NOT NULL,
+	[AccessMask] [bigint] NULL,
+	[Remark] [varchar](100) NULL,
+ CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
+(
+	[RoleID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+

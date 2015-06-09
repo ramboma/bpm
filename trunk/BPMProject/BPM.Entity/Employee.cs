@@ -9,17 +9,18 @@ namespace BPM.Entity
     public class Employee
     {
         [AutoIncrement]
-        public double ID { get; set; }
-        public string Name { get; set; }
-        public double DeptID { get; set; }
-        public double Attribute { get; set; }
-        public int Age { get; set; }
+        public long EmplID { get; set; }
+        public string EmplName { get; set; }
+        public long DeptID { get; set; }
         public string AliasName { get; set; }
         public string Password { get; set; }
         public string KeyString { get; set; }
-        public int Sex { get; set; }
+        public DateTime Birthday { get; set; }
+        public long Attribute { get; set; }
+        public long Sex { get; set; }
         public string TelNo { get; set; }
-        public double Rank { get; set; }
+        public long Rank { get; set; }
+        public long AccessMask { get; set; }
         public string Remark { get; set; }
     }
 }

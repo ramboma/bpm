@@ -17,12 +17,27 @@ namespace BPM.BLL
 
         public static List<EmplyeeDto> GetAllEmployeeInfo()
         {
-            SqlExpression<Employee> sqlexpression = Utity.Connection.From<Employee>();
-            sqlexpression.LeftJoin<Department>((e, d) => e.DeptID == d.ID);
-
-            return Utity.Connection.Select<EmplyeeDto>(sqlexpression);
+            //SqlExpression<Employee> sqlexpression = Utity.Connection.From<Employee>();
+            //sqlexpression.LeftJoin<Department>((e, d) => e.DeptID == d.DeptID);
+            string str_sql = @"SELECT Employee.EmplID,Employee.EmplName,Employee.DeptID,Employee.AliasName,Employee.KeyString
+                            ,Employee.Password,Employee.Sex
+                            ,DATEDIFF(YEAR,Employee.Birthday,GETDATE())as Age
+                            ,Employee.Attribute
+                            ,Employee.Rank
+                            ,Employee.TelNo
+                            ,Employee.AccessMask
+                            ,Employee.Remark
+                            ,Dept.DeptName
+                            ,pv.CatalogName as RankName
+                            ,pv1.CatalogName as AttributeName
+                            ,pv2.CatalogName as SexName
+                            FROM Employee
+                            left join Department dept on Employee.DeptID=dept.DeptID
+                            LEFT JOIN Provider pv ON Employee.Rank = pv.CatalogId
+                            LEFT JOIN Provider pv1 ON Employee.Attribute = pv1.CatalogId
+                            LEFT JOIN Provider pv2 ON Employee.Sex = pv2.CatalogId";
+            return Utity.Connection.Select<EmplyeeDto>(str_sql);
         }
-
         public static long AddEmployeeInfo(Employee employee)
         {
             return Utity.Connection.Insert<Employee>(employee, selectIdentity: true);
@@ -35,7 +50,7 @@ namespace BPM.BLL
 
         public static long DeleteEmployeeInfo(int strParams)
         {
-            return Utity.Connection.Delete<Employee>(s => s.ID == strParams);
+            return Utity.Connection.Delete<Employee>(s => s.EmplID == strParams);
         }
 
         #endregion
@@ -58,7 +73,7 @@ namespace BPM.BLL
         public static List<RoleDto> GetAllRoleInfo()
         {
             SqlExpression<Role> sqlexpression = Utity.Connection.From<Role>();
-            sqlexpression.LeftJoin<Employee>((r, e) => r.EmployeeID == e.ID);
+            sqlexpression.LeftJoin<Employee>((r, e) => r.EmployeeID == e.EmplID);
             return Utity.Connection.Select<RoleDto>(sqlexpression);
         }
         #endregion
@@ -68,7 +83,23 @@ namespace BPM.BLL
         {
             return Utity.Connection.Insert<Department>(departInput, selectIdentity: true);
         }
-
+        public static List<TreeDto> GetAllDeptInfoList()
+        {
+            SqlExpression<Department> sqlexpression = Utity.Connection.From<Department>();
+            var deptInfo=Utity.Connection.Select(sqlexpression);
+            var treeList = new List<TreeDto>();
+            foreach (var info in deptInfo)
+            {
+                var current = new TreeDto
+                {
+                    id = info.DeptID.ToString(),
+                    text = info.DeptName,
+                    Node = info
+                };
+                treeList.Add(current);
+            }
+            return treeList;
+        }
         public static List<TreeDto> GetAllDeptInfo()
         {
             List<TreeDto> list = new List<TreeDto>();
@@ -77,13 +108,13 @@ namespace BPM.BLL
             var allDept = Utity.Connection.Select(sqlexpression);
             //先填充第一层
             //对于第一层依次遍历，查找下一层,查找到一个就添加到子节点中
-            List<Department> firstLayer = allDept.Where(s => s.ParentId == 0).ToList();
+            List<Department> firstLayer = allDept.Where(s => s.DeptParentID == 0).ToList();
             foreach (var v in firstLayer)
             {
                 TreeDto td = new TreeDto()
                 {
-                    id = v.ID.ToString(),
-                    text = v.Name,
+                    id = v.DeptID.ToString(),
+                    text = v.DeptName,
                     Node = v,
                     children = new List<TreeDto>()
                 };
@@ -101,7 +132,7 @@ namespace BPM.BLL
 
         private static List<Department> GetChilda(List<Department> allDept, TreeDto td)
         {
-            return allDept.Where(s => s.ParentId.ToString() == td.id).ToList();
+            return allDept.Where(s => s.DeptParentID.ToString() == td.id).ToList();
         }
 
 
@@ -110,12 +141,12 @@ namespace BPM.BLL
         {
             foreach (var node in allDept)
             {
-                if (node.ParentId.ToString() == v.id)
+                if (node.DeptParentID.ToString() == v.id)
                 {
                     TreeDto currentTd = new TreeDto()
                     {
-                        id = node.ID.ToString(),
-                        text = node.Name,
+                        id = node.DeptID.ToString(),
+                        text = node.DeptName,
                         Node = node,
                         children = new List<TreeDto>()
                     };
@@ -136,7 +167,8 @@ namespace BPM.BLL
 
         public static long DeleteDeptInfo(int strParams)
         {
-            return Utity.Connection.Delete<Department>(s => s.ID == strParams);
+
+            return Utity.Connection.Delete<Department>(s => s.DeptID == strParams);
         }
         #endregion
 

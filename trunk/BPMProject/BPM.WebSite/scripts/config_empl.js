@@ -74,21 +74,23 @@ $.extend(
                        success: function (data) {
                            var Ret = eval('(' + data + ')');
                            var ctlg_json = Ret.Result;
-                           //$("#tb_objmng_name").combotree('loadData', ctlg_json);
+                           $("#dgt_result_query").datagrid('loadData', ctlg_json);
                        },
                        error: function (data) {
                            alert(data);
                        }
                    }
              );
-            //获取人员信息
+            //获取部门信息
             $.ajax(
                    {
                        url: '/Route/LibraryHandler.ashx',
                        type: 'POST',
-                       data: { c: 'assetlibrary', m: 'providermng', p: 'zw' },
+                       data: { c: 'sysconfig', m: 'getalldeptlist', p: '' },
                        success: function (data) {
-                           $("#tb_empl_rank").combotree('loadData', $.Deal_Data(data));
+                           var Ret = eval('(' + data + ')');
+                           var ctlg_json = Ret.Result;
+                           $("#sl_empl_dept").combobox('loadData', ctlg_json);
                        },
                        error: function (data) {
                            alert(data);
@@ -102,7 +104,35 @@ $.extend(
                        type: 'POST',
                        data: { c: 'assetlibrary', m: 'providermng', p: 'xb' },
                        success: function (data) {
-                           $("#tb_empl_rank").combotree('loadData', $.Deal_Data(data));
+                           $("#sl_empl_sex").combobox('loadData', $.Deal_Data(data));
+                       },
+                       error: function (data) {
+                           alert(data);
+                       }
+                   }
+             );
+            //获取职称信息
+            $.ajax(
+                   {
+                       url: '/Route/LibraryHandler.ashx',
+                       type: 'POST',
+                       data: { c: 'assetlibrary', m: 'providermng', p: 'zw' },
+                       success: function (data) {
+                           $("#sl_empl_rank").combobox('loadData', $.Deal_Data(data));
+                       },
+                       error: function (data) {
+                           alert(data);
+                       }
+                   }
+             );
+            //获取岗位属性信息
+            $.ajax(
+                   {
+                       url: '/Route/LibraryHandler.ashx',
+                       type: 'POST',
+                       data: { c: 'assetlibrary', m: 'providermng', p: 'gwsx' },
+                       success: function (data) {
+                           $("#sl_empl_attribute").combobox('loadData', $.Deal_Data(data));
                        },
                        error: function (data) {
                            alert(data);
@@ -168,7 +198,11 @@ $.extend(
             return;
         },
         Btn_Close_Click: function () {
-            $('#dlg_product_detail').dialog('close');
+            $('#dlg_employee_detail').dialog('close');
+            return;
+        },
+        Btn_Add_Click: function () {
+            $('#dlg_employee_detail').dialog('open');
             return;
         }
     });
