@@ -18,7 +18,80 @@
                     createuserid: 0,
                     deptid: 0,
                     deptname: '工厂',
+                    data:
+                        {
+                            equipmentid: 11,
+                            equipmentname: '737电台',
+                            associateTime: '2015/6/10',
+                            associateLoc: '三亚厂区',
+                            associateLog: '交接记录',
+                            attachLog: '附件交接记录',
+                            docLog: '资料交接记录',
 
+                            preRepairLevel: 3,//上次维修等级
+                            preRepairTime: '',//上次维修时间
+                            createTime: '2013/7/7',//生产日期
+                            inputFactoryTime: '2015/6/10',//进场日期
+                            userLog: '',//历次使用情况
+                            repairAdvice: '',//修理建议
+                            inquestUnit: '',//勘验单位
+                            inquestUser: '',//勘验人员
+                            repairRequire: '',//修理要求
+                            repairMakeLevel: 0,//本次修理定级
+                            makeLevelReason: '',//定级依据
+
+                            checkTask: '',//交验项目
+                            kpi: '',//指标要求
+                            checkLoc: '',//交验地点
+                            checkMethod: '',//交验方式
+
+                            armyCheck: '',//军检纪要
+                            armyResult: '',//军检结论
+
+                            equipmentResult: '',//装备验收结论
+                            armyManResult: '',//军代表验收结论
+
+                            equipmentConsignLog: '',//装备交付记录
+                            attachConsignLog: '',//附件交付记录
+                            docConsignLog: ''//资料交付记录
+
+                        },
+                    steps: [
+
+                   {
+                       stepid: 1,
+                       iscurrent: true,
+                       stepname: '修理勘验',
+                       roleid: 3,
+                       submit: 'assetlibrary.SubmitPaiChe',
+                       reback: 'assetlibrary.rebackpaiche'
+
+                   },
+                   {
+                       stepid: 2,
+                       stepname: '交验检验',
+                       roleid: 4
+
+                   },
+                   {
+                       stepid: 3,
+                       stepname: '军检',
+                       roleid: 5
+
+                   },
+                   {
+                       stepid: 5,
+                       stepname: '装备交验',
+                       roleid: 6
+
+                   },
+                   {
+                       stepid: 6,
+                       stepname: '装备交付',
+                       roleid: 8
+
+                   },
+                    ],
                     applyId: 0,
                     userDep: '',
                     carType: '',
@@ -59,33 +132,38 @@
                 </td>
             </tr>
             <tr>
-                <td class="auto-style1">装备名称：</td>
+                <td class="auto-style1">装备名称:</td>
                 <td style="width: 128px; height: 24px">
-                    <input type="text" ms-duplex="taskid"
-                        enabled="False"></input></td>
+                    <input ms-duplex="data.equipmentname" ms-attr-readonly="steps[0].iscurrent" /></td>
                 <td style="width: 88px; height: 24px">装备编号：</td>
-                <td style="width: 128px; height: 24px">{{deptname}}</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.equipmentid" ms-attr-readonly="steps[0].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">交接时间：</td>
-                <td style="width: 128px; height: 24px">&nbsp;</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.associateTime" ms-attr-readonly="steps[0].iscurrent" /></td>
                 <td style="width: 88px; height: 24px">交接地点：</td>
-                <td style="width: 128px; height: 24px">&nbsp;</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.associateLoc" ms-attr-readonly="steps[0].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">交接记录：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <asp:textbox id="tb_rwms" runat="server" height="32px" textmode="MultiLine"
-                        width="700px" enabled="False"></asp:textbox>
+                    <input ms-duplex="data.associateLog" ms-attr-readonly="steps[0].iscurrent" />
                 </td>
             </tr>
             <tr>
                 <td class="auto-style2">附件交接记录：</td>
-                <td colspan="3" style="width: 784px; height: 48px">&nbsp;</td>
+                <td colspan="3" style="width: 784px; height: 48px">
+                    <input ms-duplex="data.attachLog" ms-attr-readonly="steps[0].iscurrent" />
+                </td>
             </tr>
             <tr>
                 <td class="auto-style2">资料交接记录：</td>
-                <td colspan="3" style="width: 784px; height: 48px">&nbsp;</td>
+                <td colspan="3" style="width: 784px; height: 48px">
+                    <input ms-duplex="data.docLog" ms-attr-readonly="steps[0].iscurrent" />
+                </td>
             </tr>
             <tr>
                 <td class="auto-style2" colspan="4">
@@ -106,161 +184,189 @@
                     </div>
                 </td>
             </tr>
+        </table>
+        <table style="width: 864px" border="1">
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
-                    <img alt="open" id="img_step1" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />修理勘验</td>
+                    <img alt="open" id="img_step1" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
+                    {{steps[0].stepname}}</td>
             </tr>
-            <tbody>
-                <tr>
-                    <td class="auto-style1">上次修理等级：</td>
-                    <td style="width: 128px; height: 24px">
-                        <input type="text" ms-duplex="taskid" enabled="False"></input>
-                    </td>
-                    <td style="width: 88px; height: 24px">上次修理时间：</td>
-                    <td style="width: 128px; height: 24px">{{deptname}}</td>
-                </tr>
-                <tr>
-                    <td class="auto-style1">生产日期：</td>
-                    <td style="width: 128px; height: 24px">
-                        <input type="text" ms-duplex="taskid" enabled="False"></input>
-                    </td>
-                    <td style="width: 88px; height: 24px">进场日期：</td>
-                    <td style="width: 128px; height: 24px">{{deptname}}</td>
-                </tr>
-                <tr>
-                    <td class="auto-style2">装备历次使用情况：</td>
-                    <td colspan="3" style="width: 784px; height: 48px"></td>
-                </tr>
-                <tr>
-                    <td class="auto-style2">修理等级建议：</td>
-                    <td colspan="3" style="width: 784px; height: 48px"></td>
-                </tr>
-                <tr>
-                    <td class="auto-style2">勘验单位：</td>
-                    <td colspan="3" style="width: 784px; height: 48px"></td>
-                </tr>
-                <tr>
-                    <td class="auto-style2">参加勘验人员：</td>
-                    <td colspan="3" style="width: 784px; height: 48px"></td>
-                </tr>
-                <tr>
-                    <td class="auto-style2">修理要求：</td>
-                    <td colspan="3" style="width: 784px; height: 48px"></td>
-                </tr>
-                <tr>
-                    <td class="auto-style2">本次修理定级：</td>
-                    <td colspan="3" style="width: 784px; height: 48px"></td>
-                </tr>
-                <tr>
-                    <td class="auto-style2">本次定级依据：</td>
-                    <td colspan="3" style="width: 784px; height: 48px"></td>
-                </tr>
-                <tr>
-                    <td class="auto-style2" colspan="4">
-                        <div>
-                            监修单位经办人
+            <tr>
+                <td class="auto-style1">上次修理等级：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.preRepairLevel" ms-attr-readonly="steps[1].iscurrent" />
+                </td>
+                <td style="width: 88px; height: 24px">上次修理时间：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.preRepairTime" ms-attr-readonly="steps[1].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style1">生产日期：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.createTime" ms-attr-readonly="steps[1].iscurrent" />
+                </td>
+                <td style="width: 88px; height: 24px">进场日期：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.inputFactoryTime" ms-attr-readonly="steps[1].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style2">装备历次使用情况：</td>
+                <td colspan="3" style="width: 784px; height: 48px">
+                    <input ms-duplex="data.userLog" ms-attr-readonly="steps[1].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style2">修理等级建议：</td>
+                <td colspan="3" style="width: 784px; height: 48px">
+                    <input ms-duplex="data.repairAdvice" ms-attr-readonly="steps[1].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style2">勘验单位：</td>
+                <td colspan="3" style="width: 784px; height: 48px">
+                    <input ms-duplex="data.inquestUnit" ms-attr-readonly="steps[1].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style2">参加勘验人员：</td>
+                <td colspan="3" style="width: 784px; height: 48px">
+                    <input ms-duplex="data.inquestUser" ms-attr-readonly="steps[1].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style2">修理要求：</td>
+                <td colspan="3" style="width: 784px; height: 48px">
+                    <input ms-duplex="data.repairRequire" ms-attr-readonly="steps[1].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style2">本次修理定级：</td>
+                <td colspan="3" style="width: 784px; height: 48px">
+                    <input ms-duplex="data.repairMakeLevel" ms-attr-readonly="steps[1].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style2">本次定级依据：</td>
+                <td colspan="3" style="width: 784px; height: 48px">
+                    <input ms-duplex="data.makeLevelReason" ms-attr-readonly="steps[1].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style2" colspan="4">
+                    <div>
+                        监修单位经办人
         <input checked="true" name="R1" type="radio" value="0" />同意
         <input checked="false" name="R1" type="radio" value="1" />驳回
-                        </div>
-                        <div>
-                            机关业务部门
+                    </div>
+                    <div>
+                        机关业务部门
         <input checked="true" name="R1" type="radio" value="0" />同意
         <input checked="false" name="R1" type="radio" value="1" />驳回
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top" colspan="4" style="width: 864px">
-                        <img alt="open" id="img1" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />交验检验</td>
-                </tr>
-                <tr>
-                    <td class="auto-style1">交验项目：</td>
-                    <td style="width: 128px; height: 24px">
-                        <input type="text" ms-duplex="taskid" enabled="False"></input>
-                    </td>
-                    <td style="width: 88px; height: 24px">指标要求：</td>
-                    <td style="width: 128px; height: 24px">{{deptname}}</td>
-                </tr>
-                <tr>
-                    <td class="auto-style1">交验地点：</td>
-                    <td style="width: 128px; height: 24px">
-                        <input type="text" ms-duplex="taskid" enabled="False"></input>
-                    </td>
-                    <td style="width: 88px; height: 24px">交验方式：</td>
-                    <td style="width: 128px; height: 24px">{{deptname}}</td>
-                </tr>
-                <tr>
-                    <td class="auto-style1">校验人：</td>
-                    <td>
-                        <div>
-                            监修单位经办人
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 864px" border="1">
+            <tr>
+                <td valign="top" colspan="4" style="width: 864px">
+                    <img alt="open" id="img1" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
+                    {{steps[1].stepname}}</td>
+            </tr>
+            <tr>
+                <td class="auto-style1">交验项目：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.checkTask" ms-attr-readonly="steps[2].iscurrent" />
+                </td>
+                <td style="width: 88px; height: 24px">指标要求：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.kpi" ms-attr-readonly="steps[2].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style1">交验地点：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.checkLoc" ms-attr-readonly="steps[2].iscurrent" />
+                </td>
+                <td style="width: 88px; height: 24px">交验方式：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.checkMethod" ms-attr-readonly="steps[2].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style1">校验人：</td>
+                <td>
+                    <div>
+                        监修单位经办人
         <input checked="true" name="R1" type="radio" value="0" />同意
         <input checked="false" name="R1" type="radio" value="1" />驳回
-                        </div>
-                    </td>
-                </tr>
-                  <tr>
-                    <td valign="top" colspan="4" style="width: 864px">
-                        <img alt="open" id="img2" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />军检</td>
-                </tr>
-                <tr>
-                    <td class="auto-style1">军检纪要：</td>
-                    <td style="width: 128px; height: 24px">
-                        <input type="text" ms-duplex="taskid" enabled="False"></input>
-                    </td>
-                    <td style="width: 88px; height: 24px">军检结论：</td>
-                    <td style="width: 128px; height: 24px">{{deptname}}</td>
-                </tr>
-                <tr>
-                    <td class="auto-style1">军代表：</td>
-                    <td>
-                        <div>
-        <input checked="true" name="R1" type="radio" value="0" />同意
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 864px" border="1">
+            <tr>
+                <td valign="top" colspan="4" style="width: 864px">
+                    <img alt="open" id="img2" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
+                    {{steps[2].stepname}}</td>
+            </tr>
+            <tr>
+                <td class="auto-style1">军检纪要：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.armyCheck" ms-attr-readonly="steps[3].iscurrent" />
+                </td>
+                <td style="width: 88px; height: 24px">军检结论：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.armyResult" ms-attr-readonly="steps[3].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style1">军代表：</td>
+                <td>
+                    <div>
+                        <input checked="true" name="R1" type="radio" value="0" />同意
         <input checked="false" name="R1" type="radio" value="1" />驳回
-                        </div>
-                    </td>
-                </tr>
-                 <tr>
-                    <td valign="top" colspan="4" style="width: 864px">
-                        <img alt="open" id="img3" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />装备交验</td>
-                </tr>
-                <tr>
-                    <td class="auto-style1">单位验收结论：</td>
-                    <td style="width: 128px; height: 24px">
-                        <input type="text" ms-duplex="taskid" enabled="False"></input>
-                    </td>
-                    <td style="width: 88px; height: 24px">军代表验收结论：</td>
-                    <td style="width: 128px; height: 24px">{{deptname}}</td>
-                </tr>
-                <tr>
-                    <td class="auto-style1">军代表：</td>
-                    <td>
-                        <div>
-        <input checked="true" name="R1" type="radio" value="0" />同意
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 864px" border="1">
+            <tr>
+                <td valign="top" colspan="4" style="width: 864px">
+                    <img alt="open" id="img3" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
+                    {{steps[3].stepname}}</td>
+            </tr>
+            <tr>
+                <td class="auto-style1">单位验收结论：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.equipmentResult" ms-attr-readonly="steps[4].iscurrent" />
+                </td>
+                <td style="width: 88px; height: 24px">军代表验收结论：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.armyManResult" ms-attr-readonly="steps[4].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style1">军代表：</td>
+                <td>
+                    <div>
+                        <input checked="true" name="R1" type="radio" value="0" />同意
         <input checked="false" name="R1" type="radio" value="1" />驳回
-                        </div>
-                    </td>
-                </tr>
-                   <tr>
-                    <td valign="top" colspan="4" style="width: 864px">
-                        <img alt="open" id="img4" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />装备交付</td>
-                </tr>
-                 <tr>
-                    <td class="auto-style1">装备交接记录：</td>
-                    <td style="width: 128px; height: 24px">
-                        <input type="text" ms-duplex="taskid" enabled="False"></input>
-                    </td>
-                    <td style="width: 88px; height: 24px">附件交接记录：</td>
-                    <td style="width: 128px; height: 24px">{{deptname}}</td>
-                </tr>
-                 <tr>
-                    <td class="auto-style1">资料交接记录：</td>
-                    <td style="width: 128px; height: 24px">
-                        &nbsp;</td>
-                    <td style="width: 88px; height: 24px">&nbsp;</td>
-                    <td style="width: 128px; height: 24px">&nbsp;</td>
-                </tr>
-                 <tr>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 864px" border="1">
+            <tr>
+                <td valign="top" colspan="4" style="width: 864px">
+                    <img alt="open" id="img4" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
+                    {{steps[4].stepname}}</td>
+            </tr>
+            <tr>
+                <td class="auto-style1">装备交接记录：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.equipmentConsignLog" ms-attr-readonly="steps[5].iscurrent" />
+                </td>
+                <td style="width: 88px; height: 24px">附件交接记录：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.attachConsignLog" ms-attr-readonly="steps[5].iscurrent" /></td>
+            </tr>
+            <tr>
+                <td class="auto-style1">资料交接记录：</td>
+                <td style="width: 128px; height: 24px">
+                    <input ms-duplex="data.docConsignLog" ms-attr-readonly="steps[5].iscurrent" /></td>
+                <td style="width: 88px; height: 24px">&nbsp;</td>
+                <td style="width: 128px; height: 24px">&nbsp;</td>
+            </tr>
+            <tr>
                 <td class="auto-style2" colspan="4">
                     <div>
                         交装单位经办人
@@ -279,7 +385,6 @@
                     </div>
                 </td>
             </tr>
-            </tbody>
         </table>
     </div>
 </body>
