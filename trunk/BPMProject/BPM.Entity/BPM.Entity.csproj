@@ -82,6 +82,7 @@
     <Compile Include="Paged\PagedList.cs" />
     <Compile Include="Paged\PageDto.cs" />
     <Compile Include="Paged\TreeDto.cs" />
+    <Compile Include="Proccess\EquipmentRepair.cs" />
     <Compile Include="Proccess\processTemplate.cs" />
     <Compile Include="Proccess\StepTemplate.cs" />
     <Compile Include="Proccess\步骤实例.cs" />

@@ -70,6 +70,7 @@
     <Compile Include="PageMng.cs" />
     <Compile Include="DocMng.cs" />
     <Compile Include="SysMng.cs" />
+    <Compile Include="EquipmentRepairMng.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BPM.Entity\BPM.Entity.csproj">
