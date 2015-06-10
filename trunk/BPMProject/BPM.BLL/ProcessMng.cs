@@ -23,13 +23,13 @@ namespace BPM.BLL
             instance.模板Id = temp.模板Id;
             instance.申请时间 = DateTime.Now;
             instance.申请用户 = 1;//当前用户
-            instance.StepInstanceList = new List<步骤实例>();
+            instance.StepInstanceList = new List<StepInstance>();
             var currentStep = temp.HeaderStep;
             while (currentStep != null)
             {
-                步骤实例 current = new 步骤实例();
-                current.步骤实例id = new Random().Next();
-                current.步骤模板 = currentStep;
+                StepInstance current = new StepInstance();
+                current.stepid = new Random().Next();
+                current.StepTemplate = currentStep;
                 instance.StepInstanceList.Add(current);
                 //下一步骤
                 currentStep = currentStep.下一步骤;
@@ -42,7 +42,7 @@ namespace BPM.BLL
         /// </summary>
         /// <param name="stepInstance"></param>
         /// <returns>1,提交成功，2，流程结束，3，提交失败</returns>
-        public static int SubmitStep(步骤实例 stepInstance)
+        public static int SubmitStep(StepInstance stepInstance)
         {
             int iReturnCode = 0;
             //获取步骤模板
@@ -81,11 +81,11 @@ namespace BPM.BLL
             return iReturnCode;
         }
 
-        private static 步骤实例 GetNextStep(步骤实例 stepInstance)
+        private static StepInstance GetNextStep(StepInstance stepInstance)
         {
             foreach (var si in stepInstance.流程实例.StepInstanceList)
             {
-                if (si.步骤模板.步骤模板Id == stepInstance.步骤模板.下一步骤.步骤模板Id)
+                if (si.StepTemplate.步骤模板Id == stepInstance.StepTemplate.下一步骤.步骤模板Id)
                 {
                     return si;
                 }

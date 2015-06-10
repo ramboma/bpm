@@ -22,6 +22,20 @@ namespace BPM.BLL
         {
             return Utity.Connection.Insert<EquipmentRepair>(er, selectIdentity: true);
         }
+        public static long createEquipmentRepair()
+        {
+            long lReturn = 0;
+            try
+            {
+                Utity.Connection.CreateTable<EquipmentRepair>();
+                lReturn = 1;
+            }
+            catch(Exception e)
+            {
+                lReturn = 0;
+            }
+            return lReturn;
+        }
 
     }
 }

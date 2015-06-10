@@ -81,7 +81,8 @@ public class LibraryHandler : IHttpHandler
             case "sysconfig":
                return SysAssert.ProcRequest(method, strParams);
             #region 出库流程测试
-
+            case "flowlibrary":
+               return EquipmentRepairServer.ProcRequest(method, strParams);
             #endregion
 
 

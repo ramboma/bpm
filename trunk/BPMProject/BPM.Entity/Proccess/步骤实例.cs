@@ -7,17 +7,17 @@ using System;
 
 namespace BPM.Entity.Process
 {
-    public class 步骤实例
+    public class StepInstance
     {
         ///<summary>
         ///步骤实例ID
         ///</summary>
-        public int 步骤实例id { get; set; }
+        public int stepid { get; set; }
 
         ///<summary>
         ///步骤模板Id
         ///</summary>
-        public StepTemplate 步骤模板 { get; set; }
+        public StepTemplate StepTemplate { get; set; }
 
 
         ///<summary>

@@ -48,9 +48,9 @@ namespace BPM.Entity.Process
         ///<summary>
         ///当前步骤
         ///</summary>
-        public 步骤实例 当前步骤 { get; set; }
+        public StepInstance 当前步骤 { get; set; }
 
-        public List<步骤实例> StepInstanceList { get; set; }
+        public List<StepInstance> StepInstanceList { get; set; }
 
     }
 }
