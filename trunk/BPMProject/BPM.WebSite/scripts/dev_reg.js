@@ -15,6 +15,18 @@ $.extend(
             }
             return Json_data;
         },
+        Deal_Empl_Data: function (data) {
+            var Ret = eval('(' + data + ')');
+            var ctlg_json = Ret.Result;
+            var Json_data = [];
+            for (var i = 0; i < ctlg_json.length; i++) {
+                var TempNode = { 'id': '', 'text': '' };
+                TempNode.id = ctlg_json[i].EmplID;
+                TempNode.text = ctlg_json[i].EmplName;
+                Json_data.push(TempNode);
+            }
+            return Json_data;
+        },
         Save_Dev_Info:function(docFileName)
         {
             var Devmng_In_Json = {
@@ -29,9 +41,9 @@ $.extend(
             Devmng_In_Json.source = $("#sl_devmng_source").combobox("getValue");
             Devmng_In_Json.price = $("#tb_devmng_price").textbox("getValue");
             Devmng_In_Json.productTime = $("#tb_devmng_producttime").datebox("getValue");
-            Devmng_In_Json.departMent = $("#tb_devmng_dept").textbox("getValue");
+            Devmng_In_Json.departMent = $("#sl_devmng_dept").combobox("getValue");
             Devmng_In_Json.docPath = docFileName;
-            Devmng_In_Json.keeper = $("#tb_devmng_owner").textbox("getValue");
+            Devmng_In_Json.keeper = $("#sl_devmng_owner").combobox("getValue");
             $.ajax(
             {
                 url: '/Route/LibraryHandler.ashx',
@@ -72,6 +84,39 @@ $.extend(
                     }
                 }
                 );
+                //获取部门信息
+                $.ajax(
+                       {
+                           url: '/Route/LibraryHandler.ashx',
+                           type: 'POST',
+                           data: { c: 'sysconfig', m: 'getalldeptlist', p: '' },
+                           success: function (data) {
+                               var Ret = eval('(' + data + ')');
+                               var ctlg_json = Ret.Result;
+                               if (ctlg_json == null) {
+                                   return;
+                               }
+                               $("#sl_devmng_dept").combobox('loadData', ctlg_json);
+                           },
+                           error: function (data) {
+                               alert(data);
+                           }
+                       }
+                 );
+                //获取人员信息
+                $.ajax(
+                       {
+                           url: '/Route/LibraryHandler.ashx',
+                           type: 'POST',
+                           data: { c: 'sysconfig', m: 'getallemplyeeinfo', p: '' },
+                           success: function (data) {
+                               $("#sl_devmng_owner").combobox('loadData', $.Deal_Empl_Data(data));
+                           },
+                           error: function (data) {
+                               alert(data);
+                           }
+                       }
+                 );
             return;
         },
         Btn_Submit_Click: function (ev) {

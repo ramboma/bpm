@@ -1,5 +1,4 @@
-﻿var Submit_Flag = 0;
-var Deal_Model = 0;   //0标示没有操作，1表示修改，2表示新增
+﻿var Deal_Model = 0;   //0标示没有操作，1表示修改，2表示新增
 var Cur_Selected_Row = null;
 $.extend(
     {
@@ -116,42 +115,6 @@ $.extend(
              );
             return;
         },
-        Btn_Submit_Click: function (ev) {
-            var rows = $('#dgt_obj_list').datagrid("getRows");
-            var Param_Json = [];
-            var Param_Json_all = {};
-            Param_Json_all.ApplyId = 0;
-            Param_Json_all.ApproveId = 0;
-            Param_Json_all.RelativeTask = 0;
-            Param_Json_all.ManagerId = 0;
-            Param_Json_all.data = Param_Json;
-            if (Submit_Flag == 1) {
-                return;
-            }
-            $.each(rows, function (i, val) {
-                var TempNode = { 'ProductId': '', 'SaleCount': '' };
-                TempNode.ProductId = val.ProductId;
-                TempNode.SaleCount = val.Amount;
-                Param_Json.push(TempNode);
-            });
-            $.ajax(
-                {
-
-                    url: '/Route/LibraryHandler.ashx',
-                    type: 'POST',
-                    data: { c: 'assetlibrary', m: 'savefetchdetail', p: JSON.stringify(Param_Json_all) },
-                    success: function (data) {
-                        var Ret_Data = eval('(' + data + ')');
-                        var Ret_Result_Json = Ret_Data.Result.Lists;
-                        $("#Div_Out_Result").show();
-                        $.each(Ret_Result_Json, function (i, val) {
-                            $("#dgt_obj_OutResult").datagrid("appendRow", val);
-                        });
-                        Submit_Flag = 1;
-                    }
-                });
-            return;
-        },
         Btn_Cancel_Click: function () {
             location.reload(false);
             return;
@@ -159,7 +122,7 @@ $.extend(
         Btn_Ok_Click: function () {
             var Row = {};
             Row.EmplName = $("#tb_empl_name").textbox('getValue');
-            Row.EmplID = $("#sl_empl_dept").combobox('getValue');
+            Row.DeptID = $("#sl_empl_dept").combobox('getValue');
             Row.Attribute = $("#sl_empl_attribute").combobox('getValue');
             Row.Rank=$("#sl_empl_rank").combobox('getValue');
             Row.Sex=$("#sl_empl_sex").combobox('getValue');

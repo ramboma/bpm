@@ -12,51 +12,51 @@ public class Equipment
    ///设备编码
    ///</summary>
    [AutoIncrement] 
-   public long id {get;set;}
+   public long EquipmentID {get;set;}
     ///<summary>
    ///设备名称
    ///</summary>
-   public string equipmentName {get;set;}
+   public string EquipmentName { get; set; }
     ///<summary>
    ///型号
    ///</summary>
-   public string model {get;set;}
+   public string Model { get; set; }
     ///<summary>
    ///规格
    ///</summary>
-   public string standard {get;set;}
+   public string Standard { get; set; }
     ///<summary>
    ///来源
    ///</summary>
-   public long source {get;set;}
+   public long Source { get; set; }
     ///<summary>
    ///单价
    ///</summary>
-   public double price {get;set;}
+   public double Price { get; set; }
     ///<summary>
    ///入库时间
    ///</summary>
-   public DateTime updateTime {get;set;}
+   public DateTime UpdateTime { get; set; }
     ///<summary>
    ///设备状态初始
    ///</summary>
-   public string equipmentStatus {get;set;}
+   public string EquipmentStatus { get; set; }
     ///<summary>
    ///保管单位
    ///</summary>
-   public long departMent {get;set;}
+   public long KeepDept { get; set; }
     ///<summary>
    ///技术文档
    ///</summary>
-   public string docPath {get;set;}
+   public string DocPath { get; set; }
     ///<summary>
    ///删除标示
    ///</summary>
-   public byte hasDelete {get;set;}
+   public byte HasDelete { get; set; }
     ///<summary>
    ///保管人
    ///</summary>
-   public long keeper {get;set;}
+   public long KeepEmpl { get; set; }
 
     /// <summary>
     /// 工厂名

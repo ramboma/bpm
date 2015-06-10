@@ -189,16 +189,16 @@ CREATE TABLE [dbo].[Employee](
 角色信息表：
 
 CREATE TABLE [dbo].[Role](
-	[RoleID] [bigint] NOT NULL,
+	[RoleID] [bigint] IDENTITY(1,1) NOT NULL,
 	[RoleName] [varchar](100) NOT NULL,
-	[EmplID] [bigint] IDENTITY(1,1) NOT NULL,
-	[AccessMask] [bigint] NULL,
+	[EmplID] [bigint] NULL,
 	[Remark] [varchar](100) NULL,
  CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
 (
 	[RoleID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
 功能信息表：
 
 CREATE TABLE [dbo].[Function](
@@ -212,4 +212,28 @@ CREATE TABLE [dbo].[Function](
 	[FuncID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+设备信息表：
+CREATE TABLE [dbo].[Equipment](
+	[EquipmentID] [bigint] IDENTITY(1,1) NOT NULL,
+	[EquipmentName] [varchar](100) NULL,
+	[Model] [varchar](500) NULL,
+	[Standard] [varchar](100) NULL,
+	[Source] [bigint] NULL,
+	[Price] [float] NULL,
+	[UpdateTime] [datetime] NULL,
+	[EquipmentStatus] [varchar](50) NULL,
+	[KeepDept] [bigint] NULL,
+	[DocPath] [varchar](1000) NULL,
+	[HasDelete] [tinyint] NULL,
+	[KeepEmpl] [bigint] NULL,
+	[FactoryName] [varchar](500) NULL,
+	[SalerName] [varchar](500) NULL,
+	[ProductTime] [datetime] NULL,
+ CONSTRAINT [PK_EQUIPMENT] PRIMARY KEY CLUSTERED 
+(
+	[EquipmentId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
 

@@ -9,9 +9,10 @@ namespace BPM.Entity.DTO
     /// <summary>
     /// 新增资产Dto
     /// </summary>
-    public class EquipmentDto
+    public class EquipmentDto:Equipment
     {
-        public int EquipmentId { get; set; }
-        public string Ope { get; set; }
+        public string Keeper { get; set; }
+        public string DeptName { get; set; }
+        public string Source { get; set; }
     }
 }

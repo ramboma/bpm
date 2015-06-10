@@ -9,10 +9,10 @@ namespace BPM.Entity
     public class Role
     {
         [AutoIncrement]
-        public double id { get; set; }
-        public string  Name { get; set; }
-        public double EmployeeID { get; set; }
-        public string AccessMask { get; set; }
+        public long RoleID { get; set; }
+        public string  RoleName { get; set; }
+        public long EmplID { get; set; }
+        public long AccessMask { get; set; }
         public string Remark { get; set; }
     }
 }

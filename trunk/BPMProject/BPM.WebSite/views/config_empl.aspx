@@ -62,7 +62,7 @@
             <td  align="left" class="Dlg_Tbl_TD_Label">性别：</td>
             <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="sl_empl_sex" class="easyui-combobox" name="" data-options="valueField:'id',textField:'text'" style="width:250px;"/></td>
             <td  align="left" class="Dlg_Tbl_TD_Label">出生日期：</td>
-            <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_empl_birthday" class="easyui-datebox" data-options="min:0,max:1000,required:true" style="width:250px;"/></td>
+            <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_empl_birthday" class="easyui-datebox" data-options="" style="width:250px;"/></td>
         </tr>
         <tr>
             <td  align="left" class="Dlg_Tbl_TD_Label">登录名：</td>
@@ -72,7 +72,7 @@
         </tr>
         <tr>
             <td  align="left" class="Dlg_Tbl_TD_Label">电话：</td>
-            <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_empl_telno" class="easyui-numberbox" data-options="min:0,max:1000000000,required:true" style="width:250px;"/></td>
+            <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_empl_telno" class="easyui-numberbox" data-options="" style="width:250px;"/></td>
             <td  align="left" class="Dlg_Tbl_TD_Label">备注：</td>
             <td  align="left" class="Dlg_Tbl_TD_Txt"><input id="tb_empl_memo" class="easyui-textbox" style="width:250px;"/></td>
         </tr> 

@@ -64,8 +64,8 @@
                     <div id="div_config_Container" class="Div_Menu_Sub_Container">
                         <input id="btn_config_dept" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="部门管理" />
                         <input id="btn_config_employee" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="人员管理" />
-                        <input id="btn_config_product" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="品名管理" />
                         <input id="btn_config_role" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="角色管理" />
+                        <input id="btn_config_product" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="品名管理" />
                         <input id="btn_config_process" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="流程管理" />
                         <input id="btn_config_recover" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="备份恢复" />
                         <input id="btn_config_quit" class="Btn_Menu_Item" type="button" onclick="btn_click(this)" value="退出登录"  />

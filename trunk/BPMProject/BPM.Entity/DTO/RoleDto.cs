@@ -8,6 +8,6 @@ namespace BPM.Entity.DTO
 {
     public class RoleDto : Role
     {
-        public string EmployeeName { get; set; }
+        public string EmplName { get; set; }
     }
 }

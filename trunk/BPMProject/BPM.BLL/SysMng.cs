@@ -68,12 +68,12 @@ namespace BPM.BLL
 
         public static long DeleteRoleInfo(int strParams)
         {
-            return Utity.Connection.Delete<Role>(s => s.id == strParams);
+            return Utity.Connection.Delete<Role>(s => s.RoleID == strParams);
         }
         public static List<RoleDto> GetAllRoleInfo()
         {
             SqlExpression<Role> sqlexpression = Utity.Connection.From<Role>();
-            sqlexpression.LeftJoin<Employee>((r, e) => r.EmployeeID == e.EmplID);
+            sqlexpression.LeftJoin<Employee>((r, e) => r.EmplID == e.EmplID);
             return Utity.Connection.Select<RoleDto>(sqlexpression);
         }
         #endregion

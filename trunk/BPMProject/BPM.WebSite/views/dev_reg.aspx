@@ -57,9 +57,9 @@
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">保管单位：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_dept" class="easyui-textbox" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="sl_devmng_dept" class="easyui-combobox" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
             <td  align="left" class="Tbl_TD_Label">责任人：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_owner" class="easyui-textbox" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="sl_devmng_owner" class="easyui-combobox" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">技术文档：</td>
