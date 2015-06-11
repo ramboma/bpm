@@ -4,29 +4,38 @@
 // Purpose: Definition of Class processTemplate
 
 using System;
-
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 namespace BPM.Entity.Process
 {
-
-    public class processTemplate
+    [XmlElement]
+    public class ProcessTemplate
     {
         ///<summary>
         ///模板Id
         ///</summary>
-        public int 模板Id { get; set; }
+        [XmlAttribute]
+        public int TemplateId { get; set; }
         ///<summary>
         ///模板名称
         ///</summary>
-        public int 模板名称 { get; set; }
+        [XmlAttribute]
+        public int TemplateName { get; set; }
         ///<summary>
         ///流程申请权限
         ///</summary>
-        public int 流程申请权限 { get; set; }
+        [XmlAttribute]
+        public int RoleId { get; set; }
 
         /// <summary>
         /// 第一个步骤
         /// </summary>
         public StepTemplate HeaderStep { get; set; }
+
+        public static void SerialXml(string path)
+        {
+            
+        }
 
     }
 }

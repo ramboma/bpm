@@ -8,19 +8,19 @@ namespace BPM.BLL
 {
     public class ProcessMng
     {
-        public static List<processTemplate> 获取流程模板()
+        public static List<ProcessTemplate> 获取流程模板()
         {
             //获取配置文件中的模板
-            return new List<processTemplate>();
+            return new List<ProcessTemplate>();
         }
 
-        public static FlowInstance CreateProcessInstance(processTemplate temp)
+        public static FlowInstance CreateProcessInstance(ProcessTemplate temp)
         {
             //根据模板创建一个流程实例
             var instance = new FlowInstance();
             instance.FlowInstanceId = 1;
             instance.FlowInstanceName = "第一个实例";
-            instance.TemplateId = temp.模板Id;
+            instance.TemplateId = temp.TemplateId;
             instance.ApproveTime = DateTime.Now;
             instance.ApproveUserId = 1;//当前用户
             instance.StepInstanceList = new List<StepInstance>();
@@ -32,7 +32,7 @@ namespace BPM.BLL
                 current.StepTemplate = currentStep;
                 instance.StepInstanceList.Add(current);
                 //下一步骤
-                currentStep = currentStep.下一步骤;
+                currentStep = currentStep.NextStep;
             }
             //创建新流程实例
             return instance;
@@ -47,7 +47,7 @@ namespace BPM.BLL
             int iReturnCode = 0;
             //获取步骤模板
             StepTemplate temp = new StepTemplate();
-            string actionName = temp.提交动作事件;//assetlibrary.SubmitPaiChe
+            string actionName = temp.SubmitAction;//assetlibrary.SubmitPaiChe
             string data = stepInstance.数据;//
 
             string queryurl = "http://localhost:3665/Route/LibraryHandler.ashx";
@@ -85,7 +85,7 @@ namespace BPM.BLL
         {
             foreach (var si in stepInstance.FlowInstance.StepInstanceList)
             {
-                if (si.StepTemplate.步骤模板Id == stepInstance.StepTemplate.下一步骤.步骤模板Id)
+                if (si.StepTemplate.StepTemplateId == stepInstance.StepTemplate.NextStep.StepTemplateId)
                 {
                     return si;
                 }
