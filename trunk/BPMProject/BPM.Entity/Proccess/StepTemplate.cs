@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 namespace BPM.Entity.Process
 {
-    [XmlElement]
+    [Serializable]
     public class StepTemplate
     {
         ///<summary>

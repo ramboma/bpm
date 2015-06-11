@@ -25,7 +25,7 @@ namespace BPM.BLL
             //步骤1
             
             //更新流程表
-            return 
+           return lReturn;
         }
         public static long createEquipmentRepair()
         {

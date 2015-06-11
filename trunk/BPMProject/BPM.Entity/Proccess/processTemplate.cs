@@ -6,9 +6,11 @@
 using System;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using System.IO;
+using System.Collections.Generic;
 namespace BPM.Entity.Process
 {
-    [XmlElement]
+    [Serializable]
     public class ProcessTemplate
     {
         ///<summary>
@@ -29,14 +31,31 @@ namespace BPM.Entity.Process
 
         [XmlAttribute]
         public int StartStep { get; set; }
+        [XmlArray]
+        public List<StepTemplate> StepTemplateList { get; set; }
         /// <summary>
         /// 第一个步骤
         /// </summary>
         public StepTemplate HeaderStep { get; set; }
 
-        public static void SerialXml(string path)
+        
+    }
+    [XmlRoot]
+    public class ProcessTemplateList
+    {
+        [XmlArray]
+        [XmlArrayItem("ProcessTemplate")]
+        public List<ProcessTemplate> Lists { get; set; }
+        public static ProcessTemplate SerialXml(string path)
         {
-            
+            FileStream fs = null;
+
+            XmlSerializer xs = new XmlSerializer(typeof(ProcessTemplate));
+            fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            var template = (ProcessTemplate)xs.Deserialize(fs);
+            fs.Close();
+            return template;
+
         }
 
     }
