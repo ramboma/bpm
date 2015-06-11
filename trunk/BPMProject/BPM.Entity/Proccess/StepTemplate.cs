@@ -9,29 +9,37 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 namespace BPM.Entity.Process
 {
-    
+    [XmlElement]
     public class StepTemplate
     {
         ///<summary>
         ///步骤模板Id
         ///</summary>
+        [XmlAttribute]
         public int StepTemplateId { get; set; }
 
         ///<summary>
         ///步骤模板名称
         ///</summary>
+        [XmlAttribute]
         public string StepTemplateName { get; set; }
 
         ///<summary>
         ///审批角色
         ///</summary>
+        [XmlAttribute]
         public int RoleId { get; set; }
 
         ///<summary>
         ///所属流程
         ///</summary>
+        [XmlAttribute]
         public int ProcessTemplateId { get; set; }
 
+        [XmlAttribute]
+        public int PreStepId { get; set; }
+        [XmlAttribute]
+        public int NextStepId { get; set; }
         ///<summary>
         ///上一步骤
         ///</summary>

@@ -27,6 +27,8 @@ namespace BPM.Entity.Process
         [XmlAttribute]
         public int RoleId { get; set; }
 
+        [XmlAttribute]
+        public int StartStep { get; set; }
         /// <summary>
         /// 第一个步骤
         /// </summary>
