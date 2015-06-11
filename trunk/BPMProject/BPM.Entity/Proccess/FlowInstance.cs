@@ -8,47 +8,47 @@ using System.Collections.Generic;
 
 namespace BPM.Entity.Process
 {
-    public class 流程实例
+    public class FlowInstance
     {
         ///<summary>
         ///流程实例ID
         ///</summary>
-        public int 流程实例id { get; set; }
+        public int FlowInstanceId { get; set; }
 
         ///<summary>
         ///流程实例名称
         ///</summary>
-        public String 流程实例名称 { get; set; }
+        public String FlowInstanceName { get; set; }
 
         ///<summary>
         ///模板Id
         ///</summary>
-        public int 模板Id { get; set; }
+        public int TemplateId { get; set; }
 
         ///<summary>
         ///模板名称
         ///</summary>
-        public String 模板名称 { get; set; }
+        public String TemplateName { get; set; }
 
         ///<summary>
         ///申请用户
         ///</summary>
-        public int 申请用户 { get; set; }
+        public int ApproveUserId { get; set; }
 
         ///<summary>
         ///申请时间
         ///</summary>
-        public System.DateTime 申请时间 { get; set; }
+        public System.DateTime ApproveTime { get; set; }
 
         ///<summary>
         ///流程状态
         ///</summary>
-        public int 流程状态 { get; set; }
+        public int Status { get; set; }
 
         ///<summary>
         ///当前步骤
         ///</summary>
-        public StepInstance 当前步骤 { get; set; }
+        public StepInstance CurrentStepInstance { get; set; }
 
         public List<StepInstance> StepInstanceList { get; set; }
 

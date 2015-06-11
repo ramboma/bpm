@@ -14,15 +14,15 @@ namespace BPM.BLL
             return new List<processTemplate>();
         }
 
-        public static 流程实例 CreateProcessInstance(processTemplate temp)
+        public static FlowInstance CreateProcessInstance(processTemplate temp)
         {
             //根据模板创建一个流程实例
-            var instance = new 流程实例();
-            instance.流程实例id = 1;
-            instance.流程实例名称 = "第一个实例";
-            instance.模板Id = temp.模板Id;
-            instance.申请时间 = DateTime.Now;
-            instance.申请用户 = 1;//当前用户
+            var instance = new FlowInstance();
+            instance.FlowInstanceId = 1;
+            instance.FlowInstanceName = "第一个实例";
+            instance.TemplateId = temp.模板Id;
+            instance.ApproveTime = DateTime.Now;
+            instance.ApproveUserId = 1;//当前用户
             instance.StepInstanceList = new List<StepInstance>();
             var currentStep = temp.HeaderStep;
             while (currentStep != null)
@@ -67,12 +67,12 @@ namespace BPM.BLL
                 //下一步为空，说明流程走完了
                 if (nextStep == null)
                 {
-                    stepInstance.流程实例.流程状态 = 1; //流程结束
+                    stepInstance.FlowInstance.Status = 1; //流程结束
                     iReturnCode = 3;
                 }
                 else
                 {
-                    stepInstance.流程实例.当前步骤 = nextStep;
+                    stepInstance.FlowInstance.CurrentStepInstance = nextStep;
                     iReturnCode = 2;
                 }
 
@@ -83,7 +83,7 @@ namespace BPM.BLL
 
         private static StepInstance GetNextStep(StepInstance stepInstance)
         {
-            foreach (var si in stepInstance.流程实例.StepInstanceList)
+            foreach (var si in stepInstance.FlowInstance.StepInstanceList)
             {
                 if (si.StepTemplate.步骤模板Id == stepInstance.StepTemplate.下一步骤.步骤模板Id)
                 {

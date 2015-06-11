@@ -20,7 +20,12 @@ namespace BPM.BLL
         /// <returns></returns>
         public static long EquipmentInputFactory(EquipmentRepair er)
         {
-            return Utity.Connection.Insert<EquipmentRepair>(er, selectIdentity: true);
+            //插入装备维修数据
+           long lReturn= Utity.Connection.Insert<EquipmentRepair>(er, selectIdentity: true);
+            //步骤1
+            
+            //更新流程表
+            return 
         }
         public static long createEquipmentRepair()
         {

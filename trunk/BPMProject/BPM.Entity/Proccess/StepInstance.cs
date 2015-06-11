@@ -23,12 +23,12 @@ namespace BPM.Entity.Process
         ///<summary>
         ///审批人
         ///</summary>
-        public int 审批人 { get; set; }
+        public int Approver { get; set; }
 
         ///<summary>
         ///流程实例ID
         ///</summary>
-        public 流程实例 流程实例 { get; set; }
+        public FlowInstance FlowInstance { get; set; }
 
         ///<summary>
         ///操作人

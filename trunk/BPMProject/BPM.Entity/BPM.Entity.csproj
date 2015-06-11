@@ -85,8 +85,8 @@
     <Compile Include="Proccess\EquipmentRepair.cs" />
     <Compile Include="Proccess\processTemplate.cs" />
     <Compile Include="Proccess\StepTemplate.cs" />
-    <Compile Include="Proccess\步骤实例.cs" />
-    <Compile Include="Proccess\流程实例.cs" />
+    <Compile Include="Proccess\StepInstance.cs" />
+    <Compile Include="Proccess\FlowInstance.cs" />
     <Compile Include="ProcessLog.cs" />
     <Compile Include="ProcessType.cs" />
     <Compile Include="Product.cs" />
