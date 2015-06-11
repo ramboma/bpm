@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ProcessTemplateList>
-  <ProcessTemplate TemplateId="1" TemplateName="装备维修流程" RoleId="1">
+  <ProcessTemplate TemplateId="1" TemplateName="装备维修流程" RoleId="1" >
     <StepTemplateList>
       <StepTemplate StepTemplateId="1" StepTemplateName="装备进场" RoleId="1" ProcessTemplateId="1" PreStep="0" NextStep="2" SubmitAction="flowlibrary.equipmentinputfactory" RebackAction="flowlibrary.rebackpaiche"/>
       <StepTemplate StepTemplateId="2" StepTemplateName=" 修理勘验" RoleId="2" ProcessTemplateId="1" PreStep="1" NextStep="3" SubmitAction="flowlibrary.equipmentinputfactory" RebackAction="flowlibrary.rebackpaiche"/>
