@@ -552,4 +552,23 @@ execute sp_addextendedproperty 'MS_Description',
    'ÈÎÎñ±í',
    'user', @CurrentUser, 'table', 'Task'
 go
-
+drop table StepInstance;
+CREATE TABLE [dbo].[StepInstance](
+	[stepid] [int] IDENTITY(1,1) NOT NULL,
+	[StepTemplateId] [int]  NULL,
+	[Approver] [int]  NULL,
+	[FlowInstanceId] [bigint]  NULL,
+	[Operator] [int]  NULL,
+	[OperateAction] [varchar](8000) NULL,
+	[Data] [varchar](8000) NULL
+);
+DROP TABLE flowinstance;
+CREATE TABLE [dbo].[FlowInstance](
+	[FlowInstanceId] [BIGINT] IDENTITY(1,1) NOT NULL,
+	[FlowInstanceName] [VARCHAR](8000) NULL,
+	[TemplateId] [INT]  NULL,
+	[TemplateName] [VARCHAR](8000) NULL,
+	[ApproveUserId] [INT]  NULL,
+	[ApproveTime] [DATETIME]  NULL,
+	[Status] [INT]  NULL,
+	[CurrentStepInstanceId] [INT]  NULL)

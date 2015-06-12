@@ -84,6 +84,10 @@ public class LibraryHandler : IHttpHandler,IRequiresSessionState
             #region 出库流程测试
             case "flowlibrary":
                return EquipmentRepairServer.ProcRequest(method, strParams);
+#endregion
+            #region 流程相关
+            case "flow":
+               return Flow.ProcRequest(method, strParams);
             #endregion
 
 

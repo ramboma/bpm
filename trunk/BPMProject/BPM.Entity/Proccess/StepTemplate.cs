@@ -36,28 +36,28 @@ namespace BPM.Entity.Process
         [XmlAttribute]
         public int ProcessTemplateId { get; set; }
 
-        [XmlAttribute]
-        public int PreStepId { get; set; }
-        [XmlAttribute]
-        public int NextStepId { get; set; }
+
         ///<summary>
         ///上一步骤
         ///</summary>
-        public StepTemplate PreStep { get; set; }
-
+        [XmlAttribute]
+        public int PreStepId { get; set; }
         ///<summary>
         ///下一步骤
         ///</summary>
-        public StepTemplate NextStep { get; set; }
+        [XmlAttribute]
+        public int NextStepId { get; set; }
 
         ///<summary>
         ///提交动作事件
         ///</summary>
+        [XmlAttribute]
         public string SubmitAction { get; set; }
 
         ///<summary>
         ///驳回动作事件
         ///</summary>
+        [XmlAttribute]
         public string RebackAction { get; set; }
 
         ///<summary>
