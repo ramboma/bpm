@@ -339,4 +339,24 @@ function Change_MenuState(i) {
     else { 
     }    
 }
+$(document).ready(function () {
+        var strCookie = document.cookie;
+        var arrCookie = strCookie.split("; ");
+        for (var i = 0; i < arrCookie.length; i++) {
+            var arr = arrCookie[i].split("=");
+            if ("AccessMask" == arr[0]) {
+                var AccessMask=arr[1];
+            }
+        }
+    var MenuItems = $(".Btn_Menu_Item");
+    for (var i = 0; i < MenuItems.length; i++)
+    {
+        if ((parseInt(AccessMask) & Math.pow(2, i)) != 0) {
+            MenuItems[i].style.display = "block";
+        }
+        else {
+            MenuItems[i].style.display = "none";
+        }
+    }
+});
 

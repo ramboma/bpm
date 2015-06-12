@@ -256,5 +256,17 @@ public class SysAssert
             }
         }
         return false;
+    }
+    public static long GetAccessMask()
+    {
+        UserAuthDto obj_Temp = (UserAuthDto)HttpContext.Current.Session["UserAuth"];
+        if (obj_Temp != null)
+        {
+            if (obj_Temp.LoginState == 0)
+            {
+                return obj_Temp.AccessMask;
+            }
+        }
+        return -1;
     } 
 }
