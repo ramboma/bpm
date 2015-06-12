@@ -9,6 +9,6 @@ public partial class views_login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        HttpContext.Current.Session["ee"]="12344";
+     
     }
 }

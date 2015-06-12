@@ -9,6 +9,9 @@ public partial class views_main : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!SysAssert.CheckAuthInfo())
+        {
+            Response.Redirect("../views/Login.aspx");
+        }
     }
 }

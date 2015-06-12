@@ -79,6 +79,7 @@
     <Compile Include="Enum\CommonEnum.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="EquipmentLog.cs" />
+    <Compile Include="FunctionInfo.cs" />
     <Compile Include="Paged\IPageList.cs" />
     <Compile Include="Paged\PagedList.cs" />
     <Compile Include="Paged\PageDto.cs" />

@@ -5,6 +5,7 @@
 <head>
     <title>工作流程自动化管理系统</title>
     <link href="../css/skin.css" type="text/css" rel="Stylesheet"/>
+    <script type="text/javascript" src="../scripts/widget/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="../scripts/default.js"></script>
 </head>
 <body>

@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
-    <title>系统登录</title>
+    <title>工作流程自动化管理系统</title>
     <link rel="stylesheet" type="text/css" href="../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../scripts/widget/easyui/themes/default/easyui.css"/>
 	<link rel="stylesheet" type="text/css" href="../scripts/widget/easyui/themes/icon.css"/>
@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td  align="center" style="height:200px">
-	<div class="easyui-panel" title="系统登录" style="width:400px;padding:30px 70px 20px 70px">
+	<div class="easyui-panel" title="系统登录" style="width:400px;padding:30px 70px 20px 70px;">
 		<div style="margin-bottom:10px">
 			用户名：<input id="tb_login_username" class="easyui-textbox" style="width:100%;height:32px;padding:12px" data-options="prompt:'用户名',iconCls:'icon-man',iconWidth:32"/>
 		</div>
@@ -29,7 +29,7 @@
 		</div>
 		<div>
 			<a href="#" onclick="$.Login()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="padding:5px 0px;width:100%;">
-				<span style="font-size:14px;">Login</span>
+				<span style="font-size:14px;">登录</span>
 			</a>
 		</div>
 	</div>

@@ -15,5 +15,9 @@ public partial class views_index : System.Web.UI.Page
         {
             Response.Redirect("../views/Login.aspx");
         }
+        
+HttpCookie cookie = new HttpCookie("cookieName");
+cookie.Value = "name1";
+HttpContext.Current.Response.Cookies.Add(cookie); 
     }
 }

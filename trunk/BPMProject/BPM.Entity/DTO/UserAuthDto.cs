@@ -16,7 +16,6 @@ namespace BPM.Entity.DTO
     {
         public string DeptName { get; set; }
         public string RoleName { get; set; }
-        public long RoleAccessMask { get; set; }
         public string RankName { get; set; }
         public string AttrName { get; set; }
         public UserLoginResult LoginState { get; set; }    //0表示成功，1表示账户错误，2表示密码错误
@@ -29,5 +28,6 @@ namespace BPM.Entity.DTO
         public string NewPwd { get; set; }
         public string AuthCode { get; set; }
         public string KeyValue { get; set; }
+        public long AccessMask { get; set; }
     }
 }
