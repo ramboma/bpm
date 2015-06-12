@@ -66,6 +66,7 @@
     <Compile Include="DTO\AddProductDto.cs" />
     <Compile Include="DTO\DocBorrowDto.cs" />
     <Compile Include="DTO\EmplyeeDto.cs" />
+    <Compile Include="DTO\FlowDto.cs" />
     <Compile Include="DTO\ProductSearchDto.cs" />
     <Compile Include="DTO\ProductStatiscDto.cs" />
     <Compile Include="DTO\EquipmentDto.cs" />

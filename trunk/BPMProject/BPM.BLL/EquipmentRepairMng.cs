@@ -20,11 +20,8 @@ namespace BPM.BLL
         /// <returns></returns>
         public static long EquipmentInputFactory(EquipmentRepair er)
         {
-            //插入装备维修数据
-           long lReturn= Utity.Connection.Insert<EquipmentRepair>(er, selectIdentity: true);
-            //步骤1
-            
-            //更新流程表
+            //更新装备维修数据
+           long lReturn= Utity.Connection.Update<EquipmentRepair>(er);
            return lReturn;
         }
         public static long createEquipmentRepair()
@@ -42,5 +39,19 @@ namespace BPM.BLL
             return lReturn;
         }
 
+
+        public static EquipmentRepair InitEquipmentRepair(long flowid)
+        {
+            EquipmentRepair er=new EquipmentRepair();
+            er.FlowInstanceId=flowid;
+            long id=Utity.Connection.Insert<EquipmentRepair>(er, selectIdentity: true);
+            er.EquipmentRepairId = id;
+            return er;
+        }
+
+        public static EquipmentRepair OpenEquipmentRepair(long flowid)
+        {
+            return Utity.Connection.Single<EquipmentRepair>(s => s.FlowInstanceId == flowid);
+        }
     }
 }

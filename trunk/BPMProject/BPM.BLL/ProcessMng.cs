@@ -148,6 +148,16 @@ namespace BPM.BLL
                 }
                 return Utity.Connection.Single<StepInstance>(s => s.stepid == id);
         }
+
+       
+        public static FlowInstance OpenProcessInstance(long flowInstanceId)
+        {
+            FlowInstance flowInstance=Utity.Connection.Single<FlowInstance>(s => s.FlowInstanceId == flowInstanceId); 
+            //插入流程实体
+            flowInstance.StepInstanceList =Utity.Connection.Select<StepInstance>(s => s.FlowInstanceId == flowInstanceId);
+            //返回新流程实例
+            return flowInstance;
+        }
         /// <summary>
         /// 步骤提交
         /// </summary>
@@ -158,21 +168,21 @@ namespace BPM.BLL
             int iReturnCode = 0;
             //获取步骤模板
             StepTemplate temp = new StepTemplate();
-            string actionName = temp.SubmitAction;//assetlibrary.SubmitPaiChe
+            string actionName = temp.SubmitAction;//flowlibrary.equipmentinputfactory
             string data = stepInstance.Data;//
 
             string queryurl = "http://localhost:3665/Route/LibraryHandler.ashx";
             string c = actionName.Split(new char[] { '.' })[0];
             string m = actionName.Split(new char[] { '.' })[1];
             string p = data;
-
-            ReturnBase rb = Post(queryurl, c, m, p);
+            
+            ReturnBase rb = BPM.Common.ResponseHelper.Post(queryurl, c,m,p);
             if (rb.Code == 1)
             {
                 //提交成功,更新步骤状态
-                stepInstance.Operator = 1;
-                stepInstance.OperateAction = actionName;
-
+                stepInstance.Operator = 1;//当前用户
+                stepInstance.OperateAction = actionName;//操作动作
+                long lResult=Utity.Connection.Update<StepInstance>(stepInstance);
                 //修改当前步骤
                 var nextStep = GetNextStep(stepInstance);
                 //下一步为空，说明流程走完了
@@ -203,19 +213,10 @@ namespace BPM.BLL
             return null;
 
         }
-
-
-        private static ReturnBase Post(string queryurl, string c, string m, string p)
-        {
-            //post数据，获取实际数据
-            return new ReturnBase() { Code = 1 };
-        }
-
         public static int CreateInstanceTable()
         {
             try
             {
-
                 //创建processTemplate表
                 Utity.Connection.CreateTable<FlowInstance>(overwrite:true);
                 //创建StepInstance表
@@ -229,6 +230,7 @@ namespace BPM.BLL
             }
 
         }
+
 
     }
 

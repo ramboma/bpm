@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Net;
+using System.IO;
 namespace BPM.Common
 {
     public class ResponseHelper
@@ -35,6 +37,35 @@ namespace BPM.Common
             rb.Message = message;
             rb.Result = null;
             return JsonConvert.SerializeObject(rb);
+        }
+
+        public static ReturnBase Post(string queryurl, string c,string m,string p)
+        {
+
+            string data = string.Format("c={0}&m={1}&p={2}", c, m, p);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(queryurl));
+            request.Method = "POST";
+            byte[] bytes= Encoding.GetEncoding("GB2312").GetBytes(data);
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = bytes.Length; 
+            //post数据，获取实际数据
+            using (Stream reqStream = request.GetRequestStream())
+            {
+                reqStream.Write(bytes, 0, bytes.Length);
+            }
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+            if (responseStream != null)
+            {
+                StreamReader reader = new StreamReader(responseStream, System.Text.Encoding.GetEncoding("gb2312"));
+                string result = reader.ReadToEnd();
+                reader.Close();
+                responseStream.Close();
+                request.Abort();
+                response.Close();
+                return  JsonConvert.DeserializeObject<ReturnBase>(result);
+            }
+            return new ReturnBase() { Code = 1 };
         }
     }
 }

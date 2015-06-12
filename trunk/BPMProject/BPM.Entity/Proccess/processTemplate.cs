@@ -33,7 +33,16 @@ namespace BPM.Entity.Process
         public int StartStep { get; set; }
         [XmlAttribute]
         public int EndStep { get; set; }
-
+        /// <summary>
+        /// 初始化流程数据
+        /// </summary>
+        [XmlAttribute]
+        public string CreateAction { get; set; }
+        /// <summary>
+        /// 打开流程数据动作
+        /// </summary>
+        [XmlAttribute]
+        public string OpenAction{ get; set; }
         [XmlArray]
         [XmlArrayItem("StepTemplate")]
         public List<StepTemplate> StepTemplateList { get; set; }

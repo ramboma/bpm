@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ServiceStack.DataAnnotations;
 namespace BPM.Entity.Proccess
 {
     /// <summary>
@@ -10,7 +10,13 @@ namespace BPM.Entity.Proccess
     /// </summary>
     public class EquipmentRepair
     {
-        public long id { get; set; }
+        [AutoIncrement]
+        public long EquipmentRepairId { get; set; }
+
+        /// <summary>
+        /// 流程实例id
+        /// </summary>
+        public long FlowInstanceId{ get; set; }    
         public double equipmentid { get; set; }
         public string equipmentname { get; set; }
         public string associateTime { get; set; }

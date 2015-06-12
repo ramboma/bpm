@@ -74,6 +74,10 @@
     <Compile Include="EquipmentRepairMng.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BPM.Common\BPM.Common.csproj">
+      <Project>{edadd5ca-c0f2-433b-b3f5-f0496f85ef5f}</Project>
+      <Name>BPM.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BPM.Entity\BPM.Entity.csproj">
       <Project>{be4e7614-edf8-4c2f-91a6-c33a52400fc4}</Project>
       <Name>BPM.Entity</Name>

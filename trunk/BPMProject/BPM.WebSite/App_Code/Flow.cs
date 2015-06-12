@@ -37,8 +37,32 @@ public class Flow
                 {
                     try
                     {
-                        var vProjectList = BPM.BLL.ProcessMng.CreateProcessInstance(templatePath, int.Parse(strParams));
-                        return ResponseHelper.GetSuccessReturn(vProjectList);
+                        var flowinstance = BPM.BLL.ProcessMng.CreateProcessInstance(templatePath, int.Parse(strParams));
+                        var list = BPM.BLL.ProcessMng.GetAllTemplateList(templatePath);
+                        var template = list.Lists.Find(s => s.TemplateId == flowinstance.TemplateId);
+                        var obj = postAction(template.CreateAction, flowinstance.FlowInstanceId.ToString());
+                        FlowDto dto = new FlowDto();
+                        dto.flowInstance = flowinstance;
+                        dto.Date = obj.Result;
+                        return ResponseHelper.GetSuccessReturn(dto);
+                    }
+                    catch (Exception e1)
+                    {
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                    }
+                }
+            case "openprocessinstance":
+                {
+                    try
+                    {
+                        var flowinstance = BPM.BLL.ProcessMng.OpenProcessInstance(long.Parse(strParams));
+                        var list = BPM.BLL.ProcessMng.GetAllTemplateList(templatePath);
+                        var template = list.Lists.Find(s => s.TemplateId == flowinstance.TemplateId);
+                        var obj = postAction(template.OpenAction, flowinstance.FlowInstanceId.ToString());
+                        FlowDto dto = new FlowDto();
+                        dto.flowInstance = flowinstance;
+                        dto.Date = obj.Result;
+                        return ResponseHelper.GetSuccessReturn(dto);
                     }
                     catch (Exception e1)
                     {
@@ -61,8 +85,17 @@ public class Flow
                     }
                 }
             #endregion
- 
+
         }
         return ResponseHelper.GetErrorReturn(ResponseCode.ErrorParameter, "输入参数错误，请重新输入");
+    }
+
+    private static ReturnBase postAction(string action, string strparams)
+    {
+        string queryurl = "http://localhost:3665/Route/LibraryHandler.ashx";
+        string c = action.Split(new char[] { '.' })[0];
+        string m = action.Split(new char[] { '.' })[1];
+        string p = strparams;
+        return BPM.Common.ResponseHelper.Post(queryurl, c,m,p);
     }
 }
