@@ -4,38 +4,149 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BPM.Entity.Process;
+using System.IO;
+using System.Xml.Serialization;
+using ServiceStack.OrmLite;
+using BPM.ORMLite;
 namespace BPM.BLL
 {
     public class ProcessMng
     {
-        public static List<ProcessTemplate> 获取流程模板()
+        /// <summary>
+        /// 获取配置文件中的模板
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static ProcessTemplateList GetAllTemplateList(string path)
         {
-            //获取配置文件中的模板
-            return new List<ProcessTemplate>();
+            FileStream fs = null;
+            XmlSerializer xs = new XmlSerializer(typeof(ProcessTemplateList));
+            fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            var listResult = (ProcessTemplateList)xs.Deserialize(fs);
+            fs.Close();
+            foreach (ProcessTemplate template in listResult.Lists)
+            {
+                template.HeaderStep = template.StepTemplateList.SingleOrDefault(s => s.StepTemplateId == template.StartStep);
+                template.RearStep = template.StepTemplateList.SingleOrDefault(s => s.StepTemplateId == template.EndStep);
+            }
+            return listResult;
         }
-
-        public static FlowInstance CreateProcessInstance(ProcessTemplate temp)
+        /// <summary>
+        /// 获取步骤所属的流程模板
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="currentStepId"></param>
+        /// <returns></returns>
+        public static ProcessTemplate GetParentProcessTemplate(string path,int currentStepId)
         {
+            ProcessTemplate template=null;
+            ProcessTemplateList list = GetAllTemplateList(path);
+            foreach (var v in list.Lists)
+            {
+                if (v.StepTemplateList.Find(s => s.ProcessTemplateId == v.TemplateId) != null)
+                {
+                    template = v;
+                    break;
+                }
+            }
+            return template;
+        }
+        /// <summary>
+        /// 返回当前步骤的后一步骤
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="currentStepId"></param>
+        /// <returns></returns>
+        public static StepTemplate GetNextStepTemplate(ProcessTemplate processTemplate, int currentStepId)
+        {
+
+            if (currentStepId == processTemplate.EndStep)
+                return null;
+            StepTemplate stReturn = null;
+            foreach (var step in processTemplate.StepTemplateList)
+            {
+                if (currentStepId == step.PreStepId)
+                {
+                    stReturn = step;
+                    break;
+                }
+
+            }
+            return stReturn;
+        }
+        /// <summary>
+        /// 返回当前步骤的前一步骤
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="currentStepId"></param>
+        /// <returns></returns>
+        public static StepTemplate GetPreStepTemplate(ProcessTemplate processTemplate, int currentStepId)
+        {
+
+            if (currentStepId == processTemplate.StartStep)
+                return null;
+            StepTemplate stReturn = null;
+            foreach (var step in processTemplate.StepTemplateList)
+            {
+                if (currentStepId == step.NextStepId)
+                {
+                    stReturn = step;
+                    break;
+                }
+
+            }
+            return stReturn;
+        }
+        /// <summary>
+        /// 通过模板创建新流程实例
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="templateId"></param>
+        /// <returns></returns>
+        public static FlowInstance CreateProcessInstance(string path,int templateId)
+        {
+            var list = GetAllTemplateList(path);
+            //获取流程模板
+            var temp=list.Lists.SingleOrDefault(s => s.TemplateId == templateId);
             //根据模板创建一个流程实例
             var instance = new FlowInstance();
-            instance.FlowInstanceId = 1;
-            instance.FlowInstanceName = "第一个实例";
-            instance.TemplateId = temp.TemplateId;
+            //instance.FlowInstanceName = "第一个实例";
+            instance.TemplateId = templateId;
+            instance.TemplateName = temp.TemplateName;
             instance.ApproveTime = DateTime.Now;
             instance.ApproveUserId = 1;//当前用户
+            //插入流程实体
+            long flowId=Utity.Connection.Insert<FlowInstance>(instance,selectIdentity:true);
+            instance.FlowInstanceId = flowId;
             instance.StepInstanceList = new List<StepInstance>();
-            var currentStep = temp.HeaderStep;
-            while (currentStep != null)
+
+            foreach (var stepTemplate in temp.StepTemplateList)
             {
-                StepInstance current = new StepInstance();
-                current.stepid = new Random().Next();
-                current.StepTemplate = currentStep;
-                instance.StepInstanceList.Add(current);
-                //下一步骤
-                currentStep = currentStep.NextStep;
+                instance.StepInstanceList.Add(CreateStepInstance(flowId,instance,stepTemplate));
             }
-            //创建新流程实例
+            //返回新流程实例
             return instance;
+        }
+
+        /// <summary>
+        /// 插入步骤实体
+        /// </summary>
+        /// <param name="stepTemplate"></param>
+        /// <returns></returns>
+        private static StepInstance CreateStepInstance(long flowInstanceId,FlowInstance fInstance,StepTemplate stepTemplate)
+        {
+                StepInstance current = new StepInstance();
+                current.FlowInstance = fInstance;
+                current.FlowInstanceId = flowInstanceId;
+                current.StepTemplate = stepTemplate;
+                current.StepTemplateName = stepTemplate.StepTemplateName;
+                long id=Utity.Connection.Insert<StepInstance>(current, selectIdentity: true);
+                if (stepTemplate.PreStepId == 0)
+                {
+                    fInstance.CurrentStepInstanceId = id;
+                    Utity.Connection.Update<FlowInstance>(fInstance);
+                }
+                return Utity.Connection.Single<StepInstance>(s => s.stepid == id);
         }
         /// <summary>
         /// 步骤提交
@@ -48,7 +159,7 @@ namespace BPM.BLL
             //获取步骤模板
             StepTemplate temp = new StepTemplate();
             string actionName = temp.SubmitAction;//assetlibrary.SubmitPaiChe
-            string data = stepInstance.数据;//
+            string data = stepInstance.Data;//
 
             string queryurl = "http://localhost:3665/Route/LibraryHandler.ashx";
             string c = actionName.Split(new char[] { '.' })[0];
@@ -59,8 +170,8 @@ namespace BPM.BLL
             if (rb.Code == 1)
             {
                 //提交成功,更新步骤状态
-                stepInstance.操作人 = 1;
-                stepInstance.操作动作 = actionName;
+                stepInstance.Operator = 1;
+                stepInstance.OperateAction = actionName;
 
                 //修改当前步骤
                 var nextStep = GetNextStep(stepInstance);
@@ -85,7 +196,6 @@ namespace BPM.BLL
         {
             foreach (var si in stepInstance.FlowInstance.StepInstanceList)
             {
-                if (si.StepTemplate.StepTemplateId == stepInstance.StepTemplate.NextStep.StepTemplateId)
                 {
                     return si;
                 }
@@ -99,6 +209,25 @@ namespace BPM.BLL
         {
             //post数据，获取实际数据
             return new ReturnBase() { Code = 1 };
+        }
+
+        public static int CreateInstanceTable()
+        {
+            try
+            {
+
+                //创建processTemplate表
+                Utity.Connection.CreateTable<FlowInstance>(overwrite:true);
+                //创建StepInstance表
+                Utity.Connection.CreateTable<StepInstance>(overwrite:true);
+                return 1;
+            }
+            catch (Exception ep)
+            {
+
+                return 0;
+            }
+
         }
 
     }

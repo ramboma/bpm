@@ -5,7 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-
+using ServiceStack.DataAnnotations;
 namespace BPM.Entity.Process
 {
     public class FlowInstance
@@ -13,7 +13,8 @@ namespace BPM.Entity.Process
         ///<summary>
         ///流程实例ID
         ///</summary>
-        public int FlowInstanceId { get; set; }
+        [AutoIncrement]
+        public long FlowInstanceId { get; set; }
 
         ///<summary>
         ///流程实例名称
@@ -33,7 +34,7 @@ namespace BPM.Entity.Process
         ///<summary>
         ///申请用户
         ///</summary>
-        public int ApproveUserId { get; set; }
+        public long ApproveUserId { get; set; }
 
         ///<summary>
         ///申请时间
@@ -48,8 +49,11 @@ namespace BPM.Entity.Process
         ///<summary>
         ///当前步骤
         ///</summary>
+        public long CurrentStepInstanceId { get; set; }
+        [Ignore]
         public StepInstance CurrentStepInstance { get; set; }
 
+        [Ignore]
         public List<StepInstance> StepInstanceList { get; set; }
 
     }

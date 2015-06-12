@@ -22,7 +22,7 @@ namespace BPM.Entity.Process
         ///模板名称
         ///</summary>
         [XmlAttribute]
-        public int TemplateName { get; set; }
+        public string TemplateName { get; set; }
         ///<summary>
         ///流程申请权限
         ///</summary>
@@ -31,32 +31,29 @@ namespace BPM.Entity.Process
 
         [XmlAttribute]
         public int StartStep { get; set; }
+        [XmlAttribute]
+        public int EndStep { get; set; }
+
         [XmlArray]
+        [XmlArrayItem("StepTemplate")]
         public List<StepTemplate> StepTemplateList { get; set; }
         /// <summary>
         /// 第一个步骤
         /// </summary>
         public StepTemplate HeaderStep { get; set; }
-
+        /// <summary>
+        /// 结束步骤
+        /// </summary>
+        public StepTemplate RearStep { get; set; }
         
     }
-    [XmlRoot]
+    [Serializable]
     public class ProcessTemplateList
     {
         [XmlArray]
         [XmlArrayItem("ProcessTemplate")]
         public List<ProcessTemplate> Lists { get; set; }
-        public static ProcessTemplate SerialXml(string path)
-        {
-            FileStream fs = null;
-
-            XmlSerializer xs = new XmlSerializer(typeof(ProcessTemplate));
-            fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-            var template = (ProcessTemplate)xs.Deserialize(fs);
-            fs.Close();
-            return template;
-
-        }
+       
 
     }
 }

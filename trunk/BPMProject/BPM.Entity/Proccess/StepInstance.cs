@@ -4,7 +4,7 @@
 // Purpose: Definition of Class 步骤实例
 
 using System;
-
+using ServiceStack.DataAnnotations;
 namespace BPM.Entity.Process
 {
     public class StepInstance
@@ -12,11 +12,15 @@ namespace BPM.Entity.Process
         ///<summary>
         ///步骤实例ID
         ///</summary>
-        public int stepid { get; set; }
+        [AutoIncrement]
+        public long stepid { get; set; }
 
         ///<summary>
         ///步骤模板Id
         ///</summary>
+        public long StepTemplateId { get; set; }
+        public string StepTemplateName { get; set; }  
+        [Ignore]
         public StepTemplate StepTemplate { get; set; }
 
 
@@ -28,22 +32,24 @@ namespace BPM.Entity.Process
         ///<summary>
         ///流程实例ID
         ///</summary>
+        public long FlowInstanceId { get; set; }
+        [Ignore]
         public FlowInstance FlowInstance { get; set; }
 
         ///<summary>
         ///操作人
         ///</summary>
-        public int 操作人 { get; set; }
+        public int Operator { get; set; }
 
         ///<summary>
         ///操作动作
         ///</summary>
-        public string 操作动作 { get; set; }
+        public string OperateAction { get; set; }
 
         ///<summary>
         ///数据
         ///</summary>
-        public string 数据 { get; set; }
+        public string Data { get; set; }
 
     }
 }
