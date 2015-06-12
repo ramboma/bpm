@@ -15,13 +15,13 @@ namespace BPM.BLL
         public static List<TreeDto> GetEquipmentTree()
         {
             var express = ORMLite.Utity.Connection.From<Equipment>();
-            express.Where(s => s.hasDelete == 1);
+            express.Where(s => s.HasDelete == 0);
             var list = Utity.Connection.Select<Equipment>(express);
             var treeDtoList = new List<TreeDto>();
             //取第一层
             foreach (var product in list)
             {
-                treeDtoList.Add(new TreeDto() { id = product.id.ToString(), text = product.equipmentName, children = new List<TreeDto>(), Node = product });
+                treeDtoList.Add(new TreeDto() { id = product.EquipmentID.ToString(), text = product.EquipmentName, children = new List<TreeDto>(), Node = product });
             }
             return treeDtoList;
         }
@@ -32,14 +32,14 @@ namespace BPM.BLL
         public static List<TreeDto> GetBfEquipmentTree()
         {
             var express = ORMLite.Utity.Connection.From<Equipment>();
-            express.Where(s => s.hasDelete == 1);
-            express.Join<EquipmentLog>((equ, log) => equ.id == log.equipmentId && log.recordType != "报废");
+            express.Where(s => s.HasDelete == 1);
+            express.Join<EquipmentLog>((equ, log) => equ.EquipmentID == log.equipmentId && log.recordType != "报废");
             var list = Utity.Connection.Select<Equipment>(express);
             var treeDtoList = new List<TreeDto>();
             //取第一层
             foreach (var product in list)
             {
-                    treeDtoList.Add(new TreeDto() { id = product.id.ToString(), text = product.equipmentName, children = new List<TreeDto>(), Node = product });
+                    treeDtoList.Add(new TreeDto() { id = product.EquipmentID.ToString(), text = product.EquipmentName, children = new List<TreeDto>(), Node = product });
             }
             return treeDtoList;
         }
@@ -89,7 +89,7 @@ namespace BPM.BLL
         /// <returns></returns>
         public static long SaveEquipment(Equipment equipment)
         {
-            equipment.updateTime = System.DateTime.Now;
+            equipment.UpdateTime = System.DateTime.Now;
             return Utity.Connection.Insert<Equipment>(equipment, selectIdentity: true);
         }
         

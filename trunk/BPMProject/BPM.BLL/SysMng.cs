@@ -8,13 +8,13 @@ using BPM.Entity;
 using BPM.Entity.DTO;
 using BPM.Entity.Paged;
 using BPM.ORMLite;
+using System.Web;
+using System.Web.SessionState;
 namespace BPM.BLL
 {
     public class SysMng
     {
         #region 员工
-
-
         public static List<EmplyeeDto> GetAllEmployeeInfo()
         {
             //SqlExpression<Employee> sqlexpression = Utity.Connection.From<Employee>();
@@ -37,6 +37,17 @@ namespace BPM.BLL
                             LEFT JOIN Provider pv1 ON Employee.Attribute = pv1.CatalogId
                             LEFT JOIN Provider pv2 ON Employee.Sex = pv2.CatalogId";
             return Utity.Connection.Select<EmplyeeDto>(str_sql);
+        }
+        public static Employee GetEmployeeInfoById(long l_EmplID)
+        {
+            var SqlExpress = ORMLite.Utity.Connection.From<Employee>();
+            SqlExpress.Where(s => s.EmplID == l_EmplID);
+            var List=Utity.Connection.Select<Employee>(SqlExpress);
+            if (List.Count > 0)
+            {
+                return List[0];
+            }
+            return null;
         }
         public static long AddEmployeeInfo(Employee employee)
         {
@@ -129,7 +140,17 @@ namespace BPM.BLL
 
             return list;
         }
-
+        public static Department GetDepartmentInfoById(long l_DeptID)
+        {
+            var SqlExpress = ORMLite.Utity.Connection.From<Department>();
+            SqlExpress.Where(s => s.DeptID == l_DeptID);
+            var List = Utity.Connection.Select<Department>(SqlExpress);
+            if (List.Count > 0)
+            {
+                return List[0];
+            }
+            return null;
+        }
         private static List<Department> GetChilda(List<Department> allDept, TreeDto td)
         {
             return allDept.Where(s => s.DeptParentID.ToString() == td.id).ToList();
@@ -169,6 +190,36 @@ namespace BPM.BLL
         {
 
             return Utity.Connection.Delete<Department>(s => s.DeptID == strParams);
+        }
+        public static UserAuthDto AuthUserLogin(UserAuth LoginInfo)
+        {
+            /*如果有认证码，需要先比对认证码，如果有硬件狗的话通过KeyValue*/
+            string str_sql;
+            str_sql=@"SELECT Employee.EmplName as UserName, Employee.AliasName as LoginName,Employee.Password as UserPwd,Employee.KeyString as KeyValue,
+                     pv.CatalogName AS AttrName, pv2.CatalogName AS RankName, pv3.DeptName, pv4.RoleName, pv4.AccessMask as RoleAccessMask FROM Employee LEFT OUTER JOIN
+                      Provider AS pv ON pv.CatalogId = Employee.Attribute LEFT OUTER JOIN
+                      Provider AS pv2 ON pv2.CatalogId = Employee.Rank LEFT OUTER JOIN
+                      Department AS pv3 ON pv3.DeptID = Employee.DeptID LEFT OUTER JOIN
+                      Role AS pv4 ON pv4.EmplID = Employee.EmplID";
+            str_sql = str_sql + " where Employee.AliasName='" + LoginInfo.LoginName + "'";
+
+            var List = Utity.Connection.Select<UserAuthDto>(str_sql);
+            if (List.Count > 0)
+            {
+                if (List[0].UserPwd == LoginInfo.UserPwd)
+                {
+                    List[0].LoginState = UserLoginResult.e_UserLoginResult_Success;
+                }
+                else
+                {
+                    List[0].LoginState = UserLoginResult.e_UserLoginResult_Err_Pwd;
+                }
+            }
+            else
+            {
+                List[0].LoginState = UserLoginResult.e_UserLoginResult_Err_Account;
+            }
+            return List[0];
         }
         #endregion
 

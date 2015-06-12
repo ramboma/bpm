@@ -5,7 +5,8 @@ using BPM.Entity.DTO;
 using BPM.Entity.Paged;
 using Newtonsoft.Json;
 using BPM.Common;
-public class LibraryHandler : IHttpHandler
+using System.Web.SessionState;
+public class LibraryHandler : IHttpHandler,IRequiresSessionState
 {
 
     public void ProcessRequest(HttpContext context)
@@ -13,7 +14,7 @@ public class LibraryHandler : IHttpHandler
         context.Response.ContentType = "text/html";
 
         //执行查询，返回实体列表
-
+   
         if (context.Request.RequestType == "POST")
         {
             HttpPostedFile uploadFile = HttpContext.Current.Request.Files["fileupload"];
@@ -109,7 +110,6 @@ public class LibraryHandler : IHttpHandler
             //    }
         }
         //返回错误实体
-
         return ResponseHelper.GetErrorReturn(ResponseCode.ErrorParameter, "输入参数错误，请重新输入");
     }
 

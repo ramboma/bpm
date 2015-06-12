@@ -5,6 +5,8 @@ using BPM.BLL;
 using BPM.Entity.DTO;
 using BPM.Entity.Paged;
 using BPM.Entity;
+using System.Web;
+using System.Web.SessionState;
 /// <summary>
 /// MakeAssert 的摘要说明
 /// </summary>
@@ -20,6 +22,18 @@ public class SysAssert
                     try
                     {
                         var vProjectList = BPM.BLL.SysMng.GetAllEmployeeInfo();
+                        return ResponseHelper.GetSuccessReturn(vProjectList);
+                    }
+                    catch (Exception e1)
+                    {
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                    }
+                }
+            case "getemplinfobyid":
+                {
+                    try
+                    {
+                        var vProjectList = BPM.BLL.SysMng.GetEmployeeInfoById(long.Parse(strParams));
                         return ResponseHelper.GetSuccessReturn(vProjectList);
                     }
                     catch (Exception e1)
@@ -145,6 +159,18 @@ public class SysAssert
                         return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
                     }
                 }
+            case "getdeptinfobyid":
+                {
+                    try
+                    {
+                        var vProjectList = BPM.BLL.SysMng.GetDepartmentInfoById(long.Parse(strParams));
+                        return ResponseHelper.GetSuccessReturn(vProjectList);
+                    }
+                    catch (Exception e1)
+                    {
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                    }
+                }
             case "getalldeptlist":
                 {
                     try
@@ -182,8 +208,39 @@ public class SysAssert
                         return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
                     }
                 }
+            case "userlogin":
+                {
+                    try
+                    {
+                        var vUserLoginInfo = JsonConvert.DeserializeObject<UserAuth>(strParams);
+                        var vUserAuth= BPM.BLL.SysMng.AuthUserLogin(vUserLoginInfo);
+                        if (vUserAuth.LoginState==0)
+                        {
+                            HttpContext.Current.Session["UserAuth"] = vUserAuth;
+                            return ResponseHelper.GetSuccessReturn(vUserAuth.LoginState);
+                        }
+                        else
+                        {
+                            ResponseHelper.GetErrorReturn(ResponseCode.FAIL, vUserAuth.LoginState.ToString());
+                        }
+                    }
+                    catch (Exception e1)
+                    { 
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                    }
+                    break;
+                }
             #endregion
        }
         return ResponseHelper.GetErrorReturn(ResponseCode.ErrorParameter, "输入参数错误，请重新输入");
     }
+    public static bool CheckAuthInfo()
+    {
+        UserAuthDto obj_Temp = (UserAuthDto)HttpContext.Current.Session["UserAuth"];
+        if (obj_Temp.LoginState == 0)
+        {
+            return true;
+        }
+        return false;
+    } 
 }

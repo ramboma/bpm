@@ -13,6 +13,6 @@ namespace BPM.Entity.DTO
     {
         public string Keeper { get; set; }
         public string DeptName { get; set; }
-        public string Source { get; set; }
+        public string SourceName { get; set; }
     }
 }

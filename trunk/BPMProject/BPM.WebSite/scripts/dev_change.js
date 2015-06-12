@@ -39,18 +39,18 @@ $.extend(
             });
             return;
         },
-        Get_Product_Detail:function(node)
+        Get_Device_Detail: function (node)
         {
             /*根据节点信息写入标签*/
             $("#tb_devmng_factory").text(node.Node.FactoryName);
-            $("#tb_devmng_model").text(node.Node.model);
-            $("#tb_devmng_spec").text(node.Node.standard);
+            $("#tb_devmng_model").text(node.Node.Model);
+            $("#tb_devmng_spec").text(node.Node.Standard);
             //获取来源的类别号
             $.ajax(
             {
                 url: '/Route/LibraryHandler.ashx',
                 type: 'POST',
-                data: { c: 'assetlibrary', m: 'getproviderbyid', p: node.Node.source },
+                data: { c: 'assetlibrary', m: 'getproviderbyid', p: node.Node.Source },
                 success: function (data) {
                 var Ret = eval('(' + data + ')');
                 var ctlg_json = Ret.Result;
@@ -61,10 +61,47 @@ $.extend(
                 alert(data);
             }
             });
-            $("#tb_devmng_price").text(node.Node.price);
+            $("#tb_devmng_price").text(node.Node.Price);
+            $("#tb_devmng_producttime").text(node.Node.ProductTime);
             /*获取部门的名称和保管人的名称*/
-            $("#tb_devmng_dept").text(node.Node.departMent);
-            $("#tb_devmng_owner").text(node.Node.keeper);
+            $.ajax(
+            {
+                url: '/Route/LibraryHandler.ashx',
+                type: 'POST',
+                data: { c: 'sysconfig', m: 'getemplinfobyid', p: node.Node.KeepEmpl},
+                success: function (data) {
+                    var Ret = eval('(' + data + ')');
+                    var ctlg_json = Ret.Result;
+                    if (ctlg_json == null)
+                    {
+                        return;
+                    }
+                    $("#tb_devmng_owner").text(ctlg_json.EmplName);
+                    return;
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });
+            $.ajax(
+            {
+                url: '/Route/LibraryHandler.ashx',
+                type: 'POST',
+                data: { c: 'sysconfig', m: 'getdeptinfobyid', p: node.Node.KeepDept},
+                success: function (data) {
+                var Ret = eval('(' + data + ')');
+                var ctlg_json = Ret.Result;
+                if (ctlg_json==null)
+                {
+                    return;
+                }
+                $("#tb_devmng_dept").text(ctlg_json.DeptName);
+                return;
+                },
+                error: function (data) {
+                alert(data);
+                }
+            });
             $("#tb_devmng_producttime").text(node.Node.ProductTime);
             Cur_Selected_Node = node;
             return;
@@ -114,6 +151,6 @@ $(document).ready(function() {
     $("#btn_devmng_submit").click($.Btn_Submit_Click);
     $("#btn_devmng_cancel").click($.Btn_Cancel_Click);
     $("#btn_devmng_scan").click($.Btn_devmng_scan_click);
-    $("#tb_devmng_name").combotree({ onSelect: function (node) { $.Get_Product_Detail(node) } });
+    $("#tb_devmng_name").combotree({ onSelect: function (node) { $.Get_Device_Detail(node) } });
     $.Init_Page();
 });

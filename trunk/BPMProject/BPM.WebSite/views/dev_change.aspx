@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <td  align="left" class="Tbl_TD_Label">设备名称：</td>
-            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_name" class="easyui-combotree" data-options="" style="width:275px;"/></td>
+            <td  align="left" class="Tbl_TD_Txt"><input id="tb_devmng_name" class="easyui-combotree" data-options="valueField:'id',textField:'text'" style="width:275px;"/></td>
             <td  align="left" class="Tbl_TD_Label">生产厂家：</td>
             <td  align="left" class="Tbl_TD_Txt"><span id="tb_devmng_factory" class="Tbl_TD_TextBox"></span></td>
         </tr>
