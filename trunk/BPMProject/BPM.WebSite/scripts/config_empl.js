@@ -15,6 +15,31 @@ $.extend(
             }
             return Json_data;
         },
+        Set_AccessMask:function(mask)
+        {
+            var RowData = $("#sl_empl_accessmask").combobox('getData');
+            for (var i = 0; i < RowData.length; i++)
+            {
+                if ((mask & RowData[i].id) != 0) {
+                    $("#sl_empl_accessmask").combobox('select', RowData[i].id);
+                }
+                else
+                {
+                    $("#sl_empl_accessmask").combobox('unselect', RowData[i].id);
+                }
+            }
+            return;
+        },
+        Get_AccessMask:function()
+        {
+            var SelectValues=$("#sl_empl_accessmask").combobox('getValues');
+            var Mask=0;
+            for (var i = 0; i < SelectValues.length; i++)
+            {
+                Mask=Mask+parseInt(SelectValues[i]);
+            }
+            return Mask;
+        },
         Get_Empl_Detail: function (row) {
             $("#tb_empl_name").textbox('setValue',row.EmplName);
             $("#sl_empl_dept").combobox('setValue', row.EmplID);
@@ -27,6 +52,7 @@ $.extend(
             $("#tb_empl_telno").textbox('setValue', row.TelNo);
             $("#tb_empl_memo").textbox('setValue', row.Remark);
             Deal_Model = 1;
+            $.Set_AccessMask(row.AccessMask);
             Cur_Selected_Row = row;
             return;
         },
@@ -113,6 +139,22 @@ $.extend(
                        }
                    }
              );
+            //获取系统功能信息
+            $.ajax(
+                   {
+                       url: '/Route/LibraryHandler.ashx',
+                       type: 'POST',
+                       data: { c: 'sysconfig', m: 'getallfunctioninfo', p: '' },
+                       success: function (data) {
+                           var Ret = eval('(' + data + ')');
+                           var Result_json = Ret.Result;
+                           $("#sl_empl_accessmask").combobox('loadData', Result_json);                       
+                       },
+                       error: function (data) {
+                           alert(data);
+                       }
+                   }
+             );
             return;
         },
         Btn_Cancel_Click: function () {
@@ -132,7 +174,7 @@ $.extend(
             Row.TelNo = $("#tb_empl_telno").textbox('getValue');
             Row.Remark = $("#tb_empl_memo").textbox('getValue');
             Row.KeyString = "";
-            Row.AccessMask = 0;
+            Row.AccessMask = $.Get_AccessMask();
             if (Deal_Model == 1) //修改
             {
                 Row.EmplID = Cur_Selected_Row.EmplID;
@@ -221,5 +263,35 @@ $(document).ready(function () {
     $("#btn_empl_add").click($.Btn_Add_Click);
     $("#btn_empl_edit").click($.Btn_Edit_Click);
     $('#dlg_employee_detail').dialog('close');
+    $('#sl_empl_accessmask').combobox({
+        valueField: 'id',
+        textField: 'text',
+        panelHeight: 'auto',
+        multiple: true,
+        formatter: function (row) {
+            var opts = $(this).combobox('options');
+            return '<input type="checkbox" class="combobox-checkbox">' + row[opts.textField]
+        },
+        onLoadSuccess: function () {
+            var opts = $(this).combobox('options');
+            var target = this;
+            var values = $(target).combobox('getValues');
+            $.map(values, function (value) {
+                var el = opts.finder.getEl(target, value);
+                el.find('input.combobox-checkbox')._propAttr('checked', true);
+            })
+        },
+        onSelect: function (row) {
+            //console.log(row);
+            var opts = $(this).combobox('options');
+            var el = opts.finder.getEl(this, row[opts.valueField]);
+            el.find('input.combobox-checkbox')._propAttr('checked', true);
+        },
+        onUnselect: function (row) {
+            var opts = $(this).combobox('options');
+            var el = opts.finder.getEl(this, row[opts.valueField]);
+            el.find('input.combobox-checkbox')._propAttr('checked', false);
+        }
+    });
     $.Init_Page();
 });

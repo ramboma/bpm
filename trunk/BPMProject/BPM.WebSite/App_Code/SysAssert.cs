@@ -221,14 +221,25 @@ public class SysAssert
                         }
                         else
                         {
-                            ResponseHelper.GetErrorReturn(ResponseCode.FAIL, vUserAuth.LoginState.ToString());
+                            return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, vUserAuth.LoginState.ToString());
                         }
                     }
                     catch (Exception e1)
                     { 
                         return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
                     }
-                    break;
+                }
+            case "getallfunctioninfo":
+                {
+                    try
+                    {
+                        var vFunctionTree = SysMng.GetAllFunctionInfoList();
+                        return ResponseHelper.GetSuccessReturn(vFunctionTree);
+                    }
+                    catch (Exception e1)
+                    {
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                    }
                 }
             #endregion
        }
@@ -237,10 +248,25 @@ public class SysAssert
     public static bool CheckAuthInfo()
     {
         UserAuthDto obj_Temp = (UserAuthDto)HttpContext.Current.Session["UserAuth"];
-        if (obj_Temp.LoginState == 0)
+        if (obj_Temp != null)
         {
-            return true;
+            if (obj_Temp.LoginState == 0)
+            {
+                return true;
+            }
         }
         return false;
+    }
+    public static long GetAccessMask()
+    {
+        UserAuthDto obj_Temp = (UserAuthDto)HttpContext.Current.Session["UserAuth"];
+        if (obj_Temp != null)
+        {
+            if (obj_Temp.LoginState == 0)
+            {
+                return obj_Temp.AccessMask;
+            }
+        }
+        return -1;
     } 
 }

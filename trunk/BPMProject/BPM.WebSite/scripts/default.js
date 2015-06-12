@@ -1,4 +1,5 @@
-﻿var str_Selected_index = 0;   //
+﻿/*
+var str_Selected_index = 0;  
 var str_div = new Array();
 str_div[1] = "div_des_jcwx";
 str_div[2] = "div_des_zdwx";
@@ -25,6 +26,71 @@ function init() {
         window.parent.location = " ../default.aspx";
     }
 }
+function SelectedMenu(i) {
+    var obj_BG_disp;
+    var obj_Disp;
+    var href_array = new Array("./mng/mng_employee.aspx", "./mng/mng_area.aspx", "./mng/mng_room.aspx", "./mng/mng_card.aspx", "./mng/mng_base.aspx", "./mng/mng_dept.aspx");
+
+    obj_BG_disp = document.getElementById("Div_Dispay");
+    obj_Disp = document.getElementById("Iframe_Display");
+    obj_BG_disp.style.display = "block";
+    obj_Disp.src = href_array[i - 1];
+}
+
+function Display_Descript(i) {
+    var obj;
+    if (str_Selected_index != 0) {
+        obj = document.getElementById(str_div[str_Selected_index]);
+        obj.style.display = "none";
+        obj = document.getElementById(str_div[i]);
+        obj.style.display = "block";
+        str_Selected_index = i;
+    }
+    else {
+        str_Selected_index = i;
+        obj = document.getElementById(str_div[str_Selected_index]);
+        obj.style.display = "block";
+    }
+
+}
+function Prs_Create() {
+    document.getElementById("Iframe_Display").src = "process_mng/prs_create.aspx";
+}
+function Analysis(i) {
+    if (i == 1) {
+        document.getElementById("Iframe_Display").src = "data_mining/emplyee_mining.aspx";
+    }
+    else if (i == 2) {
+        document.getElementById("Iframe_Display").src = "data_mining/quality_mining.aspx";
+    }
+    else if (i == 3) {
+        document.getElementById("Iframe_Display").src = "data_mining/reality_mining.aspx";
+    }
+}
+function Create_Process() {
+    parent.document.getElementById("Iframe_Display").src = "process_mng/process1.aspx?type=create&id=0";
+}
+function Open_Step(i) {
+    var str_img_id = "img_step";
+    var str_div_id = "div_step_";
+    str_img_id = str_img_id + i.toString();
+    str_div_id = str_div_id + i.toString();
+    if (document.getElementById(str_img_id).alt == "close") {
+
+            document.getElementById(str_img_id).src = "../images/close.png";
+            document.getElementById(str_img_id).alt = "open";
+            document.getElementById(str_div_id).style.display = "none";
+        }
+        else {
+            document.getElementById(str_img_id).src = "../images/open.png";
+            document.getElementById(str_img_id).alt = "close";
+            document.getElementById(str_div_id).style.display = "block";
+        }
+    }
+    function monitor() {
+        parent.document.getElementById("Iframe_Display").src = "../monitor.aspx";
+    }
+*/
 function btn_click(obj) {
     switch (obj.id)
     {
@@ -188,7 +254,7 @@ function btn_click(obj) {
     }
 }
 function Return_main() {
-    window.location = " ../default.aspx";
+    window.location = " ../views/index.aspx";
 }
 function Change_MenuState(i) {
     var obj;
@@ -273,67 +339,24 @@ function Change_MenuState(i) {
     else { 
     }    
 }
-function SelectedMenu(i) {
-    var obj_BG_disp;
-    var obj_Disp;
-    var href_array = new Array("./mng/mng_employee.aspx", "./mng/mng_area.aspx", "./mng/mng_room.aspx", "./mng/mng_card.aspx", "./mng/mng_base.aspx", "./mng/mng_dept.aspx");
-
-    obj_BG_disp = document.getElementById("Div_Dispay");
-    obj_Disp = document.getElementById("Iframe_Display");
-    obj_BG_disp.style.display = "block";
-    obj_Disp.src = href_array[i - 1];
-}
-/*显示选中的流程图*/
-function Display_Descript(i) {
-    var obj;
-    if (str_Selected_index != 0) {
-        obj = document.getElementById(str_div[str_Selected_index]);
-        obj.style.display = "none";
-        obj = document.getElementById(str_div[i]);
-        obj.style.display = "block";
-        str_Selected_index = i;
-    }
-    else {
-        str_Selected_index = i;
-        obj = document.getElementById(str_div[str_Selected_index]);
-        obj.style.display = "block";
-    }
-
-}
-function Prs_Create() {
-    document.getElementById("Iframe_Display").src = "process_mng/prs_create.aspx";
-}
-function Analysis(i) {
-    if (i == 1) {
-        document.getElementById("Iframe_Display").src = "data_mining/emplyee_mining.aspx";
-    }
-    else if (i == 2) {
-    document.getElementById("Iframe_Display").src = "data_mining/quality_mining.aspx";
-    }
-    else if (i == 3) {
-    document.getElementById("Iframe_Display").src = "data_mining/reality_mining.aspx";
-    }
-}
-function Create_Process() {
-    parent.document.getElementById("Iframe_Display").src = "process_mng/process1.aspx?type=create&id=0";
-}
-function Open_Step(i) {
-    var str_img_id = "img_step";
-    var str_div_id = "div_step_";
-    str_img_id = str_img_id + i.toString();
-    str_div_id = str_div_id + i.toString();
-    if (document.getElementById(str_img_id).alt == "close") {
-
-            document.getElementById(str_img_id).src = "../images/close.png";
-            document.getElementById(str_img_id).alt = "open";
-            document.getElementById(str_div_id).style.display = "none";
+$(document).ready(function () {
+        var strCookie = document.cookie;
+        var arrCookie = strCookie.split("; ");
+        for (var i = 0; i < arrCookie.length; i++) {
+            var arr = arrCookie[i].split("=");
+            if ("AccessMask" == arr[0]) {
+                var AccessMask=arr[1];
+            }
+        }
+    var MenuItems = $(".Btn_Menu_Item");
+    for (var i = 0; i < MenuItems.length; i++)
+    {
+        if ((parseInt(AccessMask) & Math.pow(2, i)) != 0) {
+            MenuItems[i].style.display = "block";
         }
         else {
-            document.getElementById(str_img_id).src = "../images/open.png";
-            document.getElementById(str_img_id).alt = "close";
-            document.getElementById(str_div_id).style.display = "block";
+            MenuItems[i].style.display = "none";
         }
     }
-    function monitor() {
-        parent.document.getElementById("Iframe_Display").src = "../monitor.aspx";
-    }
+});
+

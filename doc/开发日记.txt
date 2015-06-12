@@ -192,6 +192,7 @@ CREATE TABLE [dbo].[Role](
 	[RoleID] [bigint] IDENTITY(1,1) NOT NULL,
 	[RoleName] [varchar](100) NOT NULL,
 	[EmplID] [bigint] NULL,
+	[AccessMask] [bigint] NULL,
 	[Remark] [varchar](100) NULL,
  CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
 (

@@ -190,8 +190,8 @@ namespace BPM.BLL
         {
             /*如果有认证码，需要先比对认证码，如果有硬件狗的话通过KeyValue*/
             string str_sql;
-            str_sql=@"SELECT Employee.EmplName as UserName, Employee.AliasName as LoginName,Employee.Password as UserPwd,Employee.KeyString as KeyValue,
-                     pv.CatalogName AS AttrName, pv2.CatalogName AS RankName, pv3.DeptName, pv4.RoleName, pv4.AccessMask as RoleAccessMask FROM Employee LEFT OUTER JOIN
+            str_sql= @"SELECT Employee.EmplName as UserName, Employee.AliasName as LoginName,Employee.Password as UserPwd,Employee.KeyString as KeyValue,
+                     Employee.AccessMask,pv.CatalogName AS AttrName, pv2.CatalogName AS RankName, pv3.DeptName, pv4.RoleName FROM Employee LEFT OUTER JOIN
                       Provider AS pv ON pv.CatalogId = Employee.Attribute LEFT OUTER JOIN
                       Provider AS pv2 ON pv2.CatalogId = Employee.Rank LEFT OUTER JOIN
                       Department AS pv3 ON pv3.DeptID = Employee.DeptID LEFT OUTER JOIN
@@ -215,6 +215,23 @@ namespace BPM.BLL
                 List[0].LoginState = UserLoginResult.e_UserLoginResult_Err_Account;
             }
             return List[0];
+        }
+        public static List<TreeDto> GetAllFunctionInfoList()
+        {
+            SqlExpression<FunctionInfo> sqlexpression = Utity.Connection.From<FunctionInfo>();
+            var functionInfo = Utity.Connection.Select(sqlexpression);
+            var treeList = new List<TreeDto>();
+            foreach (var info in functionInfo)
+            {
+                var current = new TreeDto
+                {
+                    id = info.FuncCode.ToString(),
+                    text = info.FuncName,
+                    Node = info
+                };
+                treeList.Add(current);
+            }
+            return treeList;
         }
         #endregion
 
