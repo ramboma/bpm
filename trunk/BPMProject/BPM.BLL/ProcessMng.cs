@@ -8,10 +8,12 @@ using System.IO;
 using System.Xml.Serialization;
 using ServiceStack.OrmLite;
 using BPM.ORMLite;
+using BPM.Entity.DTO;
 namespace BPM.BLL
 {
     public class ProcessMng
     {
+        public static string templateFile = AppDomain.CurrentDomain.BaseDirectory+@"xml\ProcessTemplate.xml";
         /// <summary>
         /// 获取配置文件中的模板
         /// </summary>
@@ -19,9 +21,12 @@ namespace BPM.BLL
         /// <returns></returns>
         public static ProcessTemplateList GetAllTemplateList(string path)
         {
+            string strPath=path;
+            if (string.IsNullOrEmpty(strPath))
+                strPath = templateFile;
             FileStream fs = null;
             XmlSerializer xs = new XmlSerializer(typeof(ProcessTemplateList));
-            fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            fs = new FileStream(strPath, FileMode.Open, FileAccess.Read);
             var listResult = (ProcessTemplateList)xs.Deserialize(fs);
             fs.Close();
             foreach (ProcessTemplate template in listResult.Lists)
@@ -37,7 +42,7 @@ namespace BPM.BLL
         /// <param name="path"></param>
         /// <param name="currentStepId"></param>
         /// <returns></returns>
-        public static ProcessTemplate GetParentProcessTemplate(string path,int currentStepId)
+        public static ProcessTemplate GetParentProcessTemplate(string path,long currentStepId)
         {
             ProcessTemplate template=null;
             ProcessTemplateList list = GetAllTemplateList(path);
@@ -57,7 +62,7 @@ namespace BPM.BLL
         /// <param name="list"></param>
         /// <param name="currentStepId"></param>
         /// <returns></returns>
-        public static StepTemplate GetNextStepTemplate(ProcessTemplate processTemplate, int currentStepId)
+        public static StepTemplate GetNextStepTemplate(ProcessTemplate processTemplate, long currentStepId)
         {
 
             if (currentStepId == processTemplate.EndStep)
@@ -138,6 +143,7 @@ namespace BPM.BLL
                 StepInstance current = new StepInstance();
                 current.FlowInstance = fInstance;
                 current.FlowInstanceId = flowInstanceId;
+                current.StepTemplateId = stepTemplate.StepTemplateId;
                 current.StepTemplate = stepTemplate;
                 current.StepTemplateName = stepTemplate.StepTemplateName;
                 long id=Utity.Connection.Insert<StepInstance>(current, selectIdentity: true);
@@ -163,13 +169,15 @@ namespace BPM.BLL
         /// </summary>
         /// <param name="stepInstance"></param>
         /// <returns>1,提交成功，2，流程结束，3，提交失败</returns>
-        public static int SubmitStep(StepInstance stepInstance)
+        public static int SubmitStep(StepInstanceDto stepInstanceDto)
         {
+            StepInstance stepInstance = stepInstanceDto.Instance;
             int iReturnCode = 0;
             //获取步骤模板
-            StepTemplate temp = new StepTemplate();
+            ProcessTemplate processTemplate=GetParentProcessTemplate("", stepInstance.stepid);
+            StepTemplate temp = processTemplate.StepTemplateList.First(s => s.StepTemplateId == stepInstance.StepTemplateId);
             string actionName = temp.SubmitAction;//flowlibrary.equipmentinputfactory
-            string data = stepInstance.Data;//
+            string data = stepInstanceDto.Data;//
 
             string queryurl = "http://localhost:3665/Route/LibraryHandler.ashx";
             string c = actionName.Split(new char[] { '.' })[0];
@@ -183,34 +191,57 @@ namespace BPM.BLL
                 stepInstance.Operator = 1;//当前用户
                 stepInstance.OperateAction = actionName;//操作动作
                 long lResult=Utity.Connection.Update<StepInstance>(stepInstance);
+                //获取流程
+                FlowInstance flowInstance = GetFlowInstanceById(stepInstance.FlowInstanceId);
                 //修改当前步骤
                 var nextStep = GetNextStep(stepInstance);
+                
                 //下一步为空，说明流程走完了
                 if (nextStep == null)
                 {
-                    stepInstance.FlowInstance.Status = 1; //流程结束
+                    flowInstance.Status = 1;//流程结束
                     iReturnCode = 3;
                 }
                 else
                 {
-                    stepInstance.FlowInstance.CurrentStepInstance = nextStep;
+                    //设置下一步骤
+                    flowInstance.CurrentStepInstanceId = nextStep.stepid;
                     iReturnCode = 2;
                 }
+                long lFlowInstance=Utity.Connection.Update<FlowInstance>(flowInstance);
 
             }
             iReturnCode = 3;
             return iReturnCode;
         }
 
+
+        private static FlowInstance GetFlowInstanceById(long p)
+        {
+            return Utity.Connection.Single<FlowInstance>(s => s.FlowInstanceId == p);
+        }
+
         private static StepInstance GetNextStep(StepInstance stepInstance)
         {
-            foreach (var si in stepInstance.FlowInstance.StepInstanceList)
+            StepInstance returnStepInstance=null;
+            var TemplateList=GetAllTemplateList("");
+            foreach(var template in TemplateList.Lists)
             {
+                var currentTemplate=template.StepTemplateList.First(s=>s.StepTemplateId==stepInstance.StepTemplateId);
+                if(currentTemplate!=null)
                 {
-                    return si;
+                   var nextStepTemplate= GetNextStepTemplate(template,stepInstance.StepTemplateId);
+                   if (nextStepTemplate == null)
+                   {
+                       returnStepInstance = null;
+                       break;
+                   }
+                    returnStepInstance=Utity.Connection.Single<StepInstance>(s=>s.StepTemplateId==nextStepTemplate.StepTemplateId&&s.FlowInstanceId==stepInstance.FlowInstanceId);
+                    break;
                 }
+              
             }
-            return null;
+            return returnStepInstance;
 
         }
         public static int CreateInstanceTable()

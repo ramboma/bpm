@@ -21,7 +21,7 @@ namespace BPM.BLL
         public static long EquipmentInputFactory(EquipmentRepair er)
         {
             //更新装备维修数据
-           long lReturn= Utity.Connection.Update<EquipmentRepair>(er);
+           long lReturn= Utity.Connection.Update<EquipmentRepair>(er,s=>s.EquipmentRepairId==er.EquipmentRepairId);
            return lReturn;
         }
         public static long createEquipmentRepair()

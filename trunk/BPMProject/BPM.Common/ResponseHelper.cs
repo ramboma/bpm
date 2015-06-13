@@ -45,8 +45,8 @@ namespace BPM.Common
             string data = string.Format("c={0}&m={1}&p={2}", c, m, p);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(queryurl));
             request.Method = "POST";
-            byte[] bytes= Encoding.GetEncoding("GB2312").GetBytes(data);
-            request.ContentType = "application/x-www-form-urlencoded";
+            byte[] bytes= Encoding.GetEncoding("gb2312").GetBytes(data);
+            request.ContentType = "application/x-www-form-urlencoded;charset=gb2312";
             request.ContentLength = bytes.Length; 
             //post数据，获取实际数据
             using (Stream reqStream = request.GetRequestStream())

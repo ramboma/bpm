@@ -69,6 +69,19 @@ public class Flow
                         return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
                     }
                 }
+            case "submitstep":
+                {
+                    try
+                    {
+                        var stepInstanceDto = JsonConvert.DeserializeObject<BPM.Entity.DTO.StepInstanceDto>(strParams);
+                        var resultValue = BPM.BLL.ProcessMng.SubmitStep(stepInstanceDto);
+                        return ResponseHelper.GetSuccessReturn(resultValue);
+                    }
+                    catch (Exception e1)
+                    {
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                    }
+                }
             #endregion
             #region 辅助方法
             //创建流程实例表

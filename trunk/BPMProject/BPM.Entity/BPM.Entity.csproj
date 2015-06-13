@@ -75,6 +75,7 @@
     <Compile Include="DTO\OutPutDetailDto.cs" />
     <Compile Include="DTO\ProductDetailSearchDto.cs" />
     <Compile Include="DTO\RoleDto.cs" />
+    <Compile Include="DTO\StepInstanceDto.cs" />
     <Compile Include="DTO\UserAuthDto.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Enum\CommonEnum.cs" />

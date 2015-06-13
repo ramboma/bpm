@@ -10,51 +10,121 @@
             var vm = avalon.define(
                   {
                       $id: 'test',
-                      flowid: 0,
-                      flowname: '装备进厂维修流程',
-                      taskid: 0,
-                      createtime: '2015-6-1',
-                      createuser: 'rambo',
-                      createuserid: 0,
-                      deptid: 0,
-                      deptname: '工厂',
-                      data:
+                      FlowInstanceId: 19,
+                      FlowInstanceName: "",
+                      TemplateId: 1,
+                      TemplateName: "装备维修流程",
+                      ApproveUserId: 1,
+                      ApproveTime: "2015-06-13T08:43:45.793",
+                      Status: 0,
+                      CurrentStepInstanceId: 104,
+                      CurrentStepInstance: null,
+                      StepInstanceList: [
+                           {
+                               stepid: 103,
+                               StepTemplateId: 1,
+                               StepTemplateName: "装备进场",
+                               StepTemplate: null,
+                               Approver: 0,
+                               FlowInstanceId: 19,
+                               FlowInstance: null,
+                               Operator: 1,
+                               OperateAction: "flowlibrary.equipmentinputfactory"
+                           },
+                           {
+                               stepid: 104,
+                               StepTemplateId: 2,
+                               StepTemplateName: "修理勘验",
+                               StepTemplate: null,
+                               Approver: 0,
+                               FlowInstanceId: 19,
+                               FlowInstance: null,
+                               Operator: 0,
+                               OperateAction: ""
+                           },
+        {
+            stepid: 105,
+            StepTemplateId: 3,
+            StepTemplateName: "交验检验",
+            StepTemplate: null,
+            Approver: 0,
+            FlowInstanceId: 19,
+            FlowInstance: null,
+            Operator: 0,
+            OperateAction: ""
+        },
+        {
+            stepid: 106,
+            StepTemplateId: 4,
+            StepTemplateName: "军检",
+            StepTemplate: null,
+            Approver: 0,
+            FlowInstanceId: 19,
+            FlowInstance: null,
+            Operator: 0,
+            OperateAction: ""
+        },
+        {
+            stepid: 107,
+            StepTemplateId: 5,
+            StepTemplateName: "装备交验",
+            StepTemplate: null,
+            Approver: 0,
+            FlowInstanceId: 19,
+            FlowInstance: null,
+            Operator: 0,
+            OperateAction: ""
+        },
+        {
+            stepid: 108,
+            StepTemplateId: 6,
+            StepTemplateName: "装备交付",
+            StepTemplate: null,
+            Approver: 0,
+            FlowInstanceId: 19,
+            FlowInstance: null,
+            Operator: 0,
+            OperateAction: ""
+        }
+                      ],
+                      Date:
                           {
+                              EquipmentRepairId: 8,
+                              FlowInstanceId: 14,
                               equipmentid: 11,
-                              equipmentname: '737电台',
-                              associateTime: '2015/6/10',
-                              associateLoc: '三亚厂区',
-                              associateLog: '交接记录',
-                              attachLog: '附件交接记录',
-                              docLog: '资料交接记录',
+                              equipmentname: "长波电台",
+                              associateTime: "",
+                              associateLoc: "石景山区",
+                              associateLog: "",
+                              attachLog: "",
+                              docLog: "",
 
-                              preRepairLevel: 3,//上次维修等级
-                              preRepairTime: '',//上次维修时间
-                              createTime: '2013/7/7',//生产日期
-                              inputFactoryTime: '2015/6/10',//进场日期
-                              userLog: '',//历次使用情况
-                              repairAdvice: '',//修理建议
-                              inquestUnit: '',//勘验单位
-                              inquestUser: '',//勘验人员
-                              repairRequire: '',//修理要求
-                              repairMakeLevel: 0,//本次修理定级
-                              makeLevelReason: '',//定级依据
+                              preRepairLevel: 0,
+                              preRepairTime: "",
+                              createTime: "",
+                              inputFactoryTime: "",
+                              userLog: "",
+                              repairAdvice: "",
+                              inquestUnit: "",
+                              inquestUser: "",
+                              repairRequire: "",
+                              repairMakeLevel: 0,
+                              makeLevelReason: "",
 
-                              checkTask: '',//交验项目
-                              kpi: '',//指标要求
-                              checkLoc: '',//交验地点
-                              checkMethod: '',//交验方式
+                              checkTask: "",
+                              kpi: "",
+                              checkLoc: "",
+                              checkMethod: "",
 
-                              armyCheck: '',//军检纪要
-                              armyResult: '',//军检结论
+                              armyCheck: "",
+                              armyResult: "",
 
-                              equipmentResult: '',//装备验收结论
-                              armyManResult: '',//军代表验收结论
+                              equipmentResult: "",
+                              armyManResult: "",
 
-                              equipmentConsignLog: '',//装备交付记录
-                              attachConsignLog: '',//附件交付记录
-                              docConsignLog: ''//资料交付记录
-
+                              equipmentConsignLog: "",
+                              attachConsignLog: "",
+                              docConsignLog: ""
                           },
                       outmsg: "",//输出信息
                       stepSubmit: function (func) {
@@ -75,8 +145,7 @@
   }
                               );
                       },
-                      stepReback:function(func)
-                      {
+                      stepReback: function (func) {
                           $.ajax(
                             {
                                 url: '/route/libraryhandler.ashx',
@@ -85,7 +154,7 @@
                                     {
                                         c: 'EquipmentInputFactory',
                                         m: func.reback,
-                                        p:vm.data
+                                        p: vm.data
                                     },
                                 success: function (output) {
                                     vm.outmsg = output;
@@ -220,7 +289,7 @@
         <input checked="true" name="R1" type="radio" value="0" />同意
         <input checked="false" name="R1" type="radio" value="1" />驳回
                     </div>
-                    <input type="button" value="确定" ms-click="stepSubmit('assetlibrary.SubmitPaiChe')"/>
+                    <input type="button" value="确定" ms-click="stepSubmit('assetlibrary.SubmitPaiChe')" />
                 </td>
             </tr>
         </table>
