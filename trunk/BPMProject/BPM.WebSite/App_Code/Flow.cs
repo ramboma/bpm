@@ -23,8 +23,7 @@ public class Flow
                 {
                     try
                     {
-                        string path = System.Web.HttpContext.Current.Server.MapPath(templatePath);
-                        var vProjectList = BPM.BLL.ProcessMng.GetAllTemplateList(path);
+                        var vProjectList = BPM.BLL.ProcessMng.GetAllTemplateList();
                         return ResponseHelper.GetSuccessReturn(vProjectList);
                     }
                     catch (Exception e1)
@@ -37,8 +36,8 @@ public class Flow
                 {
                     try
                     {
-                        var flowinstance = BPM.BLL.ProcessMng.CreateProcessInstance(templatePath, int.Parse(strParams));
-                        var list = BPM.BLL.ProcessMng.GetAllTemplateList(templatePath);
+                        var flowinstance = BPM.BLL.ProcessMng.CreateProcessInstance(int.Parse(strParams));
+                        var list = BPM.BLL.ProcessMng.GetAllTemplateList();
                         var template = list.Lists.Find(s => s.TemplateId == flowinstance.TemplateId);
                         var obj = postAction(template.CreateAction, flowinstance.FlowInstanceId.ToString());
                         FlowDto dto = new FlowDto();
@@ -56,7 +55,7 @@ public class Flow
                     try
                     {
                         var flowinstance = BPM.BLL.ProcessMng.OpenProcessInstance(long.Parse(strParams));
-                        var list = BPM.BLL.ProcessMng.GetAllTemplateList(templatePath);
+                        var list = BPM.BLL.ProcessMng.GetAllTemplateList();
                         var template = list.Lists.Find(s => s.TemplateId == flowinstance.TemplateId);
                         var obj = postAction(template.OpenAction, flowinstance.FlowInstanceId.ToString());
                         FlowDto dto = new FlowDto();

@@ -19,11 +19,9 @@ namespace BPM.BLL
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static ProcessTemplateList GetAllTemplateList(string path)
+        public static ProcessTemplateList GetAllTemplateList()
         {
-            string strPath=path;
-            if (string.IsNullOrEmpty(strPath))
-                strPath = templateFile;
+            string strPath=templateFile;
             FileStream fs = null;
             XmlSerializer xs = new XmlSerializer(typeof(ProcessTemplateList));
             fs = new FileStream(strPath, FileMode.Open, FileAccess.Read);
@@ -42,10 +40,10 @@ namespace BPM.BLL
         /// <param name="path"></param>
         /// <param name="currentStepId"></param>
         /// <returns></returns>
-        public static ProcessTemplate GetParentProcessTemplate(string path,long currentStepId)
+        public static ProcessTemplate GetParentProcessTemplate(long currentStepId)
         {
             ProcessTemplate template=null;
-            ProcessTemplateList list = GetAllTemplateList(path);
+            ProcessTemplateList list = GetAllTemplateList();
             foreach (var v in list.Lists)
             {
                 if (v.StepTemplateList.Find(s => s.ProcessTemplateId == v.TemplateId) != null)
@@ -108,9 +106,9 @@ namespace BPM.BLL
         /// <param name="path"></param>
         /// <param name="templateId"></param>
         /// <returns></returns>
-        public static FlowInstance CreateProcessInstance(string path,int templateId)
+        public static FlowInstance CreateProcessInstance(int templateId)
         {
-            var list = GetAllTemplateList(path);
+            var list = GetAllTemplateList();
             //获取流程模板
             var temp=list.Lists.SingleOrDefault(s => s.TemplateId == templateId);
             //根据模板创建一个流程实例
@@ -174,7 +172,7 @@ namespace BPM.BLL
             StepInstance stepInstance = stepInstanceDto.Instance;
             int iReturnCode = 0;
             //获取步骤模板
-            ProcessTemplate processTemplate=GetParentProcessTemplate("", stepInstance.stepid);
+            ProcessTemplate processTemplate=GetParentProcessTemplate(stepInstance.stepid);
             StepTemplate temp = processTemplate.StepTemplateList.First(s => s.StepTemplateId == stepInstance.StepTemplateId);
             string actionName = temp.SubmitAction;//flowlibrary.equipmentinputfactory
             string data = stepInstanceDto.Data;//
@@ -224,7 +222,7 @@ namespace BPM.BLL
         private static StepInstance GetNextStep(StepInstance stepInstance)
         {
             StepInstance returnStepInstance=null;
-            var TemplateList=GetAllTemplateList("");
+            var TemplateList=GetAllTemplateList();
             foreach(var template in TemplateList.Lists)
             {
                 var currentTemplate=template.StepTemplateList.First(s=>s.StepTemplateId==stepInstance.StepTemplateId);

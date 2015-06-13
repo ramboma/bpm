@@ -29,9 +29,9 @@ namespace BPM.Entity.DTO
         /// 规格
         /// </summary>
         public string standard{get;set;}
-        public int Source { get; set; }
-        public int StorageNum { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public string Source { get; set; }
+        public string StorageNum { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
     }
 }

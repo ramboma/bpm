@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="~/css/skin.css" type="text/css" rel="stylesheet" />
+    <link href="../css/skin.css" rel="stylesheet" />
     <script src="../scripts/require/require.js" type="text/javascript"></script>
     <script src="../scripts/requestconfig.js" type="text/javascript"></script>
+    <script src="../scripts/public.js"></script>
     <script type="text/javascript">
         require(['avalon', 'jquery'], function (avalon, $) {
+            avalon.config({ log: true });
             var vm = avalon.define(
                   {
                       $id: 'test',
@@ -19,74 +21,7 @@
                       Status: 0,
                       CurrentStepInstanceId: 104,
                       CurrentStepInstance: null,
-                      StepInstanceList: [
-                           {
-                               stepid: 103,
-                               StepTemplateId: 1,
-                               StepTemplateName: "装备进场",
-                               StepTemplate: null,
-                               Approver: 0,
-                               FlowInstanceId: 19,
-                               FlowInstance: null,
-                               Operator: 1,
-                               OperateAction: "flowlibrary.equipmentinputfactory"
-                           },
-                           {
-                               stepid: 104,
-                               StepTemplateId: 2,
-                               StepTemplateName: "修理勘验",
-                               StepTemplate: null,
-                               Approver: 0,
-                               FlowInstanceId: 19,
-                               FlowInstance: null,
-                               Operator: 0,
-                               OperateAction: ""
-                           },
-        {
-            stepid: 105,
-            StepTemplateId: 3,
-            StepTemplateName: "交验检验",
-            StepTemplate: null,
-            Approver: 0,
-            FlowInstanceId: 19,
-            FlowInstance: null,
-            Operator: 0,
-            OperateAction: ""
-        },
-        {
-            stepid: 106,
-            StepTemplateId: 4,
-            StepTemplateName: "军检",
-            StepTemplate: null,
-            Approver: 0,
-            FlowInstanceId: 19,
-            FlowInstance: null,
-            Operator: 0,
-            OperateAction: ""
-        },
-        {
-            stepid: 107,
-            StepTemplateId: 5,
-            StepTemplateName: "装备交验",
-            StepTemplate: null,
-            Approver: 0,
-            FlowInstanceId: 19,
-            FlowInstance: null,
-            Operator: 0,
-            OperateAction: ""
-        },
-        {
-            stepid: 108,
-            StepTemplateId: 6,
-            StepTemplateName: "装备交付",
-            StepTemplate: null,
-            Approver: 0,
-            FlowInstanceId: 19,
-            FlowInstance: null,
-            Operator: 0,
-            OperateAction: ""
-        }
-                      ],
+                      StepInstanceList: [],
                       Date:
                           {
                               EquipmentRepairId: 8,
@@ -127,16 +62,16 @@
                               docConsignLog: ""
                           },
                       outmsg: "",//输出信息
-                      stepSubmit: function (func) {
+                      stepSubmit: function (step) {
                           $.ajax(
   {
       url: '/route/libraryhandler.ashx',
       method: 'POST',
       data:
           {
-              c: 'EquipmentInputFactory',
-              m: func.submit,
-              p: vm.data
+              c: 'flow',
+              m: 'submitstep',
+              p: { instance: step, data: vm.data }
           },
       success: function (output) {
           vm.outmsg = output;
@@ -152,9 +87,9 @@
                                 method: 'POST',
                                 data:
                                     {
-                                        c: 'EquipmentInputFactory',
-                                        m: func.reback,
-                                        p: vm.data
+                                        c: 'flow',
+                                        m: 'rebackstep',
+                                        p: { instance: step, data: vm.data }
                                     },
                                 success: function (output) {
                                     vm.outmsg = output;
@@ -162,60 +97,51 @@
                                 }
                             }
                               );
-                      },
-                      steps: [
-
-                     {
-                         stepid: 1,
-                         iscurrent: true,
-                         stepname: '修理勘验',
-                         roleid: 3,
-                         submit: 'flowlibrary.equipmentinputfactory',
-                         reback: 'flowlibrary.rebackpaiche'
-
-                     },
-                     {
-                         stepid: 2,
-                         stepname: '交验检验',
-                         roleid: 4
-
-                     },
-                     {
-                         stepid: 3,
-                         stepname: '军检',
-                         roleid: 5
-
-                     },
-                     {
-                         stepid: 5,
-                         stepname: '装备交验',
-                         roleid: 6
-
-                     },
-                     {
-                         stepid: 6,
-                         stepname: '装备交付',
-                         roleid: 8
-
-                     },
-                      ],
-                      applyId: 0,
-                      userDep: '',
-                      carType: '',
-                      startPos: '',
-                      targetPos: '',
-                      carUser: '',
-                      puspose: '',
-                      driverName: '',
-                      startTime: '',
-                      carNum: '',
-                      approveName: 'rambo',
-                      approveTime: '',
-                      approveIdea: ''
+                      }
                   }
               );
+            //打开流程
+            function LoadFlow(flowid) {
+                $.ajax(
+                    {
+                        url: '/route/libraryhandler.ashx',
+                        method: 'POST',
+                        data:
+                        {
+                            c: 'flow',
+                            m: 'openprocessinstance',
+                            p: flowid
+                        },
+                        success: function (output) {
+                            var data = getResult(output);
+                            console.log(vm);
+                            vm.TemplateName = "kaka";//data.Result.flowInstance.TemplateName;
+                            vm.StepInstanceList[0].equipmentname = "hehe";
+                            //vm = data.Result.flowInstance;
+                            vm.StepInstanceList = data.Result.flowInstance.StepInstanceList;
+                            vm.StepInstanceList.forEach(
+                                function (d) {
+                                    if (d.stepid != vm.CurrentStepInstanceId) {
+                                        d.iscurrent = "readonly";
+                                    }
+                                }
+                                );
+                            console.log("hehe");
+                            console.log(vm);
+                            avalon.scan();
+                        }
+                    });
+            }
+            $(document).ready(
+            function () {
+                var flowid = getQueryStringByName("id");
+                LoadFlow(flowid);
+            }
+                );
         }
+
         );
+
     </script>
     <title></title>
     <style type="text/css">
@@ -234,42 +160,43 @@
         <table style="width: 864px" border="1">
             <tr>
                 <td align="center" colspan="4" style="width: 864px; height: 48px">
+                    <span></span>
                     <span font-bold="True" font-size="18px"
-                        font-strikeout="False" font-underline="True">{{flowname}}</span>
+                        font-strikeout="False" font-underline="True">{{TemplateName}}</span>
                 </td>
             </tr>
             <tr>
                 <td class="auto-style1">装备名称:</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.equipmentname" ms-attr-readonly="steps[0].iscurrent" /></td>
+                    <input ms-duplex="Date.equipmentname" ms-attr-readonly="StepInstanceList[0].iscurrent" /></td>
                 <td style="width: 88px; height: 24px">装备编号：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.equipmentid" ms-attr-readonly="steps[0].iscurrent" /></td>
+                    <input ms-duplex="Date.equipmentid" ms-attr-readonly="StepInstanceList[0].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">交接时间：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.associateTime" ms-attr-readonly="steps[0].iscurrent" /></td>
+                    <input ms-duplex="Date.associateTime" ms-attr-readonly="StepInstanceList[0].iscurrent" /></td>
                 <td style="width: 88px; height: 24px">交接地点：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.associateLoc" ms-attr-readonly="steps[0].iscurrent" /></td>
+                    <input ms-duplex="Date.associateLoc" ms-attr-readonly="StepInstanceList[0].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">交接记录：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.associateLog" ms-attr-readonly="steps[0].iscurrent" />
+                    <input ms-duplex="Date.associateLog" ms-attr-readonly="StepInstanceList[0].iscurrent" />
                 </td>
             </tr>
             <tr>
                 <td class="auto-style2">附件交接记录：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.attachLog" ms-attr-readonly="steps[0].iscurrent" />
+                    <input ms-duplex="Date.attachLog" ms-attr-readonly="StepInstanceList[0].iscurrent" />
                 </td>
             </tr>
             <tr>
                 <td class="auto-style2">资料交接记录：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.docLog" ms-attr-readonly="steps[0].iscurrent" />
+                    <input ms-duplex="Date.docLog" ms-attr-readonly="StepInstanceList[0].iscurrent" />
                 </td>
             </tr>
             <tr>
@@ -289,7 +216,7 @@
         <input checked="true" name="R1" type="radio" value="0" />同意
         <input checked="false" name="R1" type="radio" value="1" />驳回
                     </div>
-                    <input type="button" value="确定" ms-click="stepSubmit('assetlibrary.SubmitPaiChe')" />
+                    <input type="button" value="确定" ms-click="stepSubmit(vm.)" />
                 </td>
             </tr>
         </table>
@@ -297,60 +224,60 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img_step1" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{steps[0].stepname}}</td>
+                    {{StepInstanceList[1].stepname}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">上次修理等级：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.preRepairLevel" ms-attr-readonly="steps[1].iscurrent" />
+                    <input ms-duplex="Date.preRepairLevel" ms-attr-readonly="StepInstanceList[1].iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">上次修理时间：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.preRepairTime" ms-attr-readonly="steps[1].iscurrent" /></td>
+                    <input ms-duplex="Date.preRepairTime" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">生产日期：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.createTime" ms-attr-readonly="steps[1].iscurrent" />
+                    <input ms-duplex="Date.createTime" ms-attr-readonly="StepInstanceList[1].iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">进场日期：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.inputFactoryTime" ms-attr-readonly="steps[1].iscurrent" /></td>
+                    <input ms-duplex="Date.inputFactoryTime" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">装备历次使用情况：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.userLog" ms-attr-readonly="steps[1].iscurrent" /></td>
+                    <input ms-duplex="Date.userLog" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">修理等级建议：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.repairAdvice" ms-attr-readonly="steps[1].iscurrent" /></td>
+                    <input ms-duplex="Date.repairAdvice" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">勘验单位：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.inquestUnit" ms-attr-readonly="steps[1].iscurrent" /></td>
+                    <input ms-duplex="Date.inquestUnit" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">参加勘验人员：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.inquestUser" ms-attr-readonly="steps[1].iscurrent" /></td>
+                    <input ms-duplex="Date.inquestUser" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">修理要求：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.repairRequire" ms-attr-readonly="steps[1].iscurrent" /></td>
+                    <input ms-duplex="Date.repairRequire" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">本次修理定级：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.repairMakeLevel" ms-attr-readonly="steps[1].iscurrent" /></td>
+                    <input ms-duplex="Date.repairMakeLevel" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">本次定级依据：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="data.makeLevelReason" ms-attr-readonly="steps[1].iscurrent" /></td>
+                    <input ms-duplex="Date.makeLevelReason" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2" colspan="4">
@@ -371,25 +298,25 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img1" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{steps[1].stepname}}</td>
+                    {{StepInstanceList[2].stepname}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">交验项目：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.checkTask" ms-attr-readonly="steps[2].iscurrent" />
+                    <input ms-duplex="Date.checkTask" ms-attr-readonly="StepInstanceList[2].iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">指标要求：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.kpi" ms-attr-readonly="steps[2].iscurrent" /></td>
+                    <input ms-duplex="Date.kpi" ms-attr-readonly="StepInstanceList[2].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">交验地点：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.checkLoc" ms-attr-readonly="steps[2].iscurrent" />
+                    <input ms-duplex="Date.checkLoc" ms-attr-readonly="StepInstanceList[2].iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">交验方式：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.checkMethod" ms-attr-readonly="steps[2].iscurrent" /></td>
+                    <input ms-duplex="Date.checkMethod" ms-attr-readonly="StepInstanceList[2].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">校验人：</td>
@@ -406,16 +333,16 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img2" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{steps[2].stepname}}</td>
+                    {{StepInstanceList[3].stepname}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">军检纪要：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.armyCheck" ms-attr-readonly="steps[3].iscurrent" />
+                    <input ms-duplex="Date.armyCheck" ms-attr-readonly="StepInstanceList[3].iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">军检结论：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.armyResult" ms-attr-readonly="steps[3].iscurrent" /></td>
+                    <input ms-duplex="Date.armyResult" ms-attr-readonly="StepInstanceList[3].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">军代表：</td>
@@ -431,16 +358,16 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img3" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{steps[3].stepname}}</td>
+                    {{StepInstanceList[4].stepname}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">单位验收结论：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.equipmentResult" ms-attr-readonly="steps[4].iscurrent" />
+                    <input ms-duplex="Date.equipmentResult" ms-attr-readonly="StepInstanceList[4].iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">军代表验收结论：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.armyManResult" ms-attr-readonly="steps[4].iscurrent" /></td>
+                    <input ms-duplex="Date.armyManResult" ms-attr-readonly="StepInstanceList[4].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">军代表：</td>
@@ -456,21 +383,21 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img4" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{steps[4].stepname}}</td>
+                    {{StepInstanceList[5].stepname}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">装备交接记录：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.equipmentConsignLog" ms-attr-readonly="steps[5].iscurrent" />
+                    <input ms-duplex="Date.equipmentConsignLog" ms-attr-readonly="StepInstanceList[5].iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">附件交接记录：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.attachConsignLog" ms-attr-readonly="steps[5].iscurrent" /></td>
+                    <input ms-duplex="Date.attachConsignLog" ms-attr-readonly="StepInstanceList[5].iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">资料交接记录：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="data.docConsignLog" ms-attr-readonly="steps[5].iscurrent" /></td>
+                    <input ms-duplex="Date.docConsignLog" ms-attr-readonly="StepInstanceList[5].iscurrent" /></td>
                 <td style="width: 88px; height: 24px">&nbsp;</td>
                 <td style="width: 128px; height: 24px">&nbsp;</td>
             </tr>

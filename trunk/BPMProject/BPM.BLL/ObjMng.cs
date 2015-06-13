@@ -283,25 +283,25 @@ FROM    product pro
                    ) e ON pro.productid = e.ProductId
         LEFT JOIN Provider pv ON pro.FactoryId = pv.CatalogId
         LEFT JOIN Provider pv1 ON pro.DealerId = pv1.CatalogId
-        where pro.hasdelete=1 {1}                                        ";
+        where pro.hasdelete=0 {1}                                        ";
 
 
             string strFormat = "";
             string strInput = "";
             string strAnd = "";
-            if (productSearch.Source>=0) strInput += "dbo.Productinput.source="+productSearch.Source.ToString() + " and ";
-            if (productSearch.StorageNum>=0) strInput += "dbo.Productinput.storageNum="+productSearch.StorageNum.ToString() + " and ";
-            if (productSearch.StartTime != null && productSearch.EndTime != null)
+            if (!string.IsNullOrEmpty(productSearch.Source)) strInput += "dbo.Productinput.source="+productSearch.Source.ToString() + " and ";
+            if (!string.IsNullOrEmpty(productSearch.StorageNum)) strInput += "dbo.Productinput.storageNum="+productSearch.StorageNum.ToString() + " and ";
+            if (!string.IsNullOrEmpty(productSearch.StartTime)&&!string.IsNullOrEmpty(productSearch.EndTime))
             {
-                if (productSearch.StartTime != new DateTime() && productSearch.EndTime != new DateTime())
-                {
-                    strInput += "dbo.productinput.Time>='" + productSearch.StartTime.ToString() + "' and " + "dbo.productinput.time<='" + productSearch.EndTime.ToString() + "' and ";
-                }
+                    strInput += "dbo.productinput.Time>='" + productSearch.StartTime + "' and " + "dbo.productinput.time<='" + productSearch.EndTime + "' and ";
             }
-            strInput = strInput.Remove(strInput.Length - 5, 5);
             if (!string.IsNullOrEmpty(strInput))
             {
-                strInput = " where " + strInput;
+                strInput = strInput.Remove(strInput.Length - 5, 5);
+                if (!string.IsNullOrEmpty(strInput))
+                {
+                    strInput = " where " + strInput;
+                }
             }
             strAnd = "";
             string strLikeFormat = " {0} like '{1}%' ";

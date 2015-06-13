@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="~/css/skin.css" type="text/css" rel="stylesheet" />
+    <script src="../scripts/require/require.js" type="text/javascript"></script>
+    <script src="../scripts/requestconfig.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        require(['jquery','pub'], function ($,pub) {
+            $(document).ready(
+                function () {
+                    $("#createProc").click(
+                        function () {
+                            createEquipmentRepair(1);
+                        }
+                        );
+                });
+
+            function createEquipmentRepair(flowTemplateId) {
+                $.ajax(
+                        {
+                            url: 'http://localhost:3665/Route/LibraryHandler.ashx',
+                            method:'POST',
+                            data:
+                                {
+                                    c: 'flow',
+                                    m: 'createprocessinstance',
+                                    p:flowTemplateId 
+                                },
+                            success: function (data) {
+                                var result=getResult(data);
+                                if (result.Code == 1) {
+                                    //转入打开流程页面
+                                    window.location.href = "proc_equipRequire.html?id=" + result.Result.flowInstance.FlowInstanceId;
+                                }
+                                else {
+                                    //错误处理
+                                }
+                           }
+						}
+                    );
+            }
+        });
+    </script>
+</head>
+<body>
+    <a href="#" id="createProc" >创建装备维修流程</a>
+</body>
+</html>
