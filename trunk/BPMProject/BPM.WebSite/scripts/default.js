@@ -146,7 +146,7 @@ function btn_click(obj) {
             }
         case "btn_process_create":
             {
-                document.getElementById("Iframe_Display").src = "process_mng/prs_create.aspx";
+                document.getElementById("Iframe_Display").src = "../views/proc_CreateequipRequire.html";
                 break;
             }
         case "btn_process_promote":

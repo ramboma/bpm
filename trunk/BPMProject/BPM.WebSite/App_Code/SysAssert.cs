@@ -181,7 +181,7 @@ public class SysAssert
                     catch (Exception e1)
                     {
                         return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
-                    } 
+                    }
                 }
             case "updatedeptinfo":
                 {
@@ -213,8 +213,8 @@ public class SysAssert
                     try
                     {
                         var vUserLoginInfo = JsonConvert.DeserializeObject<UserAuth>(strParams);
-                        var vUserAuth= BPM.BLL.SysMng.AuthUserLogin(vUserLoginInfo);
-                        if (vUserAuth.LoginState==0)
+                        var vUserAuth = BPM.BLL.SysMng.AuthUserLogin(vUserLoginInfo);
+                        if (vUserAuth.LoginState == 0)
                         {
                             HttpContext.Current.Session["UserAuth"] = vUserAuth;
                             return ResponseHelper.GetSuccessReturn(vUserAuth.LoginState);
@@ -225,9 +225,16 @@ public class SysAssert
                         }
                     }
                     catch (Exception e1)
-                    { 
+                    {
                         return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
                     }
+                }
+            case "currentuser":
+                {
+                    UserAuthDto dto = (UserAuthDto)HttpContext.Current.Session["UserAuth"];
+                    if (dto == null)
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, "请重新登陆");
+                    return ResponseHelper.GetSuccessReturn(dto);
                 }
             case "getallfunctioninfo":
                 {
@@ -242,7 +249,7 @@ public class SysAssert
                     }
                 }
             #endregion
-       }
+        }
         return ResponseHelper.GetErrorReturn(ResponseCode.ErrorParameter, "输入参数错误，请重新输入");
     }
     public static bool CheckAuthInfo()
@@ -268,5 +275,5 @@ public class SysAssert
             }
         }
         return -1;
-    } 
+    }
 }

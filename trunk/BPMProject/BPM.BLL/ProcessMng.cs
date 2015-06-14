@@ -319,6 +319,16 @@ namespace BPM.BLL
 
         }
 
+        /// <summary>
+        /// 获取所有的流程实例
+        /// </summary>
+        /// <returns></returns>
+        public static List<FlowInstance> GetAllProcessInstance()
+        {
+            SqlExpression<FlowInstance> sqlexpression = Utity.Connection.From<FlowInstance>();
+            sqlexpression.OrderByDescending(s => s.ApproveTime);
+            return Utity.Connection.Select(sqlexpression);
+        }
     }
 
 

@@ -32,6 +32,18 @@ public class Flow
                     }
                 }
             #region 流程实例
+            case "getallprocessinstance":
+                {
+                    try
+                    {
+                        var allInstance=BPM.BLL.ProcessMng.GetAllProcessInstance();
+                        return ResponseHelper.GetSuccessReturn(allInstance);
+                    }
+                    catch (Exception e1)
+                    {
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                    }
+                }
             case "createprocessinstance":
                 {
                     try

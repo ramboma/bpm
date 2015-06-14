@@ -10,6 +10,42 @@
     <script type="text/javascript" src="../scripts/widget/easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="../scripts/widget/easyui/jquery.easyui.min.js"></script>    
     <script type="text/javascript" src="../scripts/main.js"></script>
+    <script type="text/javascript" src="../scripts/public.js"></script>
+    <script type="text/javascript">
+        $(document).ready(
+                function () {
+                    LoadMyWork();
+                }
+            );
+        function LoadMyWork() {
+            $.ajax(
+                {
+                    url: '/route/LibraryHandler.ashx',
+                    method: 'POST',
+                    data: 'c=flow&m=getallprocessinstance',
+                    success: function (data) {
+                        var d = getResult(data);
+                        if (d.Code == 1) {
+                            var flowList=d.Result;
+                            for (var flow in flowList) {
+                                var row = "<tr><td>"+flowList[flow].FlowInstanceId + "</td><td>" +
+                                flowList[flow].TemplateName + "</td><td>"+
+                                flowList[flow].TemplateName + "</td><td>" +
+                                flowList[flow].ApproveTime+"</td><td>"+
+                                flowList[flow].ApproveUserId+"</td></tr>";
+
+                                $("#tabTasks tbody").append(row);
+
+                            }
+                        }
+                        else {
+                            alert(d.Message);
+                        }
+                    }
+                }
+                );
+        }
+    </script>
 </head>
 <body>
 <table cellpadding="0" cellspacing="0" align="left" class="Tbl_Frame_main">
@@ -23,7 +59,7 @@
             </tr>
                 <tr>
                     <td align="left" valign="top" style="width:864px; height:174px; background-color:#CCFFCC">
-                    <table class="easyui-datagrid" style="width:864px;height:174px;font-size:16px">
+                    <table class="easyui-datagrid" style="width:864px;height:174px;font-size:16px" id="tabTasks">
                     <thead>
                     <tr>
                     <th data-options="field:'1',width:80">任务号</th>
@@ -33,6 +69,8 @@
                     <th data-options="field:'5',width:100">创建人</th>
                     </tr>
                     </thead>
+                        <tbody>
+                        </tbody>
                     </table>
                     </td>
                 </tr>
