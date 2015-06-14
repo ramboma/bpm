@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="../scripts/widget/easyui/themes/icon.css"/>
     <script type="text/javascript" src="../scripts/widget/easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="../scripts/widget/easyui/jquery.easyui.min.js"></script>    
-    <script type="text/javascript" src="../scripts/main.js"></script>
+    <%--<script type="text/javascript" src="../scripts/main.js"></script>--%>
     <script type="text/javascript" src="../scripts/public.js"></script>
     <script type="text/javascript">
         $(document).ready(
@@ -28,12 +28,15 @@
                         if (d.Code == 1) {
                             var flowList=d.Result;
                             for (var flow in flowList) {
-                                var row = "<tr><td>"+flowList[flow].FlowInstanceId + "</td><td>" +
+                                var status = (flowList[flow].Status==1)?"已结束":"进行中";
+
+                                var row = "<tr><td><a href=proc_equipRequire.html?id=" + flowList[flow].FlowInstanceId +">"+flowList[flow].FlowInstanceId +"</a> </td><td>" +
                                 flowList[flow].TemplateName + "</td><td>"+
                                 flowList[flow].TemplateName + "</td><td>" +
                                 flowList[flow].ApproveTime+"</td><td>"+
-                                flowList[flow].ApproveUserId+"</td></tr>";
-
+                                flowList[flow].ApproveUserId+"</td><td>"+
+                                status+"</td></tr>";
+                                
                                 $("#tabTasks tbody").append(row);
 
                             }
@@ -59,7 +62,7 @@
             </tr>
                 <tr>
                     <td align="left" valign="top" style="width:864px; height:174px; background-color:#CCFFCC">
-                    <table class="easyui-datagrid" style="width:864px;height:174px;font-size:16px" id="tabTasks">
+                    <table style="width:864px;height:174px;font-size:16px" id="tabTasks">
                     <thead>
                     <tr>
                     <th data-options="field:'1',width:80">任务号</th>
@@ -67,6 +70,7 @@
                     <th data-options="field:'3',width:300,align:'center'">任务名称</th>
                     <th data-options="field:'4',width:200,align:'center'">到达时间</th>
                     <th data-options="field:'5',width:100">创建人</th>
+                        <th>状态</th>
                     </tr>
                     </thead>
                         <tbody>

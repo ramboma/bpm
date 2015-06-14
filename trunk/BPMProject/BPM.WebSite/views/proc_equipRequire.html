@@ -137,7 +137,8 @@
           var result = getResult(output);
           if (result.Code == 1) {
               alert("提交成功!");
-              window.location.href = "index.aspx";
+              window.parent.location.href = "/views/index.aspx";
+              
           }
           console.log(output);
       }
@@ -172,7 +173,7 @@
                                     var resultData = getResult(output);
                                     if (resultData.Code == 1) {
                                         alert("驳回成功!");
-                                        window.location.href = "index.aspx";
+                                        window.parent.location.href = "/Views/index.aspx";
                                     }
                                     else {
                                         alert(resultData.Message);
