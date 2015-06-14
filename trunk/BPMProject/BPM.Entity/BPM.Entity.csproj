@@ -57,7 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookInfo.cs" />
+    <Compile Include="Proccess\BookInfo.cs" />
     <Compile Include="BookLog.cs" />
     <Compile Include="CarApply.cs" />
     <Compile Include="Department.cs" />

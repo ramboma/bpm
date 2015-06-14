@@ -81,6 +81,19 @@ public class Flow
                         return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
                     }
                 }
+            case "rebackstep":
+                {
+                    try
+                    {
+                        var stepInstance = JsonConvert.DeserializeObject<BPM.Entity.Process.StepInstance>(strParams);
+                        var resultValue = BPM.BLL.ProcessMng.RebackStep(stepInstance);
+                        return ResponseHelper.GetSuccessReturn(resultValue);
+                    }
+                    catch (Exception e1)
+                    {
+                        return ResponseHelper.GetErrorReturn(ResponseCode.FAIL, e1.Message);
+                    }
+                }
             #endregion
             #region 辅助方法
             //创建流程实例表
@@ -104,7 +117,7 @@ public class Flow
 
     private static ReturnBase postAction(string action, string strparams)
     {
-        string queryurl = "http://localhost:3665/Route/LibraryHandler.ashx";
+        string queryurl = System.Configuration.ConfigurationManager.AppSettings["posturl"];
         string c = action.Split(new char[] { '.' })[0];
         string m = action.Split(new char[] { '.' })[1];
         string p = strparams;

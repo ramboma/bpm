@@ -8,28 +8,61 @@
     <script src="../scripts/public.js"></script>
     <script type="text/javascript">
         require(['avalon', 'jquery'], function (avalon, $) {
-            avalon.config({ log: true });
+            avalon.define("array", function (vm) {
+                vm.array = ["1", "2", "3", "4"]
+                vm.del = function () {
+                    this.$vmodel.$remove()
+                }
+                "push,unshift,remove,ensure,set".replace(/\w+/g, function (method) {
+                    vm[method] = function (e) {
+                        if (this.value && e.which == 13) {
+                            vm.array[method](this.value);
+                            this.value = "";
+                        }
+                    }
+                })
+
+                vm.removeAt = function (e) {
+                    if (isFinite(this.value) && e.which == 13) {
+                        var a = ~~this.value
+                        vm.array.removeAt(a)
+                        this.value = "";
+                    }
+                }
+                "pop,shift,sort,reverse".replace(/\w+/g, function (method) {
+                    vm[method] = function (e) {
+                        vm.array[method]();
+                    }
+                })
+            });
+
             var vm = avalon.define(
                   {
                       $id: 'test',
                       FlowInstanceId: 19,
                       FlowInstanceName: "",
                       TemplateId: 1,
-                      TemplateName: "装备维修流程",
+                      TemplateName: "",
                       ApproveUserId: 1,
                       ApproveTime: "2015-06-13T08:43:45.793",
                       Status: 0,
                       CurrentStepInstanceId: 104,
-                      CurrentStepInstance: null,
-                      StepInstanceList: [],
+                      StepInstanceList: [
+                      ],
+                      Step0:{},
+                      Step1:{},
+                      Step2:{},
+                      Step3:{},
+                      Step4:{},
+                      Step5:{},
                       Date:
                           {
-                              EquipmentRepairId: 8,
-                              FlowInstanceId: 14,
-                              equipmentid: 11,
-                              equipmentname: "长波电台",
+                              EquipmentRepairId: 0,
+                              FlowInstanceId: 0,
+                              equipmentid: 0,
+                              equipmentname: "",
                               associateTime: "",
-                              associateLoc: "石景山区",
+                              associateLoc: "",
                               associateLog: "",
                               attachLog: "",
                               docLog: "",
@@ -63,45 +96,98 @@
                           },
                       outmsg: "",//输出信息
                       stepSubmit: function (step) {
+                          var stepinstance = vm.Step0.$model;
+                          if (step == 1) {
+                              stepinstance = vm.Step1.$model;
+                          }
+                          else if (step == 2)
+                              {
+                              stepinstance = vm.Step2.$model;
+                          }
+                          else if (step == 3)
+                              {
+                              stepinstance = vm.Step3.$model;
+                          }
+                          else if (step == 4)
+                              {
+                              stepinstance = vm.Step4.$model;
+                          }
+                          else if (step == 5)
+                              {
+                              stepinstance = vm.Step5.$model;
+                          }
+                            
+                          var postObj = {
+                              instance: stepinstance,
+                              data: JSON.stringify(vm.Date.$model)
+                          };
+                          var postData = "c=flow&m=submitstep&p=" + JSON.stringify(postObj);
                           $.ajax(
+
   {
       url: '/route/libraryhandler.ashx',
       method: 'POST',
-      data:
-          {
-              c: 'flow',
-              m: 'submitstep',
-              p: { instance: step, data: vm.data }
-          },
+      data: postData,
+      //{
+      //    c: 'flow',
+      //    m: 'submitstep',
+      //    p: vm.$model
+      //},
       success: function (output) {
-          vm.outmsg = output;
+          var result = getResult(output);
+          if (result.Code == 1) {
+              alert("提交成功!");
+              window.location.href = "index.aspx";
+          }
           console.log(output);
       }
   }
                               );
                       },
-                      stepReback: function (func) {
+                      stepReback: function (step) {
+                          var stepinstance = vm.Step0.$model;
+                          if (step == 1) {
+                              stepinstance = vm.Step1.$model;
+                          }
+                          else if (step == 2) {
+                              stepinstance = vm.Step2.$model;
+                          }
+                          else if (step == 3) {
+                              stepinstance = vm.Step3.$model;
+                          }
+                          else if (step == 4) {
+                              stepinstance = vm.Step4.$model;
+                          }
+                          else if (step == 5) {
+                              stepinstance = vm.Step5.$model;
+                          }
+                          var postObj = stepinstance;
+                          var postData = "c=flow&m=rebackstep&p=" + JSON.stringify(postObj);
                           $.ajax(
                             {
                                 url: '/route/libraryhandler.ashx',
                                 method: 'POST',
-                                data:
-                                    {
-                                        c: 'flow',
-                                        m: 'rebackstep',
-                                        p: { instance: step, data: vm.data }
-                                    },
+                                data:postData,
                                 success: function (output) {
-                                    vm.outmsg = output;
-                                    console.log(output);
+                                    var resultData = getResult(output);
+                                    if (resultData.Code == 1) {
+                                        alert("驳回成功!");
+                                        window.location.href = "index.aspx";
+                                    }
+                                    else {
+                                        alert(resultData.Message);
+                                    }
                                 }
                             }
                               );
                       }
+                     
                   }
               );
-            //打开流程
-            function LoadFlow(flowid) {
+            avalon.ready(
+                function () {
+                    console.log("avalon ready");
+                var flowid = getQueryStringByName("id");
                 $.ajax(
                     {
                         url: '/route/libraryhandler.ashx',
@@ -114,29 +200,92 @@
                         },
                         success: function (output) {
                             var data = getResult(output);
+                            var instance=data.Result.flowInstance;
+                            var date=data.Result.Date;
+                            //instance.StepInstanceList.forEach(
+                            //    function (d) {
+                            //        if (d.stepid != instance.CurrentStepInstanceId) {
+                            //            d.iscurrent = "readonly";
+                            //        }
+                            //    }
+                            //    );
                             console.log(vm);
-                            vm.TemplateName = "kaka";//data.Result.flowInstance.TemplateName;
-                            vm.StepInstanceList[0].equipmentname = "hehe";
-                            //vm = data.Result.flowInstance;
-                            vm.StepInstanceList = data.Result.flowInstance.StepInstanceList;
-                            vm.StepInstanceList.forEach(
-                                function (d) {
-                                    if (d.stepid != vm.CurrentStepInstanceId) {
-                                        d.iscurrent = "readonly";
-                                    }
+                            //var newData = avalon.mix(true, {}, vm.$model, data.Result)
+                            //for (var i in newData) {
+                            //    if (vm.hasOwnProperty(i) && i !== "hasOwnProperty") {//安全更新数据
+                            //        vm[i] = newData[i]
+                            //    }
+                            //}
+                            vm.FlowInstanceId = instance.FlowInstanceId;
+                            vm.FlowInstanceName = instance.FlowInstanceName;
+                            vm.TemplateId = instance.TemplateId;
+                            vm.TemplateName = instance.TemplateName;
+                            vm.ApproveUserId = instance.ApproveUserId;
+                            vm.ApproveTime = instance.ApproveTime;
+                            vm.Status = instance.Status;
+                            vm.CurrentStepInstanceId = instance.CurrentStepInstanceId;
+                            //////////////////////////////////
+                            vm.Date.EquipmentRepairId = date.EquipmentRepairId;
+                            vm.Date.FlowInstanceId = date.FlowInstanceId;
+                            vm.Date.equipmentid = date.equipmentid;
+                            vm.Date.equipmentname = date.equipmentname;
+                            vm.Date.associateTime = date.associateTime;
+                            vm.Date.associateLoc = date.associateLoc;
+                            vm.Date.associateLog = date.associateLog;
+                            vm.Date.attachLog = date.attachLog;
+                            vm.Date.docLog = date.docLog;
+
+                            vm.Date.preRepairLevel = date.preRepairLevel;
+                            vm.Date.preRepairTime = date.preRepairTime;
+                            vm.Date.createTime = date.createTime;
+                            vm.Date.inputFactoryTime = date.inputFactoryTime;
+                            vm.Date.userLog = date.userLog;
+                            vm.Date.repairAdvice = date.repairAdvice;
+                            vm.Date.inquestUnit = date.inquestUnit;
+                            vm.Date.inquestUser = date.inquestUser;
+                            vm.Date.repairRequire = date.repairRequire;
+                            vm.Date.repairMakeLevel = date.repairMakeLevel;
+                            vm.Date.makeLevelReason = date.makeLevelReason;
+
+                            vm.Date.checkTask = date.checkTask;
+                            vm.Date.kpi = date.kpi;
+                            vm.Date.checkLoc = date.checkLoc;
+                            vm.Date.checkMethod = date.checkMethod;
+
+                            vm.Date.armyCheck = date.armyCheck;
+                            vm.Date.armyResult = date.armyResult;
+
+                            vm.Date.equipmentResult = date.equipmentResult;
+                            vm.Date.armyManResult = date.armyManResult;
+
+                            vm.Date.equipmentConsignLog = date.equipmentConsignLog;
+                            vm.Date.attachConsignLog = date.attachConsignLog;
+                            vm.Date.docConsignLog = date.docConsignLog;
+                            ///////////////////////////////////
+                            for(var one in instance.StepInstanceList)
+                            {
+                                if (instance.Status == 1) {
+                                    instance.StepInstanceList[one].iscurrent = 'readonly';
+                                    instance.StepInstanceList[one].isdisable = 'disable';
                                 }
-                                );
-                            console.log("hehe");
+                                if(instance.StepInstanceList[one].stepid!=instance.CurrentStepInstanceId)
+                                {
+                                    instance.StepInstanceList[one].iscurrent='readonly';
+                                    instance.StepInstanceList[one].isdisable='disable';
+                                }
+                                
+                            }
+                            vm.Step0 = instance.StepInstanceList[0];
+                            vm.Step1 = instance.StepInstanceList[1];
+                            vm.Step2 = instance.StepInstanceList[2];
+                            vm.Step3 = instance.StepInstanceList[3];
+                            vm.Step4 = instance.StepInstanceList[4];
+                            vm.Step5 = instance.StepInstanceList[5];
                             console.log(vm);
                             avalon.scan();
                         }
-                    });
-            }
-            $(document).ready(
-            function () {
-                var flowid = getQueryStringByName("id");
-                LoadFlow(flowid);
-            }
+                    });;
+                }
                 );
         }
 
@@ -163,60 +312,53 @@
                     <span></span>
                     <span font-bold="True" font-size="18px"
                         font-strikeout="False" font-underline="True">{{TemplateName}}</span>
+                    <span>{{ApproveTime}}</span>
                 </td>
+            </tr>
+             <tr>
+                <td valign="top" colspan="4" style="width: 864px">
+                    <img alt="open" id="img5" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
+                    {{Step0.StepTemplateName}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">装备名称:</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.equipmentname" ms-attr-readonly="StepInstanceList[0].iscurrent" /></td>
+                    <input ms-duplex="Date.equipmentname" ms-attr-readonly="Step0.iscurrent" /></td>
                 <td style="width: 88px; height: 24px">装备编号：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.equipmentid" ms-attr-readonly="StepInstanceList[0].iscurrent" /></td>
+                    <input ms-duplex="Date.equipmentid" ms-attr-readonly="Step0.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">交接时间：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.associateTime" ms-attr-readonly="StepInstanceList[0].iscurrent" /></td>
+                    <input ms-duplex="Date.associateTime" ms-attr-readonly="Step0.iscurrent" /></td>
                 <td style="width: 88px; height: 24px">交接地点：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.associateLoc" ms-attr-readonly="StepInstanceList[0].iscurrent" /></td>
+                    <input ms-duplex="Date.associateLoc" ms-attr-readonly="Step0.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">交接记录：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.associateLog" ms-attr-readonly="StepInstanceList[0].iscurrent" />
+                    <input ms-duplex="Date.associateLog" ms-attr-readonly="Step0.iscurrent" />
                 </td>
             </tr>
             <tr>
                 <td class="auto-style2">附件交接记录：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.attachLog" ms-attr-readonly="StepInstanceList[0].iscurrent" />
+                    <input ms-duplex="Date.attachLog" ms-attr-readonly="Step0.iscurrent" />
                 </td>
             </tr>
             <tr>
                 <td class="auto-style2">资料交接记录：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.docLog" ms-attr-readonly="StepInstanceList[0].iscurrent" />
+                    <input ms-duplex="Date.docLog" ms-attr-readonly="Step0.iscurrent" />
                 </td>
             </tr>
             <tr>
                 <td class="auto-style2" colspan="4">
                     <div>
-                        交装单位经办人
-        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
-                    </div>
-                    <div>
-                        承修单位经办人
-        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
-                    </div>
-                    <div>
-                        监修单位经办人
-        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
-                    </div>
-                    <input type="button" value="确定" ms-click="stepSubmit(vm.)" />
+                        <input type="button" value="同意" ms-attr-disabled="Step0.isdisable" ms-click="stepSubmit(0)" />
+                        <input type="button" value="驳回" ms-attr-disabled="Step1.isdisable"  ms-click="stepReback(1)" />
                 </td>
             </tr>
         </table>
@@ -224,72 +366,66 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img_step1" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{StepInstanceList[1].stepname}}</td>
+                    {{Step1.StepTemplateName}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">上次修理等级：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.preRepairLevel" ms-attr-readonly="StepInstanceList[1].iscurrent" />
+                    <input ms-duplex="Date.preRepairLevel" ms-attr-readonly="Step1.iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">上次修理时间：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.preRepairTime" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
+                    <input ms-duplex="Date.preRepairTime" ms-attr-readonly="Step1.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">生产日期：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.createTime" ms-attr-readonly="StepInstanceList[1].iscurrent" />
+                    <input ms-duplex="Date.createTime" ms-attr-readonly="Step1.iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">进场日期：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.inputFactoryTime" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
+                    <input ms-duplex="Date.inputFactoryTime" ms-attr-readonly="Step1.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">装备历次使用情况：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.userLog" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
+                    <input ms-duplex="Date.userLog" ms-attr-readonly="Step1.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">修理等级建议：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.repairAdvice" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
+                    <input ms-duplex="Date.repairAdvice" ms-attr-readonly="Step1.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">勘验单位：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.inquestUnit" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
+                    <input ms-duplex="Date.inquestUnit" ms-attr-readonly="Step1.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">参加勘验人员：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.inquestUser" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
+                    <input ms-duplex="Date.inquestUser" ms-attr-readonly="Step1.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">修理要求：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.repairRequire" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
+                    <input ms-duplex="Date.repairRequire" ms-attr-readonly="Step1.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">本次修理定级：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.repairMakeLevel" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
+                    <input ms-duplex="Date.repairMakeLevel" ms-attr-readonly="Step1.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2">本次定级依据：</td>
                 <td colspan="3" style="width: 784px; height: 48px">
-                    <input ms-duplex="Date.makeLevelReason" ms-attr-readonly="StepInstanceList[1].iscurrent" /></td>
+                    <input ms-duplex="Date.makeLevelReason" ms-attr-readonly="Step1.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style2" colspan="4">
                     <div>
-                        监修单位经办人
-        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
-                    </div>
-                    <div>
-                        机关业务部门
-        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
+                        <input type="button" value="同意" ms-attr-disabled="Step1.isdisable"  ms-click="stepSubmit(1)" />
+                        <input type="button" value="驳回" ms-attr-disabled="Step2.isdisable"  ms-click="stepReback(2)" />
                     </div>
                 </td>
             </tr>
@@ -298,33 +434,32 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img1" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{StepInstanceList[2].stepname}}</td>
+                    {{Step2.StepTemplateName}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">交验项目：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.checkTask" ms-attr-readonly="StepInstanceList[2].iscurrent" />
+                    <input ms-duplex="Date.checkTask" ms-attr-readonly="Step2.iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">指标要求：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.kpi" ms-attr-readonly="StepInstanceList[2].iscurrent" /></td>
+                    <input ms-duplex="Date.kpi" ms-attr-readonly="Step2.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">交验地点：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.checkLoc" ms-attr-readonly="StepInstanceList[2].iscurrent" />
+                    <input ms-duplex="Date.checkLoc" ms-attr-readonly="Step2.iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">交验方式：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.checkMethod" ms-attr-readonly="StepInstanceList[2].iscurrent" /></td>
+                    <input ms-duplex="Date.checkMethod" ms-attr-readonly="Step2.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">校验人：</td>
                 <td>
                     <div>
-                        监修单位经办人
-        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
+                        <input type="button" value="同意" ms-attr-disabled="Step2.isdisable"  ms-click="stepSubmit(2)" />
+                        <input type="button" value="驳回" ms-attr-disabled="Step3.isdisable"  ms-click="stepReback(3)" />
                     </div>
                 </td>
             </tr>
@@ -333,23 +468,23 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img2" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{StepInstanceList[3].stepname}}</td>
+                    {{Step3.StepTemplateName}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">军检纪要：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.armyCheck" ms-attr-readonly="StepInstanceList[3].iscurrent" />
+                    <input ms-duplex="Date.armyCheck" ms-attr-readonly="Step3.iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">军检结论：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.armyResult" ms-attr-readonly="StepInstanceList[3].iscurrent" /></td>
+                    <input ms-duplex="Date.armyResult" ms-attr-readonly="Step3.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">军代表：</td>
                 <td>
                     <div>
-                        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
+                        <input type="button" value="同意" ms-attr-disabled="Step3.isdisable"  ms-click="stepSubmit(3)" />
+                        <input type="button" value="驳回" ms-attr-disabled="Step4.isdisable"  ms-click="stepReback(4)" />
                     </div>
                 </td>
             </tr>
@@ -358,23 +493,23 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img3" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{StepInstanceList[4].stepname}}</td>
+                    {{Step4.StepTemplateName}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">单位验收结论：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.equipmentResult" ms-attr-readonly="StepInstanceList[4].iscurrent" />
+                    <input ms-duplex="Date.equipmentResult" ms-attr-readonly="Step4.iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">军代表验收结论：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.armyManResult" ms-attr-readonly="StepInstanceList[4].iscurrent" /></td>
+                    <input ms-duplex="Date.armyManResult" ms-attr-readonly="Step4.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">军代表：</td>
                 <td>
                     <div>
-                        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
+                        <input type="button" value="同意" ms-attr-disabled="Step4.isdisable"  ms-click="stepSubmit(4)" />
+                        <input type="button" value="驳回" ms-attr-disabled="Step5.isdisable"  ms-click="stepReback(5)" />
                     </div>
                 </td>
             </tr>
@@ -383,40 +518,28 @@
             <tr>
                 <td valign="top" colspan="4" style="width: 864px">
                     <img alt="open" id="img4" style="width: 16px; height: 16px; cursor: hand" src="../images/close.png" onclick="Open_Step(1)" />
-                    {{StepInstanceList[5].stepname}}</td>
+                    {{Step5.StepTemplateName}}</td>
             </tr>
             <tr>
                 <td class="auto-style1">装备交接记录：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.equipmentConsignLog" ms-attr-readonly="StepInstanceList[5].iscurrent" />
+                    <input ms-duplex="Date.equipmentConsignLog" ms-attr-readonly="Step5.iscurrent" />
                 </td>
                 <td style="width: 88px; height: 24px">附件交接记录：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.attachConsignLog" ms-attr-readonly="StepInstanceList[5].iscurrent" /></td>
+                    <input ms-duplex="Date.attachConsignLog" ms-attr-readonly="Step5.iscurrent" /></td>
             </tr>
             <tr>
                 <td class="auto-style1">资料交接记录：</td>
                 <td style="width: 128px; height: 24px">
-                    <input ms-duplex="Date.docConsignLog" ms-attr-readonly="StepInstanceList[5].iscurrent" /></td>
+                    <input ms-duplex="Date.docConsignLog" ms-attr-readonly="Step5.iscurrent" /></td>
                 <td style="width: 88px; height: 24px">&nbsp;</td>
                 <td style="width: 128px; height: 24px">&nbsp;</td>
             </tr>
             <tr>
                 <td class="auto-style2" colspan="4">
                     <div>
-                        交装单位经办人
-        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
-                    </div>
-                    <div>
-                        承修单位经办人
-        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
-                    </div>
-                    <div>
-                        监修单位经办人
-        <input checked="true" name="R1" type="radio" value="0" />同意
-        <input checked="false" name="R1" type="radio" value="1" />驳回
+                        <input type="button" value="同意" ms-attr-disabled="Step5.isdisable"  ms-click="stepSubmit(5)" />
                     </div>
                 </td>
             </tr>
