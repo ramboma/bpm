@@ -136,6 +136,7 @@ $.extend(
                         var Ret_Result_Json = Ret_Data.Result.Lists;
                         $("#Div_Out_Result").show();
                         $.each(Ret_Result_Json, function (i, val) {
+                            val.Total = Math.round(100 * parseInt(val.Quantity) * parseFloat(val.Price)) / 100;
                             $("#dgt_obj_OutResult").datagrid("appendRow", val);
                         });
                         Submit_Flag = 1;
@@ -171,7 +172,9 @@ $.extend(
         }
     });
 $(document).ready(function () {
-    $("#btn_empl_submit").click($.Btn_Submit_Click);
+    var MyDate = new Date();
+    $("#tb_objmng_out_time").text(MyDate.toLocaleString());
+    $("#btn_objmng_submit").click($.Btn_Submit_Click);
     $("#btn_objmng_cancel").click($.Btn_Cancel_Click);
     $("#btn_objmng_ok").click($.Btn_Ok_Click);
     $("#btn_objmng_close").click($.Btn_Close_Click);

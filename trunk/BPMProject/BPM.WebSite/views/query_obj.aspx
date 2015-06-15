@@ -55,12 +55,13 @@
     <table id="dgt_result_query" class="easyui-datagrid" data-options="singleSelect:true,collapsible:true" style="width:830px;height:240px;font-size:16px">
         <thead>
         <tr>
-            <th data-options="field:'itemid',width:100">编号</th>
-            <th data-options="field:'productid',width:250">资产名称</th>
-            <th data-options="field:'listprice',width:170,align:'right'">生产厂家</th>
-            <th data-options="field:'unitcost',width:120,align:'right'">型号</th>
-            <th data-options="field:'attr1',width:120">规格</th>
-            <th data-options="field:'status',width:50,align:'center',formatter:$.Format_Detail"></th>
+            <th data-options="field:'productId',width:100">编号</th>
+            <th data-options="field:'productName',width:200">资产名称</th>
+            <th data-options="field:'factoryname',width:200">生产厂家</th>
+            <th data-options="field:'model',width:100">型号</th>
+            <th data-options="field:'standard',width:100">规格</th>
+            <th data-options="field:'Stacks',width:50">库存量</th>
+            <th data-options="field:'price',width:50,align:'center',formatter:$.Format_Detail"></th>
         </tr>
     </thead>
     </table>
@@ -70,12 +71,15 @@
 
         <thead>
         <tr>
-            <th data-options="field:'itemid',width:100">编号</th>
-            <th data-options="field:'productid',width:100">出入状态</th>
-            <th data-options="field:'listprice',width:200,align:'right'">时间</th>
-            <th data-options="field:'unitcost',width:200,align:'right'">数量</th>
-            <th data-options="field:'attr1',width:50">经办人</th>
-            <th data-options="field:'status',width:50,align:'center'">来源</th>
+            <th data-options="field:'productInputId',width:50">编号</th>
+            <th data-options="field:'InoutFlag',width:60">出入状态</th>
+            <th data-options="field:'Time',width:120">时间</th>
+            <th data-options="field:'Quantity',width:50">数量</th>
+            <th data-options="field:'ApplyName',width:70">经办人</th>
+            <th data-options="field:'Source',width:100">来源</th>
+            <th data-options="field:'Storage',width:75">库房</th>
+            <th data-options="field:'Shelf',width:75">货架</th>
+            <th data-options="field:'RelativeTask',width:50">任务号</th>
         </tr>
     </thead>
     </table>

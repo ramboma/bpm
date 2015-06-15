@@ -61,9 +61,14 @@ $.extend(
                        type: 'POST',
                        data: { c: 'assetlibrary', m: 'getallpingmingtree', p: ''},
                        success: function (data) {
-                           var Ret = eval('(' + data + ')');
-                           var ctlg_json = Ret.Result;
-                           $("#tb_objmng_name").combotree('loadData', ctlg_json);
+                           var Respnse = $.Get_Request_Result(data);
+                           if (Respnse.Code == 1) {
+                               $("#tb_objmng_name").combotree('loadData', Respnse.Result);
+                           }
+                           else
+                           {
+                               alert(Respnse.Message);
+                           }
                        },
                        error: function (data) {
                            alert(data);
@@ -75,9 +80,15 @@ $.extend(
                    {
                        url: '/Route/LibraryHandler.ashx',
                        type: 'POST',
-                       data: { c: 'assetlibrary', m: 'providermng', p: 'kf' },
+                       data: { c: 'assetlibrary', m: 'providertree', p: 'kf' },
                        success: function (data) {
-                           $("#tb_objmng_warehouse").combobox('loadData',$.Deal_Data(data));
+                           var Respnse = $.Get_Request_Result(data);
+                           if (Respnse.Code == 1) {
+                               $("#tb_objmng_warehouse").combobox('loadData', Respnse.Result);
+                           }
+                           else {
+                               alert(Respnse.Message);
+                           }
                        },
                        error: function (data) {
                            //alert(data);
@@ -89,9 +100,15 @@ $.extend(
                    {
                        url: '/Route/LibraryHandler.ashx',
                        type: 'POST',
-                       data: { c: 'assetlibrary', m: 'providermng', p: 'hj' },
-                       success: function (data) {                      
-                           $("#tb_objmng_shelf").combobox('loadData', $.Deal_Data(data));
+                       data: { c: 'assetlibrary', m: 'providertree', p: 'hj' },
+                       success: function (data) {
+                           var Respnse = $.Get_Request_Result(data);
+                           if (Respnse.Code == 1) {
+                               $("#tb_objmng_shelf").combobox('loadData', Respnse.Result);
+                           }
+                           else {
+                               alert(Respnse.Message);
+                           }
                        },
                        error: function (data) {
                            //alert(data);
@@ -103,12 +120,18 @@ $.extend(
                 {
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
-                    data: { c: 'assetlibrary', m: 'providermng', p: 'ly' },
-                    success: function (data) {             
-                    $('#sl_objmng_source').combobox('loadData', $.Deal_Data(data));
-                },
-                error: function (data) {
-               //alert(data);
+                    data: { c: 'assetlibrary', m: 'providertree', p: 'ly' },
+                    success: function (data) {
+                        var Respnse = $.Get_Request_Result(data);
+                        if (Respnse.Code == 1) {
+                            $("#sl_objmng_source").combobox('loadData', Respnse.Result);
+                        }
+                        else {
+                            alert(Respnse.Message);
+                        }
+                    },
+                    error: function (data) {
+                   alert(data);
            }
        }
         );
@@ -134,15 +157,20 @@ $.extend(
                     data: { c: 'assetlibrary', m: 'submitlibrary', p: JSON.stringify(Objmng_In_Json) },
                     success: function (data)
                     {
-                        var Ret = eval('(' + data + ')');
-                        var Ret_id = Ret.Result;
+                        var Respnse = $.Get_Request_Result(data);
+                        if (Respnse.Code == 1) {
                         $("#div_objmng_qrcode").empty();
                         $("#div_objmng_qrcode").qrcode({
                             render: "table",
                             width: 200,
                             height: 200,
-                            text: $.toUtf8(Ret_id.toString())
+                            text: $.toUtf8(Respnse.Result.toString())
                         });
+                        }
+                        else {
+                            alert(Respnse.Message);
+                        }
+                        
                         Submit_Flag = 1;
                         alert("保存成功,请打印二维码!");
                     }
@@ -156,31 +184,6 @@ $.extend(
         Btn_Print_Click: function(ev) {
             alert("请准备好打印机，按确定打印！");
             return;
-        },
-        toUtf8:function(str)
-        {
-            var out, i,len,c;
-            out="";
-            len=str.length;
-            for (i=0;i<len;i++)
-            {
-                c=str.charCodeAt(i);
-                if ((c>=0x0001) && (c<=0x007f))
-                {
-                    out=out+str.charAt(i);
-                }else if (c>0x07ff)
-                {
-                    out+=String.fromCharCode(0xe0 | ((c>>12)&0x0f));
-                    out+=String.fromCharCode(0x80 | ((c>>6)&0x3f));
-                    out+=String.fromCharCode(0x80 | ((c>>0)&0x3f));
-                }
-                else
-                {
-                    out+=String.fromCharCode(0xc0 | ((c>>6) & 0x1f));
-                    out+=String.fromCharCode(0x80 | ((c>>0) & 0x3f));
-                }
-            }
-            return out;
         }
     });
 $(document).ready(function() {

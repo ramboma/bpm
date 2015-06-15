@@ -283,7 +283,7 @@ FROM    product pro
                    ) e ON pro.productid = e.ProductId
         LEFT JOIN Provider pv ON pro.FactoryId = pv.CatalogId
         LEFT JOIN Provider pv1 ON pro.DealerId = pv1.CatalogId
-        where pro.hasdelete=0 {1}                                        ";
+        where pro.ProductId>100000000000 and pro.hasdelete=0 {1}                                        ";
 
 
             string strFormat = "";
@@ -309,7 +309,10 @@ FROM    product pro
             if (!string.IsNullOrEmpty(productSearch.factoryName)) strAnd += string.Format(strLikeFormat, "pv.CatalogName", productSearch.factoryName) + " and ";
             if (!string.IsNullOrEmpty(productSearch.model)) strAnd += string.Format(strLikeFormat, "pro.model", productSearch.model) + " and ";
             if (!string.IsNullOrEmpty(productSearch.standard)) strAnd += string.Format(strLikeFormat, "pro.standard", productSearch.standard) + " and ";
-            strAnd = strAnd.Remove(strAnd.Length - 5, 5);
+            if (strAnd.Length>5)
+            { 
+                strAnd = strAnd.Remove(strAnd.Length - 5, 5);
+            }
             if (!string.IsNullOrEmpty(strAnd))
             {
                 strFormat = " and " + strAnd;
@@ -325,10 +328,60 @@ FROM    product pro
         /// <remarks>
         ///  {productName:'机',factoryId:11,model:'',standard:'',source:33,storageNum :33,starttime:'2015/5/4 0:2:15',endtime:'2015/5/20 11:30:50'}
         /// </remarks>
-        public static ProductInOutListDetailDto SearchProductDetail(ProductDetailSearchDto dto)
+        public static List<ProductInOutDetailDto> SearchProductDetail(ProductDetailSearchDto dto)
         {
-            var list = new ProductInOutListDetailDto();
-            //
+            string str_sql = @"select a.ProductInputId,
+                            a.InoutFlag,
+                            a.Time,
+                            a.Quantity,
+                            b.emplname as ApplyName,
+                            d.CatalogName as Source,
+                            c.EmplName  as ApproveName,
+                            a.RelativeTask,
+                            e.CatalogName as Storage,
+                            f.CatalogName as Shelf
+                            from (
+                            (select productinput.ProductId,
+                            '进库' as InoutFlag,
+                            ProductInput.Id as productInputId,
+                            ProductInput.Time,
+                            ProductInput.Quantity,
+                            ProductInput.UserId as ApplyId,
+                            ProductInput.Source,
+                            ProductInput.ApproveId,
+                            ProductInput.RelativeTask,
+                            ProductInput.StorageNum,
+                            ProductInput.Shelf 
+                            from ProductInput)
+                             union(
+                            select ProductInput.ProductId,
+                            '出库' as InoutFlag,
+                            ProductInput.Id as productInputId,
+                            ProductLog.Time,
+                            ProductOutDetail.Quantity,
+                            ProductLog.ApplyId,
+                            ProductInput.Source,
+                            ProductLog.ApproveId,
+                            ProductLog.RelativeTask,
+                            ProductInput.StorageNum,
+                            ProductInput.Shelf 
+                            from ProductOutDetail  
+                            left join ProductLog on 
+                            ProductLog.Id=ProductOutDetail.ProductLogId
+                            left join ProductInput on ProductInput.Id=ProductOutDetail.ProductInputId)) as a 
+                            left join Employee as b on b.EmplID=a.ApplyId
+                            left join Employee as c on c.EmplID =a.ApproveId
+                            left join Provider as d on d.CatalogId =a.Source 
+                            left join Provider as e on e.CatalogId=a.StorageNum 
+                            left join Provider as f on f.CatalogId =a.Shelf 
+                            where a.ProductId="+dto.ProductId.ToString();
+            if (!string.IsNullOrEmpty(dto.StartTime) && !string.IsNullOrEmpty(dto.EndTime))
+            {
+                str_sql += "and a.Time>='" + dto.StartTime + "' and " + "a.Time<='" + dto.EndTime + "'";
+            }
+            str_sql += " order by productInputId,Time asc";
+            var list = Utity.Connection.Select<ProductInOutDetailDto>(str_sql);
+         
             return list;
         }
         /// <summary>

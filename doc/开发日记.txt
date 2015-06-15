@@ -216,23 +216,23 @@ CREATE TABLE [dbo].[Function](
 设备信息表：
 CREATE TABLE [dbo].[Equipment](
 	[EquipmentID] [bigint] IDENTITY(1,1) NOT NULL,
-	[EquipmentName] [varchar](100) NULL,
+	[EquipmentName] [varchar](100) not NULL,
 	[Model] [varchar](500) NULL,
 	[Standard] [varchar](100) NULL,
 	[Source] [bigint] NULL,
 	[Price] [float] NULL,
 	[UpdateTime] [datetime] NULL,
 	[EquipmentStatus] [varchar](50) NULL,
-	[KeepDept] [bigint] NULL,
+	[KeepDept] [tinyint] NULL,
+	[KeepEmpl] [bigint] NULL,
 	[DocPath] [varchar](1000) NULL,
 	[HasDelete] [tinyint] NULL,
-	[KeepEmpl] [bigint] NULL,
 	[FactoryName] [varchar](500) NULL,
 	[SalerName] [varchar](500) NULL,
 	[ProductTime] [datetime] NULL,
  CONSTRAINT [PK_EQUIPMENT] PRIMARY KEY CLUSTERED 
 (
-	[EquipmentId] ASC
+	[EquipmentID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 

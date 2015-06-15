@@ -30,20 +30,21 @@ $.extend(
         Save_Dev_Info:function(docFileName)
         {
             var Devmng_In_Json = {
-                equipmentName: '', factoryName: '', salerName: '', model: '', standard: '', source: '', price: '',
-                updateTime: '',productTime: '', equipmentStatus: '', departMent: '', docPath: '', hasDelete: '0',keeper:'' };
-            Devmng_In_Json.updateTime = new Date();
-            Devmng_In_Json.equipmentName = $("#tb_devmng_name").textbox("getValue");
+                EquipmentName: '', factoryName: '', salerName: '', Model: '', Standard: '',
+                Source: '', Price: '', UpdateTime: '', productTime: '', EquipmentStatus: '',
+                KeepDept: '', DocPath: '', HasDelete: '0', KeepEmpl: ''};
+            Devmng_In_Json.UpdateTime = new Date();
+            Devmng_In_Json.EquipmentName = $("#tb_devmng_name").textbox("getValue");
             Devmng_In_Json.factoryName = $("#tb_devmng_factory").textbox("getValue");
             Devmng_In_Json.salerName = $("#tb_devmng_saler").textbox("getValue");
-            Devmng_In_Json.model = $("#tb_devmng_model").textbox("getValue");
-            Devmng_In_Json.standard = $("#tb_devmng_spec").textbox("getValue");
-            Devmng_In_Json.source = $("#sl_devmng_source").combobox("getValue");
-            Devmng_In_Json.price = $("#tb_devmng_price").textbox("getValue");
+            Devmng_In_Json.Model = $("#tb_devmng_model").textbox("getValue");
+            Devmng_In_Json.Standard = $("#tb_devmng_spec").textbox("getValue");
+            Devmng_In_Json.Source = $("#sl_devmng_source").combobox("getValue");
+            Devmng_In_Json.Price = $("#tb_devmng_price").textbox("getValue");
             Devmng_In_Json.productTime = $("#tb_devmng_producttime").datebox("getValue");
-            Devmng_In_Json.departMent = $("#sl_devmng_dept").combobox("getValue");
-            Devmng_In_Json.docPath = docFileName;
-            Devmng_In_Json.keeper = $("#sl_devmng_owner").combobox("getValue");
+            Devmng_In_Json.KeepDept = $("#sl_devmng_dept").combobox("getValue");
+            Devmng_In_Json.DocPath = docFileName;
+            Devmng_In_Json.KeepEmpl = $("#sl_devmng_owner").combobox("getValue");
             $.ajax(
             {
                 url: '/Route/LibraryHandler.ashx',

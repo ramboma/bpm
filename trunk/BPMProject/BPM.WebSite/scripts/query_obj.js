@@ -1,25 +1,29 @@
 ﻿$.extend(
     {
         Format_Detail: function (value, row, index) {
-            return '<a href="javascript:void(0)" onclick="$.Open(\'' + row.itemid + '\')">详情</a> ';
+            return '<a href="javascript:void(0)" onclick="$.Open(\'' + row.productId + '\')">详情</a> ';
         },
         Open: function (id) {
-            var starttime = $('#tb_qryobj_time_start').datetimebox('getValue');
-            var endtime = $('#tb_qryobj_time_end').datetimebox('getValue');
-            /*
+            var Objmng_json={};
+            if (document.getElementById("cb_qryobj_time_interval").checked) {
+                Objmng_json.StartTime = $("#tb_qryobj_time_start").datetimebox("getValue");
+                Objmng_json.EndTime = $("#tb_qryobj_time_end").datetimebox("getValue");
+            };
+            Objmng_json.productId=id;
             $.ajax(
                 {
                     url: '/Route/LibraryHandler.ashx',
                     type: 'POST',
-                    data: { c: 'assetlibrary', m: 'providermng', p: { id: "", startime: "", endtime: "" } },
+                    data: { c: 'assetlibrary', m: 'searchproductdetail', p: JSON.stringify(Objmng_json) },
                     success: function (data) {
-                        $('#tb_qryobj_factory').combobox('loadData', $.Deal_Data(data));
+                        var Ret = eval("(" + data + ")");
+                        var Result = Ret.Result;
+                        $('#dgt_product_detail').datagrid('loadData', Result);
                     },
                     error: function (data) {
                         //alert(data);
                     }
                 });
-                */
             $('#dlg_product_detail').dialog('open');
             return;
         },
@@ -87,7 +91,7 @@
                 Objmng_Json.productName = $("#tb_qryobj_name").val();
             };
             if (document.getElementById("cb_qryobj_factory").checked) {
-                Objmng_Json.factoryName = $("#tb_qryobj_factory").combobox('getValue');
+                Objmng_Json.factoryName = $("#tb_qryobj_factory").combobox('getText');
             };
             if (document.getElementById("cb_qryobj_spec").checked) {
                 Objmng_Json.standard = $("#tb_qryobj_spec").val();
@@ -111,8 +115,9 @@
                     type: 'POST',
                     data: { c: 'assetlibrary', m: 'searchproduct', p: JSON.stringify(Objmng_Json) },
                     success: function (data) {
-                        alert("保存成功！");
-                        location.reload();
+                        var Ret = eval("(" + data + ")");
+                        var Result = Ret.Result;
+                        $("#dgt_result_query").datagrid('loadData', Result);
                     }
                 });
             return;

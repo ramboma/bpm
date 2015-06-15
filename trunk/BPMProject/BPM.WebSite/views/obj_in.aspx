@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="../scripts/widget/easyui/jquery.easyui.min.js"></script>    
     <script type="text/javascript" src="../scripts/widget/qrcode/jquery.qrcode.js"></script>
     <script type="text/javascript" src="../scripts/widget/qrcode/qrcode.js"></script>
+    <script type="text/javascript" src="../scripts/public.js"></script>
     <script type="text/javascript" src="../scripts/obj_in.js"></script>
 </head>
 <body>

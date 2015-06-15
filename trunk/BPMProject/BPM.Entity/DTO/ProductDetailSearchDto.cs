@@ -13,8 +13,8 @@ namespace BPM.Entity.DTO
     public class ProductDetailSearchDto
     {
         public string ProductId { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
     }
     /// <summary>
     /// {productName:'机',factoryId:11,model:'',standard:'',source:33,storageNum :33,starttime:'',endtime:''}
@@ -33,14 +33,16 @@ namespace BPM.Entity.DTO
     /// </summary>
     public class ProductInOutDetailDto
     {
-        public int Id { get; set; }
-        public int InOut { get; set; }
+        public int productInputId { get; set; }
+        public string InoutFlag { get; set; }
         public DateTime Time { get; set; }
         public int Quantity { get; set; }
-        public int AprrovalId { get; set; }
-        public string ApprovalName { get; set; }
-        public int SourceId { get; set; }
-        public string SourceName { get; set; }
+        public string ApproveName { get; set; }
+        public string ApplyName { get; set; }
+        public string  Source { get; set; }
+        public string Storage { get; set; }
+        public string Shelf { get; set; }
+        public long RelativeTask { get; set; }
     }
     public class ProductInOutListDetailDto
     {
