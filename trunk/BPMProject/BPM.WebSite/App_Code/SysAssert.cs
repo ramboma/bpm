@@ -249,6 +249,12 @@ public class SysAssert
                     }
                 }
             #endregion
+            #region 获取当前用户消息
+            case "getcurrentstep":
+                {
+                    return DateTime.Now.ToString("yyyyMMdd hh:mm:ss");
+                }
+            #endregion
         }
         return ResponseHelper.GetErrorReturn(ResponseCode.ErrorParameter, "输入参数错误，请重新输入");
     }

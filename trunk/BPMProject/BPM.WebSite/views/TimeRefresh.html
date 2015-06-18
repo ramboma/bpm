@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="../scripts/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../scripts/jquery/jquery.messager.js"></script>
+    <script type="text/javascript">
+        $(document).ready(
+            function () {
+                setInterval("startRequest()", 3000);
+            });
+        function startRequest() {
+            $.ajax(
+                {
+                    url: '/route/libraryhandler.ashx',
+                    method: 'post',
+                    data: {
+                        c:'sysconfig',
+                        m:'getcurrentstep',
+                        p: {
+
+
+                        }
+                    },
+                    success: function (data) {
+                        $.messager.show(0, '有新的<a href="proc_equipRequire.html">流程</a>来了');
+                    }
+                });
+        }
+    </script>
+    <title></title>
+</head>
+<body>
+<span id="sp1"></span>
+</body>
+</html>
